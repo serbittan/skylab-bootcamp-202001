@@ -1,9 +1,9 @@
 const logger = {
     WARN: function (message){
-        console.log("WARNING: 404 ")
+        console.log(`WARNING: 404 ${message}`)
     },
-    ERROR: function(){
-        console.log("ERROR: 500")
+    ERROR: function(message){
+        console.log(`ERROR: 500 ${message}`)
     },
     DEBUG: function(){
 
