@@ -1,41 +1,53 @@
 const net = require('net')
+const logger = require("./logger")
 const fs = require("fs")
 
-let connections = 0
+//let connections = 0
+const {argv: [, , port = 8080]} = process
+
+logger.setDebugEnable(true)
+logger.debug("starting server")
+
 
 const server = net.createServer(socket => {
-    socket.on('data', chunk => {
-        let routeServer = "index.html"
+    logger.debug("setting encoding to utf8")
+    socket.setEncoding("utf8")
+
+    socket.on('data', request => {
+        logger.info(`request from ${socket.remoteAddress}:
+${request}`)
         
-        const response = chunk.toString()
-        let route = response.split("/")[1]
-        route = route.split(" ")[0]
+        const lines = request.split("\n")
+        let [, path] = lines[0].split(" ")
 
-        if (route === "profile.html" || route === "profile") routeServer = route
-        if (route === "register.html" ||route === "register")routeServer = route
-        if (route === "login.html" || route === "login") routeServer = route
+        if (path === "/") path += "index.html"
+        
+        path = `.${path}`
 
-        if (!routeServer.includes(".html")){
-            route += ".html"
-        }
+        fs.readFile(path, "utf8", (error, content) => {
+            if (error) {
+                logger.warn(error)
 
+                return socket.end(`HTTP/1.1 404 NOT FOUND
+Content-Type: text/html
+<h1>Not found</h1>`)
+            }
+            socket.end(`HTTP/1.1 200 OK
+Content-Type: text/html
 
-fs.readFile(`./${routeServer}`, (error, content) => { // WARN buffering
-    if (error) throw error
-
-   
-    socket.end(`HTTP/1.1 200 OK\nServer: Cowboy\nAccess-Control-Allow-Origin: *\nConnections: ${++connections}\nContent-Type: text/html\n\n${content}\n`) // Content-Type: text/html
-
-    
-})
-        //console.log(chunk.toString())
-
-        //socket.end(`HTTP/1.1 404
-//Connections: ${++connections}
-// Content-Type: text/html
-// <h1>Not found</h1>
-// `)
+${content}
+`)
+        })
     })
+    socket.on("error", error => logger.error(error))
 })
+    server.listen(port, ()=> logger.info(`server up and running on port ${port}`))
 
-server.listen(8080, ()=> console.log("running on port 8080"))
+    process.on("SIGINT", () => {
+        logger.warn (`server abruptly stopped`)
+
+        setTimeout(() => process.exit(0), 1000)
+
+    })
+        
+       
