@@ -1,53 +1,98 @@
-const net = require('net')
+const http = require('http')
 const logger = require("./logger")
 const fs = require("fs")
 
-//let connections = 0
 const {argv: [, , port = 8080]} = process
 
-logger.setDebugEnable(true)
-logger.debug("starting server")
+const requestListener = (req, res) =>{
+     logger.info(`request from ${req.socket.remoteAddress}: ${req.url}`)
 
+    const main = "/index.html"
 
-const server = net.createServer(socket => {
-    logger.debug("setting encoding to utf8")
-    socket.setEncoding("utf8")
+    const rs = fs.createReadStream(`.${req.url === "/" ? main: req.url}`)
 
-    socket.on('data', request => {
-        logger.info(`request from ${socket.remoteAddress}:
-${request}`)
-        
-        const lines = request.split("\n")
-        let [, path] = lines[0].split(" ")
-
-        if (path === "/") path += "index.html"
-        
-        path = `.${path}`
-
-        fs.readFile(path, "utf8", (error, content) => {
-            if (error) {
-                logger.warn(error)
-
-                return socket.end(`HTTP/1.1 404 NOT FOUND
-Content-Type: text/html
-<h1>Not found</h1>`)
-            }
-            socket.end(`HTTP/1.1 200 OK
-Content-Type: text/html
-
-${content}
-`)
+    if (req.url !== "favicon.ico"){
+        rs.on("data", body => {
+            res.end(body)
         })
-    })
-    socket.on("error", error => logger.error(error))
+
+        rs.on("error", error => {
+            logger.warn(error)
+            res.writeHead(404)
+            res.end("<h1>NOT FOUND<h1>")
+        })
+    }else {
+        logger.warn(error)
+        res.writeHead(404)
+        res.eng("<h1>NOT FOUND</h1>")
+    }
+}
+logger.info("starting server")
+
+const server = http.createServer(requestListener)
+
+server.listen(port,()=> {
+    logger.info(`server running on port ${port}`)
+
 })
-    server.listen(port, ()=> logger.info(`server up and running on port ${port}`))
 
-    process.on("SIGINT", () => {
-        logger.warn (`server abruptly stopped`)
+server.on("SIGINT", ()=>{
+    logger.warn("server stopped abruptly")
 
-        setTimeout(() => process.exit(0), 1000)
+    setTimeout(()=> process.exit(0), 1000)
 
-    })
-        
-       
+})
+
+
+//lo mismo que lo de arriba pero mas sencillo (Mónica)
+
+// const http = require ("http")
+// const fs = require ("fs")
+// const logger = require ("./logger")
+
+// const requestListener = (req, resp)=> {
+//     const rs = fs.createReadStream(`.${req.url === "/" ? "index.html" : req.url}`)
+//     console.log(req)
+//     rs.on("data", content => {
+//         resp.writeHead(200)
+//         resp.end(`${content}`)
+//     })
+// }
+
+// const server = http.createServer(requestListener)
+// server.listen(8080)
+
+
+//manejo errores de Mónica
+
+// const http = require ('http')
+// const fs = require ('fs')
+// const log = require ('./logger')
+// const {argv: [, , port = 8080]} = process
+// const requestListener = (req, res) => {
+//   const path = req.url
+//   const rs = fs.createReadStream(`.${path === '/' ? '/index.html' : path}`)
+  
+//     if(path !== 'favicon.ico'){
+//       rs.on('data', body => {
+//       res.end(body);
+//     })
+//       rs.on('error', error => {
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//     })
+//   }else{
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//   }
+//   req.on('error', error =>{
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//   })
+// }
+// log.info('starting server')
+// const server = http.createServer(requestListener);
+// server.listen(port);
