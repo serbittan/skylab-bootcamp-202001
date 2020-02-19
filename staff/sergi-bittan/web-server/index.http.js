@@ -36,15 +36,15 @@ server.listen(port,()=> {
 
 })
 
-// server.on("SIGINT", ()=>{
-//     logger.warn("server stopped abruptly")
+server.on("SIGINT", ()=>{
+    logger.warn("server stopped abruptly")
 
-//     setTimeout(()=> process.exit(0), 1000)
+    setTimeout(()=> process.exit(0), 1000)
 
-// })
+})
 
 
-//lo mismo que lo de arriba pero mas sencillo
+//lo mismo que lo de arriba pero mas sencillo (Mónica)
 
 // const http = require ("http")
 // const fs = require ("fs")
@@ -61,3 +61,38 @@ server.listen(port,()=> {
 
 // const server = http.createServer(requestListener)
 // server.listen(8080)
+
+
+//manejo errores de Mónica
+
+// const http = require ('http')
+// const fs = require ('fs')
+// const log = require ('./logger')
+// const {argv: [, , port = 8080]} = process
+// const requestListener = (req, res) => {
+//   const path = req.url
+//   const rs = fs.createReadStream(`.${path === '/' ? '/index.html' : path}`)
+  
+//     if(path !== 'favicon.ico'){
+//       rs.on('data', body => {
+//       res.end(body);
+//     })
+//       rs.on('error', error => {
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//     })
+//   }else{
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//   }
+//   req.on('error', error =>{
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//   })
+// }
+// log.info('starting server')
+// const server = http.createServer(requestListener);
+// server.listen(port);
