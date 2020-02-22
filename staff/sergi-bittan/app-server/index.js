@@ -78,8 +78,7 @@ app.post("/logout", (req, res) => {
 })
 
 app.post("/register", (req, res) => {
-    const { body: {name, surname, username, password }} = req
-
+    const { name, surname, username, password } = req.body
     try{
         registerUser(name, surname, username, password)
 
