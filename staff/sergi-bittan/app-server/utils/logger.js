@@ -15,8 +15,6 @@ const logger = {
 
             console.log(output)
 
-            
-
             // fs.writeFile(this.__logFile__, `${output}\n`, { encoding: 'utf8', flag: 'a' }, error => {
             //     if (error) console.error(error)
             // })
@@ -49,6 +47,3 @@ const logger = {
 LEVELS.forEach((LEVEL, index) => logger[LEVEL] = index)
 
 module.exports = logger
-
-
-
