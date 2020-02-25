@@ -1,5 +1,5 @@
 const { retrieveUser } = require("../logic")
-const { App, Landing } = require("../routes")
+const { App, Landing } = require("../components")
 const { logger } = require("../utils")
 
 

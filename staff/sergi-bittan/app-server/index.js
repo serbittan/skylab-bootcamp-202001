@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const { Login, App, Register, Landing, Search, Results } = require('./components')
 const FileStore = require('session-file-store')(session)
-const { landing, login, loginPost, search, logout, registerPost } = require("./routes")
+const { landing, login, loginPost, search, logout, registerPost, register, acceptCookies } = require("./routes")
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -18,6 +18,8 @@ logger.path = path.join(__dirname, 'server.log')
 logger.debug('setting up server')
 
 const app = express()
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'components'))
 
 app.use(loggerMidWare)
 app.use(express.static(path.join(__dirname, 'public')))
@@ -41,17 +43,9 @@ app.post('/logout', urlencodedBodyParser, logout)
 
 app.post('/register', urlencodedBodyParser, registerPost)
 
-app.get('/register', ({ session: { acceptCookies } }, res) => {
-    res.send(App({ title: 'Register', body: Register(), acceptCookies }))
-})
+app.get('/register', register)
 
-app.post('/accept-cookies', (req, res) => {
-    const { session } = req
-
-    session.acceptCookies = true
-
-    res.redirect(req.get('referer'))
-})
+app.post('/accept-cookies', acceptCookies)
 
 app.get('/search', search)
 

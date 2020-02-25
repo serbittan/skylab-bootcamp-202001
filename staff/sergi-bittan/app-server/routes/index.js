@@ -5,4 +5,6 @@ module.exports = {
     search: require("./search"),
     logout: require("./logout"),
     registerPost: require("./register-post"),
+    register: require("./register"),
+    acceptCookies: require("./accept-cookies")
 }
