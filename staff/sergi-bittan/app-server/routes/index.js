@@ -6,5 +6,6 @@ module.exports = {
     logout: require("./logout"),
     registerPost: require("./register-post"),
     register: require("./register"),
-    acceptCookies: require("./accept-cookies")
+    acceptCookies: require("./accept-cookies"),
+    toggleFav: require("./toggle-fav")
 }

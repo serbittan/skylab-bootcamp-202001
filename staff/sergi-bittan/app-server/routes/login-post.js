@@ -1,4 +1,4 @@
-const { authenticateUser } = require("../logic")
+const { authenticateUser, retrieveUser } = require("../logic")
 const { App, Login } = require("../components")
 const { logger } = require("../utils")
 
@@ -6,18 +6,8 @@ module.exports = (req, res) => {
     const { body: { username, password }, session } = req
 
     try {
-        authenticateUser(username, password, (error, token) => {
-           
-                if (error) {
-                    logger.warn(error)
-
-                    const { message } = error
-                    const { session: { acceptCookies }} = req
-
-                    //return res.send(App({ title: 'Login', body: Login({ error: message, username }), acceptCookies }))
-                    return res.render("login", { error: message, username, acceptCookies })
-                }
-
+        return authenticateUser(username, password)
+            .then((token) => {
                 session.token = token
 
                 session.save(() => {
@@ -28,8 +18,25 @@ module.exports = (req, res) => {
                     res.redirect('/')
 
                 })
-        })
-        
+                return retrieveUser(token)
+                
+            })
+            .then((user) => {
+                const { name, username } = user
+                req.session.user = user
+                res.send(App({title: "landing", body: Landing({name, username})}))
+            })
+            .catch((error) => {
+
+                const { message } = error
+                const { session: { acceptCookies } } = req
+
+                logger.warn(error)
+                return res.render("login", { error: message, username, acceptCookies })
+            })
+
+
+
     } catch (error) {
         logger.error(error)
 
@@ -39,7 +46,5 @@ module.exports = (req, res) => {
         //res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
         res.render("login", { error: message, username, acceptCookies })
     }
-    
+
 }
-
-

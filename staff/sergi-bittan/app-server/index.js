@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const { Login, App, Register, Landing, Search, Results } = require('./components')
 const FileStore = require('session-file-store')(session)
-const { landing, login, loginPost, search, logout, registerPost, register, acceptCookies } = require("./routes")
+const { landing, login, loginPost, search, logout, registerPost, register, acceptCookies, toggleFav } = require("./routes")
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -49,40 +49,7 @@ app.post('/accept-cookies', acceptCookies)
 
 app.get('/search', search)
 
-app.post('/toggle-fav/:id', (req, res) => {
-    const { params: { id }, session } = req
-
-    debugger
-
-    const { token } = session
-
-    if (!token) {
-        session.referer = req.get('referer')
-
-        session.fav = id
-
-        return session.save(() => res.redirect('/login'))
-    }
-
-    try {
-        toggleFavVehicle(token, id, error => {
-            if (error) {
-                // ?
-
-                return
-            }
-
-            const { referer = req.get('referer') } = session
-
-            delete session.referer
-            delete session.fav
-
-            session.save(() => res.redirect(referer))
-        })
-    } catch ({ message }) {
-        // ?
-    }
-})
+app.post('/toggle-fav/:id', toggleFav)
 
 app.listen(port, () => logger.info(`server up and running on port ${port}`))
 

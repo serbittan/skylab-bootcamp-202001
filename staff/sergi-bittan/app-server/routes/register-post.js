@@ -8,24 +8,22 @@ module.exports = (req, res) => {
 
 
     try {
-        registerUser(name, surname, username, password, error => {
-            if (error) {
-                logger.warn(error)
+        return registerUser(name, surname, username)
+        .then(() => {
+            return res.render("register", { error: message, name, surname, username, acceptCookies })
 
-                const { message } = error
-                const { session: { acceptCookies}} = req
-                //return res.send(App({ title: "Register", body: Register({error: message}), acceptCookies }))
-                return res.render("register", { error: message, name, surname, username, acceptCookies })
-            }
-
-            
-        })
+        }).catch((error => {
+            const { message } = error
+            const { session: { acceptCookies}} = req
+            logger.warn(error)
+            res.render("register", { error: message, name, surname, username, acceptCookies })
+        }))
+    
     } catch (error) {
         logger.error("/error")
-
+        const { message } = error
         const { session: { acceptCookies } } = req
 
-        //res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
         res.render("register", { error: message, name, surname, username, acceptCookies })
     }
 }

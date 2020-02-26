@@ -6,17 +6,19 @@ const { logger } = require("../utils")
 module.exports = ({ session: { token, acceptCookies } }, res) => {
         if (token) {
             try{
-                retrieveUser(token, (error, user) => {
-                    if (error) {
-                        logger.error(error)
-
-                        res.redirect("/error")
-                    }
-        
+                return retrieveUser(token)
+                .then((user) => {
                     const { name, username } = user
         
                     res.send(App({ title: 'My App', body: Landing({ name, username }), acceptCookies }))
+
                 })
+                .catch((error) => {
+                    logger.error(error)
+    
+                    res.redirect("/error")
+
+                }) 
             } catch(error){
                 logger.error(error)
 
