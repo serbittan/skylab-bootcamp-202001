@@ -1,12 +1,14 @@
-const { MongoClient } = require("mongodb")
-let db, client
+const { MongoClient, ObjectId } = require('mongodb')
+
+let client, db
 
 module.exports = {
     connect(url) {
         return MongoClient.connect(url, { useUnifiedTopology: true })
             .then(_client => {
                 client = _client
-                db = client.db
+
+                db = client.db()
             })
     },
     collection(name) {
@@ -14,6 +16,6 @@ module.exports = {
     },
     disconnect() {
         return client.close()
-    }
-
+    },
+    ObjectId
 }

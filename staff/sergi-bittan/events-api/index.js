@@ -1,22 +1,20 @@
 require('dotenv').config()
 
-const { env: { PORT = 8080, NODE_ENV: env, MONGO_URL }, argv: [, , port = PORT] } = process
+const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT] } = process
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribe, deleteEvent} = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
-const { jwtVerifierMidWare } = require("./mid-wares")
-const { database } = require("./data")
+const { jwtVerifierMidWare } = require('./mid-wares')
+const { database } = require('./data')
 
-database.connect(MONGO_URL)
+database.connect(MONGODB_URL)
     .then(() => {
-
-
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
             format: winston.format.json(),
@@ -43,7 +41,23 @@ database.connect(MONGO_URL)
 
         app.post('/users/auth', jsonBodyParser, authenticateUser)
 
-        app.get("/users", jwtVerifierMidWare, retrieveUser)
+        app.get('/users', jwtVerifierMidWare, retrieveUser)
+
+        app.get("/users/:id", jwtVerifierMidWare, retrievePublishedEvents) 
+         
+
+        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+
+        app.get("/events/last-events", jwtVerifierMidWare, retrieveLastEvents)
+
+        //app.post("/events/subscribe/:id", jsonBodyParser, subscribeEvent)
+        app.patch('/users/subscribe', [jwtVerifierMidWare,jsonBodyParser], subscribeEvent)
+
+
+        //app.get("/events/:id", jsonBodyParser, retrieveSubscribe)
+        app.get('/users/:id/subscribe', jwtVerifierMidWare, retrieveSubscribe )
+        
+        app.delete('/users/subscribe', deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
@@ -52,5 +66,4 @@ database.connect(MONGO_URL)
 
             process.exit(0)
         })
-
     })
