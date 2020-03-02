@@ -7,7 +7,7 @@ module.exports = date => {
 
     const events = database.collection("events")
 
-    return events.find({ date :{$gte : new Date}}).toArray()
+    return events.find().sort({ date: -1 }).toArray()
     .then(events => {
 
         if (!events) throw new NotFoundError("events not found")

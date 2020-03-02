@@ -2,12 +2,12 @@ const { NotFoundError } = require("../errors")
 const { retrieveLastEvents } = require("../logic")
 
 module.exports = (req, res) => {
-    const { date } = req
+    
 
     try{
         retrieveLastEvents(date)
-        .then(() => {
-            res.status(200).end()
+        .then((events) => {
+            res.status(200).json(events)
         })
         .catch(({message}) => {
             res
