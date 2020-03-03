@@ -1,5 +1,5 @@
 const { validate } = require("../utils")
-const { models: { User } } = require("../data")
+const { models: { User, Event } } = require("../data")
 const { NotFoundError } = require("../errors")
 
 
@@ -7,13 +7,12 @@ module.exports = (userId, eventId) => {
     validate.string = (userId, "id")
     validate.string = (eventId, "id")
 
-    const _userId = ObjectId(userId)
-    const _eventId = ObjectId(eventId)
+    // const _userId = ObjectId(userId)
+    // const _eventId = ObjectId(eventId)
 
-    const users = database.collection("users")
-    const events = database.collection("events")
+    
 
-    return events.find({ _id: _eventId }).toArray()
+    return Event.find({ id: eventId }).toArray()
         .then(event => {
             if (!event) throw new NotFoundError('event not found')
             return users.find({ _id: ObjectId(_userId), subscribeEvent: _eventId }).toArray()

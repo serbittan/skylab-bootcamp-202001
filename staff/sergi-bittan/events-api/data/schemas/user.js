@@ -7,5 +7,6 @@ module.exports = new Schema({
     password: { type: String, require: true },
     created: { type: Date, require: true, default: Date.now },
     authenticated: { type: Date },
-    retrieved: { type: Date }
+    retrieved: { type: Date },
+    subscribeEvents: { type: [ObjectId]}
 })

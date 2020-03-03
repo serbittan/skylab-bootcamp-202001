@@ -11,9 +11,9 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
-const mongoose = require('./data')
+const mongoose = require('mongoose')
 
-mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
@@ -57,7 +57,7 @@ mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: 
              
         //app.get('/users/:id/subscribe', jwtVerifierMidWare, retrieveSubscribe )
         
-        //app.delete('/users/subscribe', deleteEvent)
+        app.delete('/users/subscribe/:id', deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
