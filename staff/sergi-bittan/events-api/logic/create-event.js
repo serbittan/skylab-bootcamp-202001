@@ -1,5 +1,5 @@
 const { validate } = require('../utils')
-const { database, database: { ObjectId }, models: { Event } } = require('../data')
+const { models: { Event } } = require('../data')
 
 module.exports = (publisher, title, description, location, date) => {
     validate.string(publisher, 'publisher')
@@ -7,14 +7,9 @@ module.exports = (publisher, title, description, location, date) => {
     validate.string(description, 'description')
     validate.string(location, 'location')
     validate.type(date, 'date', Date)
-
-    const events = database.collection('events')
-    const users = database.collection("users")
-
-
-    return events.insertOne(new Event({ publisher: ObjectId(publisher), title, description, location, date }))
-    .then(results => users.updateOne({_id: ObjectId(publisher)}, {$push: {publishedEvents: results.insertedId}}))
-    .then(() =>  {})
     
+    const event = new Event({ publisher, title, description, location, date, created: new Date })
 
+    return event.save()
+        .then(() => { })
 }

@@ -1,5 +1,5 @@
 const { validate } = require("../utils")
-const { database } = require("../data")
+const { models } = require("../data")
 const { NotFoundError } = require("../errors")
 
 module.exports = date => {

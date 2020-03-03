@@ -11,9 +11,9 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
-const { database } = require('./data')
+const mongoose = require('./data')
 
-database.connect(MONGODB_URL)
+mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
@@ -43,21 +43,21 @@ database.connect(MONGODB_URL)
 
         app.get('/users', jwtVerifierMidWare, retrieveUser)
 
-        app.get("/users/:id", jwtVerifierMidWare, retrievePublishedEvents) 
+        //app.get("/users/:id", jwtVerifierMidWare, retrievePublishedEvents) 
          
 
         app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
 
-        app.get("/events/last-events", jwtVerifierMidWare, retrieveLastEvents)
+        //app.get("/events/last-events", jwtVerifierMidWare, retrieveLastEvents)
 
-        //app.post("/events/subscribe/:id", jsonBodyParser, subscribeEvent)
-        app.patch('/users/subscribe', [jwtVerifierMidWare,jsonBodyParser], subscribeEvent)
+                   
+        //app.patch('/users/subscribe', [jwtVerifierMidWare,jsonBodyParser], subscribeEvent)
 
 
-        //app.get("/events/:id", jsonBodyParser, retrieveSubscribe)
-        app.get('/users/:id/subscribe', jwtVerifierMidWare, retrieveSubscribe )
+             
+        //app.get('/users/:id/subscribe', jwtVerifierMidWare, retrieveSubscribe )
         
-        app.delete('/users/subscribe', deleteEvent)
+        //app.delete('/users/subscribe', deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
