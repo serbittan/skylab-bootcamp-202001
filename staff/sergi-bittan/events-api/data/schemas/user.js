@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose")
+const { Schema, Types: { ObjectId } } = require("mongoose")
 
 module.exports = new Schema({
     name: { type: String, require: true },
@@ -8,5 +8,6 @@ module.exports = new Schema({
     created: { type: Date, require: true, default: Date.now },
     authenticated: { type: Date },
     retrieved: { type: Date },
-    subscribeEvents: { type: [ObjectId]}
+    published: { type: [ObjectId], ref: "Event" },
+    subscribeEvents: { type: [ObjectId], ref: "Event" }
 })

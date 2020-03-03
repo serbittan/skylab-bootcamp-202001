@@ -1,17 +1,19 @@
 const { validate } = require("../utils")
-const { models } = require("../data")
+const { models: { Event } } = require("../data")
 const { NotFoundError } = require("../errors")
 
-module.exports = date => {
-    validate.type = (date, "date", Date)
-
-    const events = database.collection("events")
-
-    return events.find().sort({ date: -1 }).toArray()
+module.exports = () => Event.find({ date: { $gte: new Date } })
+    .lean()
     .then(events => {
+        //sanitize
+        events.forEach(event => {
+            event.id = event._id.toString()
 
-        if (!events) throw new NotFoundError("events not found")
+            delete event._id
+
+            event.publisher = event.publisher.toString()
+        })
+
         return events
     })
-
-}
+    

@@ -31,7 +31,3 @@ module.exports = (email, password) => {
 }
 
 
-
-
-    // return users.updateOne({ _id }, { $set: { authenticated: new Date } })
-    //     .then(() => _id.toString())

@@ -1,47 +1,28 @@
 const { validate } = require('../utils')
-const { models: { User } } = require('../data')
+const { models: { User, Event } } = require('../data')
 const { NotFoundError } = require('../errors')
+const { Types: { ObjectId } } = require("mongoose")
 
 module.exports = id => {
     validate.string(id, 'id')
 
-    const _id = ObjectId(id)
+    return User.findById(id)
+        .then(user => {
+            if (!user) throw new NotFoundError(`user witn id ${id} not found`)
 
-    const events = database.collection("events")
+            return Event.find({ publisher: ObjectId(id), date: { $gte: new Date } })
+                .lean()
+                .then(events => {
+                    // sanitize
+                    events.forEach(event => {
+                        event.id = event._id.toString()
 
-    return events.find({ publisher: _id}).toArray()
-    .then((results) => {
-        
-        if (!results) throw new NotFoundError("events not found")
-        return results 
-    })
+                        delete event._id
 
-}   
+                        event.publisher = event.publisher.toString()
+                    })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     return events.findOne({ _id })
-//         .then(user => {
-//             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
-//             if (!user.publishedEvents) throw new NotFoundError(`user with id ${id} does not exist`)
-            
-//             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
-
-//             return users.findOne({ _id: _id ,  publishedEvents: [] })
-//                 .then(() => {
-//                     const { publishedEvents } = user
-
-//                     return { publishedEvents }
-//                 })
-//         })
+                    return events
+                })
+        })
+}
