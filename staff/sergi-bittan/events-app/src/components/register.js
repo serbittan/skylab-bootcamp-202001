@@ -1,7 +1,7 @@
 import React from "react"
 export default
 
-function Register() {
+function Register({onRegister, onToLogin}) {
     return <form className="register" onSubmit={event => {
         event.preventDefault()
 
