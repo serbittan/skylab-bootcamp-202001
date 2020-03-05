@@ -4,7 +4,7 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribe, deleteEvent} = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, publishEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribe, deleteEvent} = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -12,7 +12,8 @@ const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
 const cors = require("cors")
-const mongoose = require('mongoose')
+const { mongoose } = require('events-data')
+mongoose.set('useFindAndModify', false);
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -40,6 +41,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.use(morgan('combined', { stream: accessLogStream }))
 
+        //app.get("/", (req, res) => res.send("api working"))
+
         app.post('/users', jsonBodyParser, registerUser)
 
         app.post('/users/auth', jsonBodyParser, authenticateUser)
@@ -49,7 +52,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
         //app.get("/users/:id", jwtVerifierMidWare, retrievePublishedEvents) 
          
 
-        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
 
         //app.get("/events/last-events", jwtVerifierMidWare, retrieveLastEvents)
 

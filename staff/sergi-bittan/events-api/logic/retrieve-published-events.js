@@ -1,7 +1,6 @@
 const { validate } = require('events-utils')
 const { models: { User, Event } } = require('events-data')
 const { NotFoundError } = require('events-errors')
-const { Types: { ObjectId } } = require("mongoose")
 
 module.exports = id => {
     validate.string(id, 'id')
