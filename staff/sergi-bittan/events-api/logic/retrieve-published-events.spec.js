@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const { expect } = require("chai")
 const { random } = Math
 const retrievePublishedEvents = require("./retrieve-published-events")
-const { models: { User, Event } } = require("../data")
+const { models: { User, Event } } = require("events-data")
 
 
 describe("retrievePublishedEvents", () => {

@@ -6,7 +6,7 @@ const { Types: { ObjectId } } = mongoose
 const { expect } = require("chai")
 const { random } = Math
 const subscribeEvent = require("./subscribe-event")
-const { models: { User, Event } } = require("../data")
+const { models: { User, Event } } = require("events-data")
 
 describe("subscribeEvent", () => {
     before(() =>

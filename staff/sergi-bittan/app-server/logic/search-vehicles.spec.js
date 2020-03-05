@@ -1,6 +1,6 @@
 const { searchVehicles } = require('.')
-const { call } = require('../utils')
-require('../utils/array.prototype.random')
+const { call } = require('events-utils')
+require('events-utils/array.prototype.random')
 
 fdescribe('searchVehicles', () => {
     let name, surname, username, password, token, query, ids

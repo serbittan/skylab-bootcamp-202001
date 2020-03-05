@@ -1,6 +1,6 @@
 const { retrieveUser } = require("../logic")
 const { App, Landing } = require("../components")
-const { logger } = require("../utils")
+const { logger } = require("events-utils")
 
 
 module.exports = ({ session: { token, acceptCookies } }, res) => {

@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
-const { models: { User } } = require("../data")
+const { models: { User } } = require("events-data")
 
 describe('authenticateUser', () => {
     before(() =>

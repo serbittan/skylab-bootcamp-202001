@@ -1,6 +1,6 @@
 const { registerUser } = require("../logic")
 const { App, Register } = require("../components")
-const { logger } = require("../utils")
+const { logger } = require("events-utils")
 
 
 module.exports = (req, res) => {

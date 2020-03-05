@@ -1,6 +1,6 @@
 const { retrieveUser, searchVehicles } = require("../logic")
 const { App, Login, Landing } = require("../components")
-const { logger } = require("../utils")
+const { logger } = require("events-utils")
 
 
 

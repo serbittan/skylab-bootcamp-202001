@@ -1,6 +1,6 @@
-const { fetch } = require('../utils')
+const { fetch } = require('events-utils')
 const atob = require('atob')
-require('../utils/array.prototype.toggle')
+require('events-utils/array.prototype.toggle')
 
 module.exports = function (token, id) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
