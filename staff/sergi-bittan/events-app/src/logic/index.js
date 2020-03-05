@@ -1,5 +1,11 @@
 import sayHello from './say-hello'
+import authenticateUser from "./authenticate-user"
+import registerUser from "./register-user"
+import retrieveUser from "./retrieve-user"
 
 export {
-    sayHello
+    sayHello,
+    authenticateUser,
+    registerUser,
+    retrieveUser
 }

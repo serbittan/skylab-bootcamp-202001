@@ -1,7 +1,8 @@
 import React from "react"
-export default
 
-function Register({onRegister, onToLogin}) {
+
+
+export default function Register({onRegister, onToLogin}) {
     return <form className="register" onSubmit={event => {
         event.preventDefault()
 
@@ -17,7 +18,7 @@ function Register({onRegister, onToLogin}) {
 
         <input type="text" name="name" placeholder="name" />
         <input type="text" name="surname" placeholder="surname" />
-        <input type="text" name="username" placeholder="username" />
+        <input type="text" name="email" placeholder="email" />
         <input type="password" name="password" placeholder="password" />
         <button>Register</button>
         <a href="" onClick={event => {
