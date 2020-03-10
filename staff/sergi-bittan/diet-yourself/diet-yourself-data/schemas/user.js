@@ -12,6 +12,6 @@ module.exports = new Schema({
     activity: { type: String, require: true },
     points: { type: Number },
     method: { type: String },
-    diet: Diet,
-    favorites: [Diet] 
+    //diet: Diet,
+    //favorites: [Diet] 
 })
