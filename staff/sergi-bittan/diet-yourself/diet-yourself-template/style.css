@@ -1,7 +1,7 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  background-color: #ebb2a5;
+  background-color: #f9a603;
   width: 100%; }
 
 .activity-page {
@@ -13,7 +13,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #caa6a6;
+  background-color: #f25c00;
   height: 15vh; }
 
 .activity {
@@ -29,7 +29,7 @@ body {
     _height: 10vh;
     _font-size: 130%;
     border-radius: 0.8rem;
-    background-color: #ea3759;
+    background-color: #f70025b8;
     box-shadow: 0 0 18px #952a02;
     color: snow; }
 
