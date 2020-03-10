@@ -1,0 +1,85 @@
+@import config
+
+body
+    margin: 0
+    box-sizing: border-box
+    background-color: #ebb2a5
+    width: 100%
+
+.main
+    height: 100vh
+    display: flex
+    flex-direction: column
+    
+.header
+    display: flex
+    justify-content: space-evenly
+    align-items: center
+    background-color: #caa6a6
+    height: 15vh
+    &__landing
+        font-size: large
+    
+
+.main-landing
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    height: 60%
+    flex: 4
+
+    &__diet
+        width: 200px
+        margin-bottom: 0.5rem
+        -webkit-appearance: none
+        height: 10vh
+        font-size: 130%
+        border-radius: 0.8rem
+        background-color: #ea3759
+        box-shadow: 0 0 18px #952a02
+        color: snow
+    &__complicate
+        width: 200px
+        margin-bottom: 0.5rem
+        -webkit-appearance: none
+        height: 8vh
+        font-size: 90%
+        border-radius: 0.8rem
+        background-color: rgb(82, 217, 230)
+        box-shadow: 0 0 18px #14abe2
+        color: black
+.footer-landing
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    align-items: center
+    height: 20%
+    flex: 0.5
+    background: bisque
+    &__today
+        align-self: center
+        margin-top: 8px
+        -webkit-appearance: none
+        width: 60px
+        height: 60px
+        margin-bottom: 30px
+        border-radius: 50%
+        background: #14abe2
+
+.large-icon-size
+    font-size: x-large
+
+    
+
+// @keyframes changecolor 
+//     0%  
+//         background: #41c4de
+//     25%  
+//         background: #8cc73f
+//     50%  
+//         background: #f3d333
+//     75% 
+//         background: #f78e56
+//     100%  
+//         background: #41c4de
