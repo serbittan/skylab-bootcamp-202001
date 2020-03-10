@@ -10,25 +10,16 @@ body
     height: 100vh
     display: flex
     flex-direction: column
+    
 .header
     display: flex
-    justify-content: space-around
-    &__landing-objetivo
-        display: flex
-        flex-direction: column
-h6
-    font-size: medium 
-input
-    width: 50%
-// .logo
-//     display: flex
-//     justify-content: center
-//     flex: 3
-//     &__image
-//         border-radius: 100%
-//         margin-top: 30px
-//         height: 40vh
-        
+    justify-content: space-evenly
+    align-items: center
+    background-color: #caa6a6
+    height: 15vh
+    &__landing
+        font-size: large
+    
 
 .main-landing
     display: flex
@@ -65,7 +56,10 @@ input
     align-items: center
     height: 20%
     flex: 0.5
+    background: bisque
     &__today
+        align-self: center
+        margin-top: 8px
         -webkit-appearance: none
         width: 60px
         height: 60px
@@ -73,6 +67,10 @@ input
         border-radius: 50%
         background: #14abe2
 
+.large-icon-size
+    font-size: x-large
+
+    
 
 // @keyframes changecolor 
 //     0%  
