@@ -8,8 +8,8 @@ module.exports = (username, email, password, goal, activity, gender, age, height
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
-    validate.type(goal, 'goal', Number)
-    validate.type(activity, "activity", Number)
+    validate.string(goal, 'goal')
+    validate.string(activity, "activity")
     validate.string(gender, "gender")
     validate.type(age, "age", Number)
     validate.type(height, "height", Number)
@@ -17,7 +17,7 @@ module.exports = (username, email, password, goal, activity, gender, age, height
     validate.string(city, "city")
     validate.type(finalWeight, "finalWeight", Number)
     validate.type(points, "points", Number)
-
+   
     return User.findOne({ email })
         .then(user => {
             if (user) throw new NotAllowedError(`user with email ${email} already exists`)
