@@ -1,8 +1,11 @@
-// const { Schema } = require("mongoose")
+const { Schema } = require("mongoose")
 
 
-// module.exports = new Schema({
-//     method: { type: String},
-//     proportions: [ String ],
-//     points: { type: Number }  
-// })
+module.exports = new Schema({
+    method: { type: String},
+    proportions: [ {
+        food: String,
+        quantity: Number
+    } ],
+    points: { type: Number }  
+})

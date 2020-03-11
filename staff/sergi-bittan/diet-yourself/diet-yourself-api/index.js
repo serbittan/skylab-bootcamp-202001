@@ -36,7 +36,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.use(morgan('combined', { stream: accessLogStream }))
 
-        app.use('/api', router)
+        app.use("/api", router)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

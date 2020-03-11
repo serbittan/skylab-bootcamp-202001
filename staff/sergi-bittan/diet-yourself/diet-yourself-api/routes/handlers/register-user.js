@@ -2,10 +2,10 @@ const { registerUser } = require('../../logic')
 const { NotAllowedError, ContentError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { body: { name, surname, email, password } } = req
+    const { body: { username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points  } } = req
 
     try {
-        registerUser(name, surname, email, password)
+        registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points)
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400

@@ -13,11 +13,11 @@ describe('authenticateUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password
+    let  username, email, password
 
     beforeEach(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
+        username = `username-${random()}`
+        //surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
     })
@@ -28,7 +28,7 @@ describe('authenticateUser', () => {
         beforeEach(() =>
             bcrypt.hash(password, 10)
                 .then(password =>
-                    User.create({ name, surname, email, password })
+                    User.create({ username, email, password })
                 )
                 .then(user => _id = user.id)
         )
