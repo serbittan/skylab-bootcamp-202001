@@ -1,7 +1,7 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  background-color: #ebb2a5;
+  background-color: #98dbc6;
   width: 100%; }
 
 .activity-page {
@@ -13,7 +13,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #caa6a6;
+  background-color: #5bc8ac;
   height: 15vh; }
 
 .activity {
@@ -23,15 +23,16 @@ body {
   align-items: center;
   flex: 4; }
   .activity__mmm {
-    width: 200px;
-    margin-bottom: 0.5rem;
+    width: 25em;
+    margin-bottom: 0.8em;
     -webkit-appearance: none;
     _height: 10vh;
     _font-size: 130%;
     border-radius: 0.8rem;
-    background-color: #ea3759;
+    background-color: #e6d72a;
     box-shadow: 0 0 18px #952a02;
-    color: snow; }
+    color: black;
+    padding: 1em; }
 
 .h4 {
   font-size: medium; }
@@ -39,7 +40,66 @@ body {
 body {
   margin: 0;
   box-sizing: border-box;
-  background-color: #ebb2a5;
+  background-color: #98dbc6;
+  width: 100%; }
+
+.medidas {
+  height: 100vh;
+  display: flex;
+  flex-direction: column; }
+
+.edad {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #5bc8ac;
+  height: 15vh; }
+
+.genero {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30%; }
+
+.button {
+  justify-content: space-between;
+  display: flex;
+  width: 35vh; }
+  .button__m {
+    width: 100px;
+    margin-bottom: 0.7rem;
+    -webkit-appearance: none;
+    _height: 10vh;
+    _font-size: 130%;
+    border-radius: 0.8rem;
+    background-color: #e6d72a;
+    box-shadow: 0 0 18px #952a02;
+    color: black;
+    padding: 3vh; }
+
+.edad-antrop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 11%; }
+  .edad-antrop__edad {
+    width: 35vh;
+    margin: 3vh;
+    height: 6vh;
+    border-radius: 10px;
+    border-style: none;
+    font-size: 1em;
+    text-align: center;
+    background-color: #ffffff; }
+
+span {
+  font-size: x-large; }
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #98dbc6;
   width: 100%; }
 
 .contenedor {
@@ -71,9 +131,9 @@ body {
     height: 10vh;
     font-size: 130%;
     border-radius: 0.8rem;
-    background-color: #ea3759;
+    background-color: #e6d72a;
     box-shadow: 0 0 18px #952a02;
-    color: snow;
+    color: black;
     animation: changecolor 10s infinite; }
     .logo-goal__opciones:hover {
       filter: brightness(1.2); }
@@ -92,7 +152,7 @@ body {
   25% {
     background: #8cc73f; }
   50% {
-    background: #f3d333; }
+    background: #e6d72a; }
   75% {
     background: #f78e56; }
   100% {
@@ -100,8 +160,8 @@ body {
 body {
   margin: 0;
   box-sizing: border-box;
-  background-color: #ebb2a5;
-  width: 100%; }
+  background-color: #98dbc6;
+    background-color-width: 100%; }
 
 .main {
   height: 100vh;
@@ -112,7 +172,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #caa6a6;
+  background-color: #5bc8ac;
   height: 15vh; }
   .header__landing {
     font-size: large; }
@@ -131,9 +191,9 @@ body {
     height: 10vh;
     font-size: 130%;
     border-radius: 0.8rem;
-    background-color: #ea3759;
+    background-color: #e6d72a;
     box-shadow: 0 0 18px #952a02;
-    color: snow; }
+    color: black; }
   .main-landing__complicate {
     width: 200px;
     margin-bottom: 0.5rem;
@@ -143,7 +203,10 @@ body {
     border-radius: 0.8rem;
     background-color: #52d9e6;
     box-shadow: 0 0 18px #14abe2;
-    color: black; }
+    color: black;
+    animation: changecolor 10s infinite; }
+    .main-landing__complicate:hover {
+      filter: brightness(1.2); }
 
 .footer-landing {
   display: flex;
@@ -152,7 +215,7 @@ body {
   align-items: center;
   height: 20%;
   flex: 0.5;
-  background: bisque; }
+  background: #f18d93; }
   .footer-landing__today {
     align-self: center;
     margin-top: 8px;
@@ -165,5 +228,17 @@ body {
 
 .large-icon-size {
   font-size: x-large; }
+
+@keyframes changecolor {
+  0% {
+    background: #41c4de; }
+  25% {
+    background: #8cc73f; }
+  50% {
+    background: #f18d9e; }
+  75% {
+    background: #f78e56; }
+  100% {
+    background: #41c4de; } }
 
 /*# sourceMappingURL=style.css.map */
