@@ -5,5 +5,6 @@ module.exports = {
     retrieveLastEvents: require('./retrieve-last-events'),
     publishEvent: require("./publish-event"),
     updateUser: require("./update-user"),
-    toggleFavDiets: require("./toggle-fav-diets")
+    toggleFavDiets: require("./toggle-fav-diets"),
+    createDiet: require("./create-diet")
 }

@@ -1,5 +1,7 @@
-const { Schema } = require('mongoose')
+const { Schema, Types: { ObjectId } } = require('mongoose')
 const  Diet  = require('./diet')
+
+
 
 module.exports = new Schema({
     username: { type: String, required: true },
@@ -15,6 +17,6 @@ module.exports = new Schema({
     finalWeight: { type: Number },
     points: { type: Number },
     method: { type: String },
-    diet: Diet,
-    favorites: [Diet] 
+    diet: { type: String},
+    favorites: { type: ObjectId,ref: "Diet"} 
 })
