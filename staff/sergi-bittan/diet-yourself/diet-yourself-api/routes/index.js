@@ -4,6 +4,7 @@ const {
     authenticateUser,
     retrieveUser,
     retrieveLastEvents,
+    updateUser
    
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -18,6 +19,8 @@ router.post('/users', jsonBodyParser, registerUser)
 router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
+
+router.patch("/users", jwtVerifierMidWare, updateUser)
 
 //router.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
 

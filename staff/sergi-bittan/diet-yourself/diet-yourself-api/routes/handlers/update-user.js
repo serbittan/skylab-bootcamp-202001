@@ -1,20 +1,17 @@
-
-const { retrieveUser } = require('../../logic')
-const { NotAllowedError } = require('diet-yourself-errors')
+const { updateUser } = require("../../logic")
+const { NotAllowedError, ContentError } = require("diet-yourself-errors")
 
 module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
-
-    try {
-        retrieveUser(id)
-            .then(user =>
-                res.status(200).json(user)
-            )
+    const { payload: { sub: id }, updates: { username, age, weight, height, goal, activity, city, finalWeight } } = req
+    
+    try{
+        updateUser(id, username, age, weight, height, goal, activity, city, finalWeight)
+            .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 401 // not authorized
+                    status = 409
 
                 const { message } = error
 
@@ -23,12 +20,12 @@ module.exports = (req, res) => {
                     .json({
                         error: message
                     })
-            })
+                })
     } catch (error) {
         let status = 400
 
         if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 // not acceptable
+            status = 406 
 
         const { message } = error
 
