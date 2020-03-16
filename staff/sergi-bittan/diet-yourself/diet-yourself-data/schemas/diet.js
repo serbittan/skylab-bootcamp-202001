@@ -5,7 +5,7 @@ module.exports = new Schema({
     method: { type: String},
     food: [ {
         description: { type: String},
-        quantity: { typer: Number},
+        quantity: { type: String},
         points: { type: Number}
     } ]
      

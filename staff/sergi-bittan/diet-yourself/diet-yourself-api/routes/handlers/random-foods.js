@@ -1,22 +1,18 @@
-const { updateUser } = require("../../logic")
-const { NotAllowedError, ContentError } = require("diet-yourself-errors")
+const { randomFoods } = require('../../logic')
+const { NotAllowedError, ContentError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id }} = req
-  
-    const { query: { username, age, weight, height, goal, activity, city, finalWeight } } = req
-   
-    try{
-        debugger
-        let update = {username, age, weight, height, goal, activity, city, finalWeight}
-       debugger
-        updateUser(id, update)
-            .then(() => res.status(201).end())
+    const { body: {goal, activity, gender, age, height, weight, method} } = req
+    debugger
+    try {
+        
+        randomFoods( goal, activity, gender, age, height, weight, method )
+            .then(response => res.status(201).end(response))
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 409
+                    status = 409 // conflict
 
                 const { message } = error
 
@@ -25,12 +21,12 @@ module.exports = (req, res) => {
                     .json({
                         error: message
                     })
-                })
+            })
     } catch (error) {
         let status = 400
 
         if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 
+            status = 406 // not acceptable
 
         const { message } = error
 

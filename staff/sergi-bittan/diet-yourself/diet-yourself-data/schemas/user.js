@@ -18,5 +18,5 @@ module.exports = new Schema({
     points: { type: Number },
     method: { type: String },
     diet: { type: String},
-    favorites: { type: ObjectId,ref: "Diet"} 
+    favorites: [{ type: ObjectId,ref: "Diet"}] 
 })

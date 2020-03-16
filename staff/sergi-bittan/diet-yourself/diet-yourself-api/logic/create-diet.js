@@ -1,11 +1,18 @@
 const { validate } = require("diet-yourself-utils")
 const { errors } = require("diet-yourself-errors")
-const { Diet, User } = require("diet-yourself-data")
+const { models: {Diet, User} } = require("diet-yourself-data")
 
-module.exports = async (method, food, userId) => {
+
+module.exports = (method, food, userId) => {
+    validate.string(method, "method")
+    validate.string(userId, "userId")
     
-    const diet = new Diet({method, food})
-    const saveData = await diet.save()
-    await User.update({ _id: userId}, {$push:{favorites: saveData._id}})
-    return saveData
+    return (async () => {
+        const newDiet = new Diet({ method, food })
+        const saveData = await newDiet.save()
+        await User.update({ _id: userId}, {$push:{favorites: saveData._id}})
+        return 
+    })()
+
 }
+        
