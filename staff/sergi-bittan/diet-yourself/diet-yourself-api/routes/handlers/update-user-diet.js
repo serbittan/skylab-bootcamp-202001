@@ -4,8 +4,9 @@ const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
     const { param: { userId, dietId } } = req
-
+debugger
     try {
+        debugger
         updateUserDiet(userId, dietId)
             .then(diets =>
                 res.status(200).json(diets)

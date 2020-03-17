@@ -1,36 +1,27 @@
 const { updateUser } = require("../../logic")
-const { NotAllowedError, ContentError } = require("diet-yourself-errors")
+const { NotFoundError } = require("diet-yourself-errors")
 
 module.exports = (req, res) => {
-    const { payload: { sub: id }} = req
-  
-    const { query: { username, age, weight, height, goal, activity, city, finalWeight } } = req
+    const { payload: { sub: id }, body } = req
    
     try{
-        debugger
-        let update = {username, age, weight, height, goal, activity, city, finalWeight}
-       debugger
-        updateUser(id, update)
-            .then(() => res.status(201).end())
-            .catch(error => {
-                let status = 400
-
-                if (error instanceof NotAllowedError)
-                    status = 409
-
-                const { message } = error
-
+        updateUser(id, body)
+            .then(() => res.status(201).json({ message: "You've successfully updated this User" }))
+            .catch(({ message }) =>
                 res
-                    .status(status)
+                    .status(401)
                     .json({
                         error: message
                     })
-                })
+            )
     } catch (error) {
         let status = 400
 
-        if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 
+        switch (true) {
+            case error instanceof NotFoundError:
+                status = 404 // not found
+                break
+        }
 
         const { message } = error
 

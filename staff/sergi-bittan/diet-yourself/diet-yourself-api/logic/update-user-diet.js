@@ -5,6 +5,7 @@ module.exports = (userId, dietId) => {
     validate.string(dietId, "dietId")
 
     return (async () => {
+        debugger
         const user = await findByIdAndUpdate({userId}, {dietId})
         const saveDiet = await user.save()
     
