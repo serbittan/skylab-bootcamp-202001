@@ -1,6 +1,6 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
 const diet = require('./diet')
-const { goals, activities } = require('../constants')
+const { goals, activities } = require('../../diet-yourself-utils/constants')
 
 module.exports = new Schema({
     username: {
@@ -45,7 +45,6 @@ module.exports = new Schema({
     city: { type: String },
     finalWeight: { type: Number },
     points: { type: Number },
-    method: { type: String },
     diet: diet,
     favorites: [diet]
 })

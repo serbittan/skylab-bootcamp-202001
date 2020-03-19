@@ -2,10 +2,11 @@ const { createDiet } = require('../../logic')
 const { NotAllowedError, ContentError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { body: { method, food, userId } } = req
+    
+    const { payload: { sub: id } , body: { method } } = req
     
     try {
-        createDiet( method, food, userId )
+        createDiet( id, method )
             .then(response => res.status(201).end(response))
             .catch(error => {
                 let status = 400

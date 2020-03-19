@@ -1,19 +1,21 @@
 const { validate } = require("diet-yourself-utils")
 const { NotFoundError } = require("diet-yourself-errors")
-const { models: { Diet, User }, constants: { methods, foods } } = require("diet-yourself-data")
+const { models: { Diet, User }  } = require("diet-yourself-data")
+const { constants: { methods, foods }} = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
+
+
 
 module.exports = (userId, method) => {
     validate.string(userId, "userId")
     validate.string(method, "method")
     
-
     return (async () => {
         const user = await User.findById(userId)
 
         if (!user) throw new NotFoundError(`user with id ${userId} does not exist`)
 
-        const { weight, height, age, gender, activity, method } = user
+        const { weight, height, age, gender, activity } = user
 
         const points = calculatePoints(weight, height, age, gender, activity)
 
@@ -23,22 +25,73 @@ module.exports = (userId, method) => {
         const carbsPoints = points * carbs / 100
         const fatPoints = points * fat / 100
 
-        const proteinFoods = foods.find(food => food.domain === 'protein')
-        const carbsFoods = foods.find(food => food.domain === 'carbs')
-        const fatFoods = foods.find(food => food.domain === 'fat')
+        
 
-        let proteinFoodPoints = proteinFoods.random().points
+        const proteinFoods = foods.filter(food => food.domain === 'protein')
+        const carbsFoods = foods.filter(food => food.domain === 'carbs')
+        const fatFoods = foods.filter(food => food.domain === 'fat')
+        
+        debugger
+        
+        let counter = 0
+        let counterProteins = 0
+        let counterCarbs = 0
+        let counterFats = 0
+        let dietFoods = []
+        
+        while(counter < points) {
 
-        if (proteinFoodPoints < proteinPoints) ...
+            if (counterProteins < proteinPoints) {
 
-        // TODO calculate quantities for the foods
-        // TODO create the foods
+                let random = Math.floor(Math.random()*proteinFoods.length)
+                result = dietFoods.findIndex(item => ( item.name === proteinFoods[random].name))
+                if (result === -1) dietFoods.push(proteinFoods[random])
+                else dietFoods[result].quantity+=proteinFoods[random].quantity
+                //dietFoods.push(proteinFoods[random])
+    
+                counterProteins += proteinFoods[random].points
+                debugger
+            }
 
-        const diet = new Diet({ method, foods })
+            if (counterCarbs < carbsPoints) {
+
+                let random = Math.floor(Math.random()*carbsFoods.length)
+                dietFoods.push(carbsFoods[random])
+    
+                counterCarbs += carbsFoods[random].points
+            }
+
+            
+            if (counterFats < fatPoints) {
+
+                let random = Math.floor(Math.random()*fatFoods.length)
+                dietFoods.push(fatFoods[random])
+
+                counterFats += fatFoods[random].points
+            }
+
+            counter = counterProteins + counterCarbs + counterFats
+
+        }
+
+        console.log('dietFoods => ', dietFoods)
+
+        console.log( counterProteins, counterCarbs, counterFats )
+
+
+        const diet = new Diet({ method, foods: dietFoods, points })
         
         user.diet = diet
 
+
         await user.save()
+
+        const user2 = await User.findById(userId)
+
+        console.log(user2.diet)
+
+        return
     })()
 
 }
+

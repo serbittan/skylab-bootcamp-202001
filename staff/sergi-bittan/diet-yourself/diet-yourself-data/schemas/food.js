@@ -1,5 +1,5 @@
 const { Schema } = require("mongoose")
-const { foods } = require("../constants")
+const { foods } = require("../../diet-yourself-utils/constants")
 
 module.exports = new Schema({
     name: { 
