@@ -44,7 +44,7 @@ module.exports = (userId, method) => {
             if (counterProteins < proteinPoints) {
 
                 let random = Math.floor(Math.random()*proteinFoods.length)
-                result = dietFoods.findIndex(item => ( item.name === proteinFoods[random].name))
+                let result = dietFoods.findIndex(item => ( item.name === proteinFoods[random].name))
                 if (result === -1) dietFoods.push(proteinFoods[random])
                 else dietFoods[result].quantity+=proteinFoods[random].quantity
                 //dietFoods.push(proteinFoods[random])
@@ -56,7 +56,9 @@ module.exports = (userId, method) => {
             if (counterCarbs < carbsPoints) {
 
                 let random = Math.floor(Math.random()*carbsFoods.length)
-                dietFoods.push(carbsFoods[random])
+                let result = dietFoods.findIndex(item => ( item.name === carbsFoods[random].name))
+                if (result === -1) dietFoods.push(carbsFoods[random])
+                else dietFoods[result].quantity+=carbsFoods[random].quantity
     
                 counterCarbs += carbsFoods[random].points
             }
@@ -65,7 +67,9 @@ module.exports = (userId, method) => {
             if (counterFats < fatPoints) {
 
                 let random = Math.floor(Math.random()*fatFoods.length)
-                dietFoods.push(fatFoods[random])
+                let result = dietFoods.findIndex(item => ( item.name === fatFoods[random].name))
+                if (result === -1) dietFoods.push(fatFoods[random])
+                else dietFoods[result].quantity+=fatFoods[random].quantity
 
                 counterFats += fatFoods[random].points
             }
