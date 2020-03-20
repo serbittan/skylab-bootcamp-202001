@@ -33,7 +33,7 @@ router.get("/diet", retrieveDiet)
 
 router.get("/diets", retrieveDiets)
 
-//router.post("/diet/random", jsonBodyParser, randomFoods)
+
 
 
 module.exports = router

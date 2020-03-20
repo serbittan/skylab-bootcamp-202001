@@ -3,7 +3,7 @@ const { models: { User } } = require('diet-yourself-data')
 const { NotAllowedError } = require('diet-yourself-errors')
 const bcrypt = require('bcryptjs')
 
-module.exports = (username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points) => {
+module.exports = (username, email, password, goal, activity, gender, age, height, weight, city, finalWeight) => {
     validate.string(username, 'username')
     validate.string(email, 'email')
     validate.email(email)
@@ -16,7 +16,7 @@ module.exports = (username, email, password, goal, activity, gender, age, height
     validate.type(weight, "weight", Number)
     validate.string(city, "city")
     validate.type(finalWeight, "finalWeight", Number)
-    validate.type(points, "points", Number)
+    
    
     return User.findOne({ email })
         .then(user => {
@@ -25,7 +25,7 @@ module.exports = (username, email, password, goal, activity, gender, age, height
             return bcrypt.hash(password, 10)
         })
         .then(password => {
-            user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points })
+            user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
 
             return user.save()
         })

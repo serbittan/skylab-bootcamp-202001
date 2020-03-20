@@ -8,5 +8,4 @@ module.exports = {
     retrieveDiet: require("./retrieve-diet"),
     retrieveDiets: require("./retrieve-diets"),
     updateUserDiet: require("./update-user-diet")
-    //randomFoods: require("./random-foods")
 }
