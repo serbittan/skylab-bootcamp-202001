@@ -10,6 +10,7 @@
     "diet-yourself-utils": "file:../diet-yourself-utils",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0"
   },
   "scripts": {
@@ -36,7 +37,10 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "devDependencies": {
-    "diet-yourself-data": "file:../diet-yourself-data"
+    "bcryptjs": "^2.4.3",
+    "diet-yourself-data": "file:../diet-yourself-data",
+    "jsonwebtoken": "^8.5.1",
+    "node-sass": "^4.13.1"
   },
   "keywords": [],
   "author": "",
