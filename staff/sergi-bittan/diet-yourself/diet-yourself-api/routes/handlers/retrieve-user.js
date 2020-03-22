@@ -1,3 +1,4 @@
+
 const { retrieveUser } = require('../../logic')
 const { NotAllowedError } = require('diet-yourself-errors')
 

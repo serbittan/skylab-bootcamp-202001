@@ -1,17 +1,16 @@
-const { registerUser } = require('../../logic')
-const { NotAllowedError, ContentError } = require('diet-yourself-errors')
-
 module.exports = (req, res) => {
-    const { body: { username, email, password, goal, activity, gender, age, height, weight, city, finalWeight  } } = req
+    const { payload: { sub:{ id }}} = req
 
-    try {
-        registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
-            .then(() => res.status(201).end())
+    try{
+        toggleFavDiets(token, id)
+            .then(() => 
+                res.status(200).json()
+            )
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 409 // conflict
+                    status = 401
 
                 const { message } = error
 
@@ -25,8 +24,7 @@ module.exports = (req, res) => {
         let status = 400
 
         if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 // not acceptable
-
+            status = 406 
         const { message } = error
 
         res
@@ -34,5 +32,6 @@ module.exports = (req, res) => {
             .json({
                 error: message
             })
+
     }
 }

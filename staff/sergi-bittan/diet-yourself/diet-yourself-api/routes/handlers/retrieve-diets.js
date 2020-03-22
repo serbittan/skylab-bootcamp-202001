@@ -1,17 +1,20 @@
-const { registerUser } = require('../../logic')
-const { NotAllowedError, ContentError } = require('diet-yourself-errors')
+
+const { retrieveDiets } = require('../../logic')
+const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { body: { username, email, password, goal, activity, gender, age, height, weight, city, finalWeight  } } = req
+    
 
     try {
-        registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
-            .then(() => res.status(201).end())
+        retrieveDiets()
+            .then(diets =>
+                res.status(200).json(diets)
+            )
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 409 // conflict
+                    status = 401 // not authorized
 
                 const { message } = error
 

@@ -1,14 +1,21 @@
-const { publishEvent } = require('../../logic')
-const { ContentError } = require('diet-yourself-errors')
+
+const { updateUserDiet } = require('../../logic')
+const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { params: { id }, body: { title, description, location, date } } = req
-
+    const { param: { userId, dietId } } = req
+debugger
     try {
-        publishEvent(id, title, description, location, new Date(date))
-            .then(() => res.status(201).end())
+        debugger
+        updateUserDiet(userId, dietId)
+            .then(diets =>
+                res.status(200).json(diets)
+            )
             .catch(error => {
                 let status = 400
+
+                if (error instanceof NotAllowedError)
+                    status = 401 // not authorized
 
                 const { message } = error
 

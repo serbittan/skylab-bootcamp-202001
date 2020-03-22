@@ -3,7 +3,11 @@ const {
     registerUser,
     authenticateUser,
     retrieveUser,
-    retrieveLastEvents,
+    updateUser,
+    createDiet,
+    retrieveDiet,
+    retrieveDiets,
+    updateUserDiet
    
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -19,12 +23,17 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-//router.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
+router.patch("/users", jwtVerifierMidWare, jsonBodyParser, updateUser)
 
-router.get('/events', jwtVerifierMidWare, retrieveLastEvents)
+router.patch("/user/:userId/:dietId",jsonBodyParser, updateUserDiet)
 
-//router.get('/users/:id/events/published', jwtVerifierMidWare, retrievePublishedEvents)
+router.post("/user/diet", jsonBodyParser, jwtVerifierMidWare, createDiet)
 
-//router.post('/users/:id/events/:eventId', jwtVerifierMidWare, subscribeEvent)
+router.get("/diet", retrieveDiet)
+
+router.get("/diets", retrieveDiets)
+
+
+
 
 module.exports = router

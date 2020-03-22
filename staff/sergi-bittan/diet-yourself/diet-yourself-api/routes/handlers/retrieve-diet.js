@@ -1,13 +1,20 @@
-const { retrieveLastEvents } = require('../../logic')
+
+const { retrieveDiet } = require('../../logic')
+const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
+    const { query: { id } } = req
+
     try {
-        retrieveLastEvents()
-            .then(events =>
-                res.status(200).json(events)
+        retrieveDiet(id)
+            .then(diet =>
+                res.status(200).json(diet)
             )
             .catch(error => {
                 let status = 400
+
+                if (error instanceof NotAllowedError)
+                    status = 401 // not authorized
 
                 const { message } = error
 
@@ -19,6 +26,9 @@ module.exports = (req, res) => {
             })
     } catch (error) {
         let status = 400
+
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
 
         const { message } = error
 
