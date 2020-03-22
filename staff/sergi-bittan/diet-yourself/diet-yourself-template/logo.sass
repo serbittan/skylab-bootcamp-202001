@@ -1,9 +1,9 @@
-@import config
+@import ./config
 
 body
     margin: 0
     box-sizing: border-box
-    background-color: #ebb2a5
+    background-color: $body-color
     width: 100%
 
 .contenedor
@@ -37,9 +37,9 @@ body
         height: 10vh
         font-size: 130%
         border-radius: 0.8rem
-        background-color: #ea3759
+        background-color: $button-color
         box-shadow: 0 0 18px #952a02
-        color: snow
+        color: black
         animation: changecolor 10s infinite
         &:hover
             filter: brightness(1.2)
@@ -59,7 +59,7 @@ body
     25%  
         background: #8cc73f
     50%  
-        background: #f3d333
+        background: #e6d72a
     75% 
         background: #f78e56
     100%  
