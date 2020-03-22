@@ -1,0 +1,30 @@
+{
+  "name": "diet-yourself-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "diet-yourself-data": "file:../diet-yourself-data",
+    "diet-yourself-errors": "file:../diet-yourself-errors",
+    "diet-yourself-utils": "file:../diet-yourself-utils",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "uuid": "^7.0.1",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.0",
+    "nodemon": "^2.0.2"
+  }
+}
