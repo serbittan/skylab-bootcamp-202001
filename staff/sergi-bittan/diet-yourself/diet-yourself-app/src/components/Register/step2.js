@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import './step2.sass'
 
 const Step2 = ({ onSaveData, data }) => {
     console.log(data);
@@ -6,11 +7,11 @@ const Step2 = ({ onSaveData, data }) => {
 
     return (
         <div className="activity">
-            <h4>Qué tan activo eres?</h4>
-            <button type="button" className={`activity__mmm ${activityLevel === 'sedentary' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'sedentary' })}>No Muy Activo<br /><h5>pasas la mayor parte del día sentado. (ejemplo: cajero/trabajas en oficina..)<br />No practicas deporte</h5></button>
-            <button type="button" className={`activity__mmm ${activityLevel === 'ligeramente_activo' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'ligeramente_activo' })}>Ligeramente Activo<br /><h5>pasas buena parte del día de pie. (ejemplo: profesor/vendedor)<br />Entrenas 2 dias a la semana</h5></button>
-            <button type="button" className={`activity__mmm ${activityLevel === 'activo' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'activo' })}>Activo<br /><h5>pasas buena parte del día haciendo alguna actividad física. (ejemplo: camarero/cartero)<br />Entrenas 3-4 días a la semana</h5></button>
-            <button type="button" className={`activity__mmm ${activityLevel === 'muy_activo' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'muy_activo' })}>Muy Activo<br /><h5>pasas la mayor parte del día haciendo actividad física intensa. (ejemplo: mensajero ciclista/carpintero)<br />Entrenas 5 o más días a la semana</h5></button>
+            <h4>How active are you?</h4>
+            <button type="button" className={`activity__mmm ${activityLevel === 'sedentary' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'sedentary' })}>Sedentary<br /><h5><br />Do not do sport</h5></button>
+            <button type="button" className={`activity__mmm ${activityLevel === 'mild_activity' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'mild_activity' })}>Mild Activity<br /><h5><br />You train 2 days a week</h5></button>
+            <button type="button" className={`activity__mmm ${activityLevel === 'moderate_activity' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'moderate_activity' })}>Moderate Activity<br /><h5><br />You train 3-4 days a week</h5></button>
+            <button type="button" className={`activity__mmm ${activityLevel === 'heavy_activity' ? 'activity__selected' : ''}`} onClick={() => onSaveData('step2', { activityLevel: 'heavy_activity' })}>Heavy Activity<br /><h5><br />You train 5 o more days a week</h5></button>
         </div>
     );
 }

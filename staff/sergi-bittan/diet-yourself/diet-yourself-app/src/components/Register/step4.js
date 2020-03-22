@@ -1,83 +1,33 @@
 import React from 'react'
-import Feedback from './Feedback'
-import './Register.sass'
+//import Feedback from './Feedback'
+//import './step4.sass'
 
-export default function ({ onRegister, error }) {
+const Step4 = ({ onSaveData, data }) => {
+    console.log(data)
+    const { height, weight, finalWeight } = data
     return (
-        <div>
-            <form className="register" onSubmit={event => {
-                event.preventDefault()
+        
+    <form class="height" onSubmit={event => {
+        event.preventDefault()
 
-                const email = event.target.email.value
-                const password = event.target.password.value
-                const userName = event.targer.username.value
+        const height = event.target.height.value
+        const weight = event.target.weight.value
+        const finalWeight = event.target.finalWeight.value
 
-                onRegister(email, password, userName)
-            }}>
-                <input type="text" class="register__mail" name="mail" placeholder="exemple@mail.com" />
-                <input type="text" class="register__password" name="password" placeholder="password" />
-                <input type="text" class="register__username" name="username" placeholder="username" />
-                <button class="register__acces">Register</button>
-
-            </form>
-            {/* {error && <Feedback message={error} level="error" />} */}
-        </div>
-    );
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
+        //onStep5(height, weight, finalWeight) //???
+    }}>
+        <h5>How Tall are you?</h5>
+        <input type="text" class="height__height" name="height" placeholder="cms"/>
+        <h5>Current Weight</h5>
+        <input type="text" class="height__weight" name="weight" placeholder="kg"/>
+        <h5>Desired Weight</h5>
+        <input type="text" class="height__desire" name="weight" placeholder="kg"/>
+    </form>
+        
+    )
 }
 
+export default Step4
 
 
 
@@ -128,5 +78,53 @@ export default function ({ onRegister, error }) {
 
 
 
-    </div>
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -23,4 +23,4 @@ export default function ({ onRegister, error }) {
             {/* {error && <Feedback message={error} level="error" />} */}
         </div>
     );
-};}
+};
