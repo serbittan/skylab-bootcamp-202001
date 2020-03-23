@@ -1,6 +1,6 @@
 import React from 'react'
 // import Feedback from './Feedback'
-import './Register.sass'
+
 
 export default function ({ onRegister, error }) {
     return (
