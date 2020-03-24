@@ -2,12 +2,14 @@ import App from './App'
 import Register from './Register'
 import Login from './Login'
 import Feedback from './Feedback'
-import Header from './Header'
+import Landing from './Landing'
+import Page from './Page'
 
 export {
     App,
     Register,
     Login,
     Feedback,
-    Header
+    Landing,
+    Page
 }
