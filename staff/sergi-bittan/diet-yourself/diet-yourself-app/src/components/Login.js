@@ -1,11 +1,11 @@
-import React from 'react'
-// import Feedback from './Feedback'
-// import './Login.sass'
+import React, { useEffect, useContext } from 'react'
+import Feedback from './Feedback'
+import './Login.sass'
 
 
 export default ({ onLogin, error }) => {
     return <div>
-        <form onSubmit={event => {
+        <form className="login" onSubmit={event => {
             event.preventDefault()
 
             const email = event.target.email.value
@@ -14,11 +14,11 @@ export default ({ onLogin, error }) => {
             onLogin(email, password)
         }}>
 
-            <input type="text" class="login__mail" name="mail" placeholder="ejemplo@mail.com" />
-            <input type="text" class="login__password" name="password" placeholder="password" />
-            <button class="login__acces">Login</button>
+            <input type="text" className="login__mail" name="email" placeholder="ejemplo@mail.com" autoFocus="autofocus" />
+            <input type="password" className="login__password" name="password" placeholder="password" />
+            <button className="login__acces">Login</button>
 
         </form>
-        {/* {error && <Feedback message={error} level="error" />} */}
+        {error && <Feedback message={error} level="error" />} 
     </div>
 }
