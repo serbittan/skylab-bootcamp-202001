@@ -9,18 +9,16 @@ module.exports = (id) => {
     return (async () => {debugger
 
         const user = await User.findById(id)
-
+        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-        debugger
-        
-        const _diet = await User.findOne({_id: id}, {diet: 1})
-
         
 
-        if (!_diet) throw new NotFoundError(`user does not have any diet`)
+        const diet = user.diet[0]
 
-        const { method, foods, points } = _diet
+        if(!diet) throw new NotFoundError(`there are no diets`)
 
+        const { method, foods, points } = diet
+        
         return { method, foods, points }
 
     })()

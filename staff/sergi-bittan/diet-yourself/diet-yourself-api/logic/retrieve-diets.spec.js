@@ -23,7 +23,7 @@ describe('retrieve diets', () => {
 
 
     //diet
-    debugger
+   
 
     let method, method2, idDiet, diet, diet2
     let _foods = []

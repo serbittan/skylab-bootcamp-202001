@@ -25,7 +25,7 @@ describe.only('retrieve user diet', () => {
     //diet
     
     let method, idDiet
-    let foods = []
+    let _foods = []
     let methodIndex = Math.floor(Math.random() * 4)
     
     const proteinFoods = foods.filter(food => food.domain === 'protein')
@@ -87,7 +87,9 @@ describe.only('retrieve user diet', () => {
         idDiet = diet.id
         debugger
 
-        user.diet = diet
+        user.diet = []
+
+        user.diet.push(diet)
     
 
         await user.save()
@@ -98,22 +100,25 @@ describe.only('retrieve user diet', () => {
     it('should succeed retrieving user diet', async () => {debugger
         const diet = await retrieveUserDiet(id)
         expect(diet).to.exist
+        expect(diet.method).to.equal(method)
+        expect(diet.foods).to.be.instanceof(Array)
+        expect(diet.points).to.equal(points)
 
     })
 
-    // it('should fail on wrong user id', async () => {
-    //     let wrongId = '293898iujuyh'
+    it('should fail on wrong user id', async () => {
+        let wrongId = '293898iujuyh'
 
-    //     try {
-    //         await retrieveUserDiet(wrongId)
+        try {
+            await retrieveUserDiet(wrongId)
 
-    //         throw Error('should not reach this point')
-    //     } catch (error) {
-    //         expect(error).to.exist
-    //         expect(error).to.be.an.instanceOf(NotFoundError)
-    //         expect(error.message).to.equal(`user with id ${wrongId} not found`)
-    //     }
-    // })
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with id ${wrongId} not found`)
+        }
+    })
 
    after(() => User.deleteMany()
         .then(() => mongoose.disconnect()))
