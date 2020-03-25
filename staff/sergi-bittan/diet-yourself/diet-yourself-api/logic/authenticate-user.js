@@ -20,6 +20,7 @@ module.exports = (email, password) => {
     validate.email(email)
     validate.string(password, 'password')
 
+    
     return User.findOne({ email })
         .then(user => {
             if (!user) throw new NotAllowedError(`wrong credentials`)

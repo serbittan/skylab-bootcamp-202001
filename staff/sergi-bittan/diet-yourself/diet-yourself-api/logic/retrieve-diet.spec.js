@@ -110,7 +110,7 @@ describe('retrieve unique diet', () => {
 
     })
 
-    it('should fail on wrong user id', async () => {
+    it('should fail on wrong diet id', async () => {
         let wrongIdDiet = '293898iujuyh'
 
         try {
