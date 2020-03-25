@@ -14,13 +14,17 @@ module.exports = ( id ) => {
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
         
         const userDiets = []
-        const favDiets = user.favDiets.toObject()
+
+        const favDiets = user.favorites.toObject()
 
         favDiets.forEach(diet =>{
+
             userDiets.push({
                 method: diet.method,
                 foods: diet.foods,
+                points: diet.points
             })
+
         })
 
         return userDiets

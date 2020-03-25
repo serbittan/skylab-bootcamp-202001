@@ -4,14 +4,14 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Diet } } = require('diet-yourself-data')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveDiet = require('./retrieve-diet')
+const retrieveDiets = require('./retrieve-diets')
 const bcrypt = require('bcryptjs')
 const { NotFoundError} = require("diet-yourself-errors")
 
 const { constants: { methods, foods } } = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
 
-describe.only('retrieve unique diet', () => {
+describe.only('retrieve diets', () => {
 
     before(() =>
     mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -19,12 +19,17 @@ describe.only('retrieve unique diet', () => {
     )
 
     //user
-    let username, email, password, age, height, weight, city, finalWeight, points, id, goal, activity, gender, goalIndex, activityIndex, genderIndex
-    
-    
+    let username, email, password, age, height, weight, city, finalWeight, points, id
+    let goal = ["gain muscle mass", "maintain weight", "lose weight"]
+    let goalIndex = Math.floor(Math.random() * 3)
+    let activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
+    let activityIndex = Math.floor(Math.random() * 4)
+    let gender = ["male", "female"]
+    let genderIndex = Math.floor(Math.random() * 2)
+
     //diet
-    
-    let method, _foods, idDiet, diet, diet2
+
+    let method, _foods, idDiet, idDiet2
     let methodIndex = Math.floor(Math.random() * 4)
     
     const proteinFoods = foods.filter(food => food.domain === 'protein')
@@ -39,16 +44,8 @@ describe.only('retrieve unique diet', () => {
     let fruitsIndex = Math.floor(Math.random() * fruitsFoods.length)
     let vegetablesIndex = Math.floor(Math.random() * vegetables.length)
     
-    
-    beforeEach(async () => {
 
-        goal = ["gain muscle mass", "maintain weight", "lose weight"]
-    activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
-    gender = ["male", "female"]
-        
-        goalIndex = Math.floor(Math.random() * 3)
-        activityIndex = Math.floor(Math.random() * 4)
-        genderIndex = Math.floor(Math.random() * 2)
+    beforeEach(async () => {
 
         //data to create user
         username = `username-${random()}`
@@ -81,13 +78,14 @@ describe.only('retrieve unique diet', () => {
 
         //create diet and extract id
 
-        diet = await new Diet({ method, _foods, points })
+
+        const diet = await new Diet({ method, _foods, points })
 
         idDiet = diet.id
 
         user.favorites.push(diet)
 
-        diet2 = await new Diet({ method, foods, points })
+        const diet2 = await new Diet({ method, foods, points })
 
         idDiet2 = diet2.id
 
@@ -99,14 +97,9 @@ describe.only('retrieve unique diet', () => {
     })
 
 
-    it('should succeed retrieving user diet', async () => {
-        const { method, foods, points } = await retrieveDiet(id, idDiet)
-
-        
-        expect(method).to.exist
-        expect(method).to.equal(diet.method)
-        expect(points).to.equal(diet.points)
-        
+    it('should succeed retrieving user fav diets', async () => {
+        const diets = await retrieveDiets(id)
+        expect(diets).to.exist
 
     })
 
@@ -114,13 +107,13 @@ describe.only('retrieve unique diet', () => {
         let wrongIdDiet = '293898iujuyh'
 
         try {
-            await retrieveDiet(id, wrongIdDiet)
+            await retrieveDiet(wrongIdDiet)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`diet with id ${wrongIdDiet} not found`)
+            expect(error.message).to.equal(`user with id ${wrongId} not found`)
         }
     })
 

@@ -11,8 +11,9 @@ module.exports = (id) => {
         const user = await User.findById(id)
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-        const diet = user.diet.toObject()
+        debugger
+        
+        const diet = user.diet._doc[0]
 
         if (!diet) throw new NotFoundError(`user does not have any diet`)
 
