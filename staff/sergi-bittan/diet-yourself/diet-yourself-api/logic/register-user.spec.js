@@ -3,6 +3,7 @@ require('dotenv').config()
 const { expect } = require('chai')
 const { random, floor } = Math
 const { mongoose, models: { User } } = require('diet-yourself-data')
+const { NotAllowedError } = require('diet-yourself-errors')
 const registerUser = require('./register-user')
 const bcrypt = require('bcryptjs')
 
@@ -22,7 +23,7 @@ describe('registerUser', () => {
             .then(() => User.deleteMany())
     )
 
-    beforeEach(() => {
+    beforeEach(async () => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
@@ -30,16 +31,22 @@ describe('registerUser', () => {
         goal = goal[goalIndex]
         activity = activity[activityIndex]
         gender = gender[genderIndex]
-        age = (floor(random() * 65) + 12)
-        height = (floor(random() * 200) + 120)
-        weight = (floor(random() * 200) + 30)
+        age = (Math.floor(random() * 65) + 12)
+        height = (Math.floor(random() * 200) + 120)
+        weight = (Math.floor(random() * 200) + 30)
         city = `city-${random()}`
-        finalWeight = (floor(random() * 200) + 30)
-        points = floor(random() * 100)
+        finalWeight = (Math.floor(random() * 200) + 30)
+        points = Math.floor(random() * 100)
+
+        // const user = await User.create({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points })
+
+        // id = user.id
+        // _email = user.email
+        // await user.save()
     })
 
-    it('should succeed on correct user data', () =>
-        registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points)
+    it('should succeed on correct user data', async () => {debugger
+        await registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
             .then(result => {
                 expect(result).not.to.exist
                 expect(result).to.be.undefined
@@ -60,13 +67,26 @@ describe('registerUser', () => {
                 expect(user.weight).to.equal(weight)
                 expect(user.city).to.equal(city)
                 expect(user.finalWeight).to.equal(finalWeight)
-                expect(user.points).to.equal(points)
+                // expect(user.points).to.equal(points)
                 //expect(user.created).to.be.instanceOf(Date)
 
                 return bcrypt.compare(password, user.password)
             })
             .then(validPassword => expect(validPassword).to.be.true)
-    )
+        })
+
+    // it('should fail on existing username', async () => {
+        
+    //     try {
+    //         await registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
+
+    //         throw Error('should not reach this point')
+    //     } catch (error) {
+    //         expect(error).to.exist
+    //         expect(error.toString()).to.be.an.instanceOf(NotAllowedError)
+    //         expect(error.message).to.equal(`user with email ${email} already exists`)
+    //     }
+    // })
 
     // TODO unhappy paths and other happies if exist
 
