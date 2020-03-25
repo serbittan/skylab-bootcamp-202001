@@ -1,21 +1,20 @@
-
-const { retrieveDiets } = require('../../logic')
+const { removeFavDiet } = require('../../logic')
 const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    
-    const { payload: { sub: id } } = req
 
-    try {
-        retrieveDiets(id)
-            .then(diets =>
-                res.status(200).json(diets)
+    const { params: { idDiet }, payload: { sub:{ id } } } = req
+
+    try{
+        removeFavDiet(id, idDiet)
+            .then(() => 
+                res.status(200).json()
             )
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 401 // not authorized
+                    status = 401
 
                 const { message } = error
 
@@ -29,8 +28,7 @@ module.exports = (req, res) => {
         let status = 400
 
         if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 // not acceptable
-
+            status = 406 
         const { message } = error
 
         res
@@ -38,5 +36,6 @@ module.exports = (req, res) => {
             .json({
                 error: message
             })
+
     }
 }

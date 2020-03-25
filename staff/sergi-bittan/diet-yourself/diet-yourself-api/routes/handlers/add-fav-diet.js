@@ -1,16 +1,17 @@
-module.exports = (req, res) => {
-    const { payload: { sub:{ id }}} = req
+const { addFavDiet } = require('../../logic')
+const { NotAllowedError, ContentError } = require('diet-yourself-errors')
 
-    try{
-        toggleFavDiets(token, id)
-            .then(() => 
-                res.status(200).json()
-            )
+module.exports = (req, res) => {
+    const { payload: { sub: id } } = req
+
+    try {
+        addFavDiet(id)
+            .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 401
+                    status = 409 // conflict
 
                 const { message } = error
 
@@ -24,7 +25,8 @@ module.exports = (req, res) => {
         let status = 400
 
         if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 
+            status = 406 // not acceptable
+
         const { message } = error
 
         res
@@ -32,6 +34,5 @@ module.exports = (req, res) => {
             .json({
                 error: message
             })
-
     }
 }

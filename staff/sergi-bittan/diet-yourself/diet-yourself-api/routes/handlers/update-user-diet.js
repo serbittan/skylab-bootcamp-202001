@@ -3,11 +3,12 @@ const { updateUserDiet } = require('../../logic')
 const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { param: { userId, dietId } } = req
-debugger
+
+    const { params: { userId, idDiet } } = req
+
     try {
         debugger
-        updateUserDiet(userId, dietId)
+        updateUserDiet(userId, idDiet)
             .then(diets =>
                 res.status(200).json(diets)
             )
