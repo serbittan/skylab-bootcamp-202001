@@ -3,10 +3,11 @@ const { retrieveDiet } = require('../../logic')
 const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
-    const { query: { id } } = req
+    
+    const { params: { idDiet }, payload: { sub: id } } = req
 
     try {
-        retrieveDiet(id)
+        retrieveDiet(id, idDiet)
             .then(diet =>
                 res.status(200).json(diet)
             )

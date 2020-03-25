@@ -7,5 +7,7 @@ module.exports = {
     createDiet: require("./create-diet"),
     retrieveDiet: require("./retrieve-diet"),
     retrieveDiets: require("./retrieve-diets"),
-    updateUserDiet: require("./update-user-diet")
+    updateUserDiet: require("./update-user-diet"),
+    addFavDiet: require("./add-fav-diet"),
+    removeFavDiet: require("./remove-fav-diet")
 }
