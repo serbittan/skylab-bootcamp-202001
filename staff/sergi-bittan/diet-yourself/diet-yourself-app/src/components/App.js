@@ -38,7 +38,7 @@ export default withRouter(function ({ history }) {
             }
           })()
         } else {
-          history.push('/login')
+          history.push('/register')
         }
       }, [])
 
@@ -73,7 +73,7 @@ export default withRouter(function ({ history }) {
     return (
         <div className="App">
             <Switch>
-                <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Redirect to="/login"  />} />
+                <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Redirect to="/register"  />} />
                 <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register  /*error={error}*/ />} />
                 <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} error={'error-test'} />} />
                 <Route path="/landing" render={() => isLoggedIn() ? <Landing onMethod={handleMethod} /> : <Redirect to="/login" /*error={'error-test'}*/ />} /> 
