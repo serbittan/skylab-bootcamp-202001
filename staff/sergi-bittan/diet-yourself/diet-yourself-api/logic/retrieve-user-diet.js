@@ -6,20 +6,22 @@ module.exports = (id) => {
     
     validate.string(id, "id")
 
-    return (async () => {
+    return (async () => {debugger
 
         const user = await User.findById(id)
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
         debugger
         
-        const diet = user.diet._doc[0]
+        const _diet = await User.findOne({_id: id}, {diet: 1})
 
-        if (!diet) throw new NotFoundError(`user does not have any diet`)
+        
 
-        const { method, foods } = diet
+        if (!_diet) throw new NotFoundError(`user does not have any diet`)
 
-        return { method, foods }
+        const { method, foods, points } = _diet
+
+        return { method, foods, points }
 
     })()
 

@@ -6,46 +6,46 @@ const { expect } = require('chai')
 const { random } = Math
 const retrieveDiet = require('./retrieve-diet')
 const bcrypt = require('bcryptjs')
-const { NotFoundError} = require("diet-yourself-errors")
+const { NotFoundError } = require("diet-yourself-errors")
 
 const { constants: { methods, foods } } = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
 
-describe.only('retrieve unique diet', () => {
+describe('retrieve unique diet', () => {
 
     before(() =>
-    mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(() => User.deleteMany)
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => User.deleteMany)
     )
 
     //user
     let username, email, password, age, height, weight, city, finalWeight, points, id, goal, activity, gender, goalIndex, activityIndex, genderIndex
-    
-    
+
+
     //diet
-    
+
     let method, _foods, idDiet, diet, diet2
     let methodIndex = Math.floor(Math.random() * 4)
-    
+
     const proteinFoods = foods.filter(food => food.domain === 'protein')
     const carbsFoods = foods.filter(food => food.domain === 'carbs')
     const fatFoods = foods.filter(food => food.domain === 'fat')
     const fruitsFoods = foods.filter(food => food.domain === "fruit")
     const vegetables = foods.filter(food => food.domain === "vegetables")
-    
+
     let proteinIndex = Math.floor(Math.random() * proteinFoods.length)
     let carbsIndex = Math.floor(Math.random() * carbsFoods.length)
     let fatIndex = Math.floor(Math.random() * fatFoods.length)
     let fruitsIndex = Math.floor(Math.random() * fruitsFoods.length)
     let vegetablesIndex = Math.floor(Math.random() * vegetables.length)
-    
-    
+
+
     beforeEach(async () => {
 
         goal = ["gain muscle mass", "maintain weight", "lose weight"]
-    activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
-    gender = ["male", "female"]
-        
+        activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
+        gender = ["male", "female"]
+
         goalIndex = Math.floor(Math.random() * 3)
         activityIndex = Math.floor(Math.random() * 4)
         genderIndex = Math.floor(Math.random() * 2)
@@ -99,14 +99,14 @@ describe.only('retrieve unique diet', () => {
     })
 
 
-    it('should succeed retrieving user diet', async () => {
+    it('should succeed retrieving user diet', async () => {debugger
         const { method, foods, points } = await retrieveDiet(id, idDiet)
 
-        
+
         expect(method).to.exist
         expect(method).to.equal(diet.method)
         expect(points).to.equal(diet.points)
-        
+
 
     })
 
@@ -124,7 +124,7 @@ describe.only('retrieve unique diet', () => {
         }
     })
 
-   after(() => User.deleteMany()
+    after(() => User.deleteMany()
         .then(() => mongoose.disconnect()))
 
 })   

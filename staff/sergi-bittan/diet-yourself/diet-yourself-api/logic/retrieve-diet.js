@@ -10,7 +10,7 @@ module.exports =  (id, idDiet)=> {
 
     validate.string(idDiet, "idDiet")
 
-    return (async () => {
+    return (async () => {debugger
 
         const user = await User.findById(id)
         

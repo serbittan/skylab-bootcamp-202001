@@ -24,7 +24,8 @@ describe.only('retrieve user diet', () => {
     
     //diet
     
-    let method, _foods, idDiet
+    let method, idDiet
+    let foods = []
     let methodIndex = Math.floor(Math.random() * 4)
     
     const proteinFoods = foods.filter(food => food.domain === 'protein')
@@ -40,7 +41,7 @@ describe.only('retrieve user diet', () => {
     let vegetablesIndex = Math.floor(Math.random() * vegetables.length)
     
     
-    beforeEach(async () => {debugger
+    beforeEach(async () => {
 
         goal = ["gain muscle mass", "maintain weight", "lose weight"]
     activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
@@ -81,36 +82,38 @@ describe.only('retrieve user diet', () => {
     
         //create diet and extract id
 
-        const diet = await new Diet({ method, _foods, points })
+        const diet = await new Diet({ method, foods:_foods, points })
 
         idDiet = diet.id
+        debugger
 
-        user.diet = {diet}
+        user.diet = diet
+    
 
         await user.save()
 
     })
 
 
-    it('should succeed retrieving user diet', async () => {
+    it('should succeed retrieving user diet', async () => {debugger
         const diet = await retrieveUserDiet(id)
         expect(diet).to.exist
 
     })
 
-    it('should fail on wrong user id', async () => {
-        let wrongId = '293898iujuyh'
+    // it('should fail on wrong user id', async () => {
+    //     let wrongId = '293898iujuyh'
 
-        try {
-            await retrieveUserDiet(wrongId)
+    //     try {
+    //         await retrieveUserDiet(wrongId)
 
-            throw Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${wrongId} not found`)
-        }
-    })
+    //         throw Error('should not reach this point')
+    //     } catch (error) {
+    //         expect(error).to.exist
+    //         expect(error).to.be.an.instanceOf(NotFoundError)
+    //         expect(error.message).to.equal(`user with id ${wrongId} not found`)
+    //     }
+    // })
 
    after(() => User.deleteMany()
         .then(() => mongoose.disconnect()))
