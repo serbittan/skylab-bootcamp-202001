@@ -10,7 +10,8 @@ module.exports = new Schema({
     },
     foods: [{
         type: food,
-        required: true
+        required: true,
+        default: []
     }],
     points: {
         type: Number,
