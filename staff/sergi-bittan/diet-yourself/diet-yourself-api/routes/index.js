@@ -29,7 +29,7 @@ router.patch("/user/:userId/:dietId",jsonBodyParser, updateUserDiet)
 
 router.post("/user/diet", jsonBodyParser, jwtVerifierMidWare, createDiet)
 
-router.get("/diet", retrieveDiet)
+router.get("/diet", jwtVerifierMidWare,  retrieveDiet)
 
 router.get("/diets", retrieveDiets)
 

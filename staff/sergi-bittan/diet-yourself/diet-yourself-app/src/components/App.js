@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import { Login, Register, Landing, Page } from '../components'
-import { register, login, isLoggedIn } from '../logic'
+import { Login, Register, Landing, Page, ItemFood, ResultsFood, Header } from '../components'
+import { register, login, isLoggedIn, addMethod, retrieveUser, retrieveDiet } from '../logic'
 import { Context } from './ContextProvider'
 import './App.sass'
 
@@ -10,16 +10,34 @@ import './App.sass'
 export default withRouter(function ({ history }) {
     //const [state, setState] = useState()
     const [state, setState] = useContext(Context)
+    const [foods, setFoods] = useState()
+    const [user, setUser] = useState([])
 
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     if (isLoggedIn()) {
+    //       setState({ page: 'landing' })
+    
+    //       history.push('/landing')
+    //     } else {
+    //       setState({ page: 'login' })
+    
+    //       history.push('/login')
+    //     }
+    //   }, [])
+
+      useEffect(() => {
         if (isLoggedIn()) {
-          setState({ page: 'landing' })
-    
-          history.push('/landing')
+          (async () => {
+            try {
+              const user = await retrieveUser()
+              setUser(user)
+            } catch (error) {
+              // logout()
+              history.push('/login')
+            }
+          })()
         } else {
-          setState({ page: 'login' })
-    
           history.push('/login')
         }
       }, [])
@@ -28,6 +46,8 @@ export default withRouter(function ({ history }) {
         try {
             await login(email, password)
 
+            let user = await retrieveUser()
+            setUser(user)
             history.push('./landing')
 
         } catch ({message}) {
@@ -35,7 +55,18 @@ export default withRouter(function ({ history }) {
         }
     }
 
-    async function handleCreateDiet ()
+    async function handleMethod (method) {
+        try{
+            await addMethod(method)
+
+            const foods = retrieveDiet()
+            setFoods(foods)
+            history.push('/diet')
+            
+        } catch ({message}) {
+            setState({ error: message })
+        }
+    }
 
     //console.log(isLoggedIn());
 
@@ -43,10 +74,10 @@ export default withRouter(function ({ history }) {
         <div className="App">
             <Switch>
                 <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Redirect to="/login"  />} />
-                <Route  path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} error={'error-test'} />} />
-                <Route  path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register  error={error} />} />
-                <Route  path="/landing" render={() => isLoggedIn() ? <Landing onSaveDiet={handleCreateDiet} method={method} /> : <Redirect to="/login" error={'error-test'} />} /> 
-                <Route path="/search" render={()=> <h1>SEARCH</h1> } />               
+                <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register  /*error={error}*/ />} />
+                <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} error={'error-test'} />} />
+                <Route path="/landing" render={() => isLoggedIn() ? <Landing onMethod={handleMethod} /> : <Redirect to="/login" /*error={'error-test'}*/ />} /> 
+                <Route path="/diet" render={()=> isLoggedIn() ? <ResultsFood foods={foods} user={user}/> : <Redirect to="/login"  />} />               
                 <p>Route not found</p>
             </Switch>
         </div>

@@ -4,6 +4,9 @@ import Login from './Login'
 import Feedback from './Feedback'
 import Landing from './Landing'
 import Page from './Page'
+import ItemFood from './Item-food'
+import ResultsFood from './Results-food'
+import Header from './Header'
 
 export {
     App,
@@ -11,5 +14,8 @@ export {
     Login,
     Feedback,
     Landing,
-    Page
+    Page,
+    ItemFood,
+    ResultsFood,
+    Header
 }
