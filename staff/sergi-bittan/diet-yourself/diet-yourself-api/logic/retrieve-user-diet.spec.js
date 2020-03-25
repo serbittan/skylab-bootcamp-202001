@@ -11,7 +11,7 @@ const { NotFoundError} = require("diet-yourself-errors")
 const { constants: { methods, foods } } = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
 
-describe.only('retrieve user diet', () => {
+describe('retrieve user diet', () => {
 
     before(() =>
     mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })

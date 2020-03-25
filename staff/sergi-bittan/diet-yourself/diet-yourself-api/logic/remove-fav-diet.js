@@ -16,25 +16,31 @@ const { NotFoundError } = require("diet-yourself-errors")
  * @throws {}...
  */
 
-module.exports = (token, id) => {
-    validate.string(id, "id")
-    validate.jwt(token)
+module.exports = (id, idDiet) => {
 
-    return User.findById({id})
+    validate.string(id, "id")
+    validate.string(idDiet, "idDiet")
+
+    return User.findById(id)
+
+        //quitar dieta de los favs
+
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
-                const { favorites } = user
-          if (favorites.indexOf(id) !== -1){
-              favorites.splice(favorites.indexOf(id), 1)
-          } else {
-              const diet = new Diet({ method, proportions, points })
 
-              user.favorite.push(diet)
-          }
+            const { favorites } = user
 
-          user.save()
+            const index = favorites.findIndex(item => item.id === idDiet)
 
+            if (index !== -1) {
+
+                favorites.splice(index, 1)
+
+            }
+            else throw new NotFoundError(`diet with id ${idDiet} does not exist`)
+
+            user.save()
 
         })
-        .then(() => {})
+        .then(() => { })
 }

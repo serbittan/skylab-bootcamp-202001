@@ -6,8 +6,11 @@ const {
     updateUser,
     createDiet,
     retrieveDiet,
+    retrieveUserDiet,
     retrieveDiets,
-    updateUserDiet
+    updateUserDiet,
+    addFavDiet,
+    removeFavDiet
    
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -25,13 +28,27 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch("/users", jwtVerifierMidWare, jsonBodyParser, updateUser)
 
-router.patch("/user/:userId/:dietId",jsonBodyParser, updateUserDiet)
+
+router.patch("/user/:userId/:idDiet",jsonBodyParser, updateUserDiet)
 
 router.post("/user/diet", jsonBodyParser, jwtVerifierMidWare, createDiet)
 
-router.get("/diet", jwtVerifierMidWare,  retrieveDiet)
 
-router.get("/diets", retrieveDiets)
+
+//retrieve de la dieta con el idDiet
+router.get("/user/diet/:idDiet", jwtVerifierMidWare,  retrieveDiet)
+
+//retrieve de la dieta actual del user
+
+router.get("/user/diet", jwtVerifierMidWare,  retrieveUserDiet)
+
+//retrieve de las dietas de favs
+
+router.get("user/diets", retrieveDiets)
+
+router.patch("user/favs", jwtVerifierMidWare, addFavDiet)
+
+router.patch("user/diet/:idDiet/delete", jwtVerifierMidWare, removeFavDiet )
 
 
 
