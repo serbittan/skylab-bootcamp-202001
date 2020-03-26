@@ -45,6 +45,6 @@ module.exports = new Schema({
     city: { type: String },
     finalWeight: { type: Number },
     points: { type: Number },
-    diet: [diet],
+    diet: diet,
     favorites: [diet]
 })

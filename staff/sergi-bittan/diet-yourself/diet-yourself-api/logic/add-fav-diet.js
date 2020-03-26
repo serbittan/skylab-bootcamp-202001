@@ -13,7 +13,7 @@ module.exports = (id) => {
 
         if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-        const diet = user.diet[0]
+        const diet = user.diet
         
         user.favorites.push(diet)
 
