@@ -17,11 +17,17 @@ module.exports =  (id, idDiet)=> {
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
         
 
-        const diets = await User.findOne({_id:id }, {favorites: { $elemMatch: { _id: idDiet } }})
+        // const diets = await User.findOne({_id:id }, {favorites: { $elemMatch: { _id: idDiet } }})
 
-        const diet = diets.favorites[0]
+        // const diet = diets.favorites[0]
         
-        if(!diet) throw new NotFoundError(`diet with id ${idDiet} not found`)
+        // if(!diet) throw new NotFoundError(`diet with id ${idDiet} not found`)
+
+        const index = user.favorites.findIndex(diet => diet._id.toString() === idDiet) //en mongo es ObjectId
+
+        if(index === -1) throw new NotFoundError(`diet with id ${idDiet} not found`)
+
+        const diet = user.favorites[index]
 
         const { method, foods, points } = diet
 

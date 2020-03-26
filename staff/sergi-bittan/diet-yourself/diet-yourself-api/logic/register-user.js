@@ -19,15 +19,15 @@ module.exports = (username, email, password, goal, activity, gender, age, height
     
    
     return User.findOne({ email })
-        .then(user => {
-            if (user) throw new NotAllowedError(`user with email ${email} already exists`)
+    .then(user => {
+        if (user) throw new NotAllowedError(`user with email ${email} already exists`)
 
-            return bcrypt.hash(password, 10)
-        })
-        .then(password => {
-            user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
+        return bcrypt.hash(password, 10)
+    })
+    .then(password => {
+        user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
 
-            return user.save()
-        })
-        .then(() => { })
+        return user.save()
+    })
+    .then(() => { })
 }

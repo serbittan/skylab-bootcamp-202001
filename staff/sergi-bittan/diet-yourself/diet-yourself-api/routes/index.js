@@ -12,6 +12,7 @@ const {
     removeFavDiet
    
 } = require('./handlers')
+
 const { jwtVerifierMidWare } = require('../mid-wares')
 const bodyParser = require('body-parser')
 
@@ -40,11 +41,11 @@ router.get("/user/diet", jwtVerifierMidWare,  retrieveUserDiet)
 
 //retrieve de las dietas de favs
 
-router.get("user/diets", retrieveDiets)
+router.get("/user/diets", retrieveDiets)
 
-router.patch("user/favs", jwtVerifierMidWare, addFavDiet)
+router.patch("/user/favs", jwtVerifierMidWare, addFavDiet)
 
-router.patch("user/diet/:idDiet/delete", jwtVerifierMidWare, removeFavDiet )
+router.patch("/user/diet/:idDiet/delete", jwtVerifierMidWare, removeFavDiet )
 
 
 
