@@ -99,7 +99,11 @@ export default withRouter(function Register ({ history }) {
 
         
         console.log(registerData);
-    };
+    }
+
+    const handleGoToLogin = () => {
+        history.push('./login')
+    }
     
     async function handleRegister() {
 
@@ -128,13 +132,13 @@ export default withRouter(function Register ({ history }) {
 
     return (
         <Fragment>
-            <header class="header-activity">
+            <header className="header-activity">
                 <h3>Activity Level</h3>
-                {step > 0 && <button onClick={handleGoPrevStep}>Prev step <i class="fas fa-arrow-left"></i></button>}
-                {step < 4 && <button onClick={handleGoNextStep}>Next step <i class="fas fa-arrow-right"></i></button>}
+                {step > 0 && <button onClick={handleGoPrevStep}>Prev step <i className="fas fa-arrow-left"></i></button>}
+                {step < 4 && <button onClick={handleGoNextStep}>Next step <i className="fas fa-arrow-right"></i></button>}
             </header>
 
-            {step === 0 && <Step1 onSaveData={handleSaveData} data={registerData.steps[0]} />}
+            {step === 0 && <Step1 onSaveData={handleSaveData} onGoToLogin={handleGoToLogin} data={registerData.steps[0]} />}
             {step === 1 && <Step2 onSaveData={handleSaveData} data={registerData.steps[1]} />}
             {step === 2 && <Step3 onSaveData={handleSaveData} data={registerData.steps[2]} />}
             {step === 3 && <Step4 onSaveData={handleSaveData} data={registerData.steps[3]} />}

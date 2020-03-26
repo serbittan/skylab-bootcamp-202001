@@ -2,30 +2,26 @@ import { validate } from 'diet-yourself-utils'
 import { NotAllowedError } from 'diet-yourself-errors'
 import context from './context'
 
-
 const API_URL = process.env.REACT_APP_API_URL
 
-const login = ((email, password) => {
-    validate.string(email, 'email')
-    validate.email(email)
-    validate.string(password, 'password')
 
-    return (async() => {
-        const response = await fetch(`${API_URL}/users/auth`, {
+const addMethod = (method => {
+    validate.string(method, 'method')
+
+    return (async () => {
+        const response = await fetch(`${API_URL}/user/diet`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
+            header: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`
+            },
+            body: JSON.stringify({method})
         })
 
         const { status } = response
 
-        if (status === 200) {
-            const { token } = await response.json()
-            
-            this.token = token
+        if (status === 201) return
 
-            return
-        }
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
@@ -40,7 +36,6 @@ const login = ((email, password) => {
         throw new Error('server error')
     })()
 
-}).bind(context) 
-    
+}).bind(context)
 
-export default login
+export default addMethod
