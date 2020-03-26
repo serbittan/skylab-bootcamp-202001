@@ -1,6 +1,6 @@
 
 const { retrieveUserDiet } = require('../../logic')
-const { NotAllowedError } = require('diet-yourself-errors')
+const { NotAllowedError, ContentError, TypeError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
 
@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     const { payload: { sub: id } } = req
 
     try { 
-        retrieveDiet(id)
+        retrieveUserDiet(id)
             .then(diet =>
                 res.status(200).json(diet)
             )

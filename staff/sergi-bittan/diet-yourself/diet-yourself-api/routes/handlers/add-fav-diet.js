@@ -3,8 +3,9 @@ const { NotAllowedError, ContentError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
-
+debugger
     try {
+        debugger
         addFavDiet(id)
             .then(() => res.status(201).end())
             .catch(error => {
