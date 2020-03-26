@@ -32,11 +32,6 @@ router.patch("/users", jwtVerifierMidWare, jsonBodyParser, updateUser)
 
 router.post("/user/diet", jsonBodyParser, jwtVerifierMidWare, createDiet)
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> develop-diet-yourself
 //retrieve de la dieta con el idDiet
 router.get("/user/diet/:idDiet", jwtVerifierMidWare,  retrieveDiet)
 
