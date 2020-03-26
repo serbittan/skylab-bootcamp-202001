@@ -13,7 +13,7 @@ module.exports = (id) => {
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
         
 
-        const diet = user.diet[0]
+        const diet = user.diet
 
         if(!diet) throw new NotFoundError(`there are no diets`)
 
