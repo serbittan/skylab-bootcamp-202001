@@ -8,7 +8,6 @@ const {
     retrieveDiet,
     retrieveUserDiet,
     retrieveDiets,
-    updateUserDiet,
     addFavDiet,
     removeFavDiet
    
@@ -28,13 +27,15 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch("/users", jwtVerifierMidWare, jsonBodyParser, updateUser)
 
-
-router.patch("/user/:userId/:idDiet",jsonBodyParser, updateUserDiet)
+//router.patch("/user/:userId/:idDiet",jsonBodyParser, updateUserDiet)
 
 router.post("/user/diet", jsonBodyParser, jwtVerifierMidWare, createDiet)
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> develop-diet-yourself
 //retrieve de la dieta con el idDiet
 router.get("/user/diet/:idDiet", jwtVerifierMidWare,  retrieveDiet)
 
