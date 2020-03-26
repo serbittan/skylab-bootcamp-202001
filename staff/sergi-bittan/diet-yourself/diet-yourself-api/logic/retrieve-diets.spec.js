@@ -4,18 +4,18 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Diet } } = require('diet-yourself-data')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveDiet = require('./retrieve-diet')
+const retrieveDiets = require('./retrieve-diets')
 const bcrypt = require('bcryptjs')
-const { NotFoundError } = require("diet-yourself-errors")
+const { NotFoundError} = require("diet-yourself-errors")
 
 const { constants: { methods, foods } } = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
 
-describe('retrieve unique diet', () => {
+describe('retrieve diets', () => {
 
     before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany)
+    mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => User.deleteMany)
     )
 
     //user
@@ -23,8 +23,11 @@ describe('retrieve unique diet', () => {
 
 
     //diet
+   
 
-    let method, _foods, idDiet, diet, diet2
+    let method, method2, idDiet, diet, diet2
+    let _foods = []
+    let _foods2 = []
     let methodIndex = Math.floor(Math.random() * 4)
 
     const proteinFoods = foods.filter(food => food.domain === 'protein')
@@ -63,12 +66,16 @@ describe('retrieve unique diet', () => {
         city = `city-${random()}`
         finalWeight = (Math.floor(random() * 200) + 30)
         points = 0
+        
 
         //data to create diet
 
         method = methods[methodIndex].name
-
+        method2 = methods[methodIndex].name
+        
         _foods = [proteinFoods[proteinIndex], carbsFoods[carbsIndex], fatFoods[fatIndex], fruitsFoods[fruitsIndex], vegetables[vegetablesIndex]]
+
+        _foods2 = [proteinFoods[proteinIndex], carbsFoods[carbsIndex], fatFoods[fatIndex], fruitsFoods[fruitsIndex], vegetables[vegetablesIndex]]
 
         points = calculatePoints(weight, height, age, gender, activity)
 
@@ -81,13 +88,14 @@ describe('retrieve unique diet', () => {
 
         //create diet and extract id
 
-        diet = await new Diet({ method, _foods, points })
+        debugger
+        diet = await new Diet({ method, foods: _foods, points })
 
         idDiet = diet.id
 
         user.favorites.push(diet)
 
-        diet2 = await new Diet({ method, foods, points })
+        diet2 = await new Diet({ method: method2, foods: _foods2, points })
 
         idDiet2 = diet2.id
 
@@ -99,32 +107,38 @@ describe('retrieve unique diet', () => {
     })
 
 
-    it('should succeed retrieving user diet', async () => {debugger
-        const { method, foods, points } = await retrieveDiet(id, idDiet)
+    it('should succeed retrieving user fav diets', async () => {
 
+        const diets = await retrieveDiets(id)
+        expect(diets).to.exist
+        expect(diets[0].method).to.equal(method)
+        expect(diets[0].foods).to.be.instanceof(Array)
+        // expect(diets[0].foods).to.contain(_foods[0])
+        expect(diets[0].points).to.equal(points)
 
-        expect(method).to.exist
-        expect(method).to.equal(diet.method)
-        expect(points).to.equal(diet.points)
-
+        expect(diets[1].method).to.equal(method2)
+        expect(diets[1].foods).to.be.instanceof(Array)
+        // expect(diets[1].foods).to.deep.equal(_foods2)
+        expect(diets[1].points).to.equal(points)
+        
 
     })
 
-    it('should fail on wrong diet id', async () => {
-        let wrongIdDiet = '293898iujuyh'
+    it('should fail on wrong user id', async () => {debugger
+        let wrongId = '293898iujuyh'
 
         try {
-            await retrieveDiet(id, wrongIdDiet)
+            await retrieveDiets(wrongId)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`diet with id ${wrongIdDiet} not found`)
+            expect(error.message).to.equal(`user with id ${wrongId} not found`)
         }
     })
 
-    after(() => User.deleteMany()
+   after(() => User.deleteMany()
         .then(() => mongoose.disconnect()))
 
 })   

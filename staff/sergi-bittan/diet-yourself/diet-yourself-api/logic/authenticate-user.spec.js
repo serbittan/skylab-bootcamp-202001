@@ -14,15 +14,37 @@ describe('authenticateUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let username, email, password
+     //user
+     let username, email, password, age, height, weight, city, finalWeight, points, id, goal, activity, gender, goalIndex, activityIndex, genderIndex
 
-    beforeEach(() => {
+
+
+    beforeEach( () => {
+
+        goal = ["gain muscle mass", "maintain weight", "lose weight"]
+        activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
+        gender = ["male", "female"]
+
+        goalIndex = Math.floor(Math.random() * 3)
+        activityIndex = Math.floor(Math.random() * 4)
+        genderIndex = Math.floor(Math.random() * 2)
+
+        //data to create user
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
+        goal = goal[goalIndex]
+        activity = activity[activityIndex]
+        gender = gender[genderIndex]
+        age = (Math.floor(random() * 65) + 12)
+        height = (Math.floor(random() * 200) + 120)
+        weight = (Math.floor(random() * 200) + 30)
+        city = `city-${random()}`
+        finalWeight = (Math.floor(random() * 200) + 30)
+        points = 0
     })
 
-    describe('when user already exists', () => {
+    describe('when user does not exist', () => {
         let _id
 
         beforeEach(() =>

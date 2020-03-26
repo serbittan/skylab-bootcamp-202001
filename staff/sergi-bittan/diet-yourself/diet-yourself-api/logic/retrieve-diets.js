@@ -1,12 +1,38 @@
-const { models: { Diet }} = require("diet-yourself-data")
+const { models: { User } } = require("diet-yourself-data")
+
+const { validate } = require("diet-yourself-utils")
+const { NotFoundError } = require("diet-yourself-errors")
 
 
-module.exports =  () => {
+module.exports =  (id)=> {
+
+    validate.string(id, "id")
 
     return (async () => {
-        const diets = await Diet.find()
+
+        const user = await User.findById(id)
         
-         return diets
+        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        
+
+        const diets = user.favorites
+
+        const userDiets = []
+        
+        if(!diets) throw new NotFoundError(`there are no diets`)
+
+                
+        diets.forEach(diet =>{
+            userDiets.push({
+                method: diet.method,
+                foods: diet.foods,
+                points: diet.points
+
+            })
+        })
+
+       return userDiets
+        
     })()
 
 }

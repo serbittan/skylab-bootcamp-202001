@@ -1,8 +1,12 @@
+const { removeFavDiet } = require('../../logic')
+const { NotAllowedError } = require('diet-yourself-errors')
+
 module.exports = (req, res) => {
-    const { payload: { sub:{ id }}} = req
+
+    const { params: { idDiet }, payload: { sub:{ id } } } = req
 
     try{
-        toggleFavDiets(token, id)
+        removeFavDiet(id, idDiet)
             .then(() => 
                 res.status(200).json()
             )
