@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React from 'react'
 import Feedback from './Feedback'
 import './Login.sass'
 
@@ -14,7 +14,7 @@ export default ({ onLogin, error }) => {
             onLogin(email, password)
         }}>
 
-            <input type="text" className="login__mail" name="email" placeholder="ejemplo@mail.com" autoFocus="autofocus" />
+            <input type="text" className="login__mail" name="email" placeholder="ejemplo@email.com" autoFocus="autofocus" />
             <input type="password" className="login__password" name="password" placeholder="password" />
             <button className="login__acces">Login</button>
 

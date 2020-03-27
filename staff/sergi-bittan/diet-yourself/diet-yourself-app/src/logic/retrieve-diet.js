@@ -1,10 +1,10 @@
-import React from 'react'
+
 import { NotAllowedError } from 'diet-yourself-errors'
 import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-const retrieveDiet = (() => {
+const retrieveDiet = function () {
     return (async () => {
         const response = await fetch(`${API_URL}/diet`, {
             method: 'GET',
@@ -36,6 +36,6 @@ const retrieveDiet = (() => {
         throw new Error('server error')
         
     })()
-}).bind(context)
+}.bind(context)
 
 export default retrieveDiet

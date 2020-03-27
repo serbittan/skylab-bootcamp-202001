@@ -5,7 +5,7 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-const login = ((email, password) => {
+const login = function(email, password) {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
@@ -40,7 +40,7 @@ const login = ((email, password) => {
         throw new Error('server error')
     })()
 
-}).bind(context) 
+}.bind(context) 
     
 
 export default login
