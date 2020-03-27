@@ -34,13 +34,13 @@ const registerData = {
     ]
 }
 
-export default withRouter(function Register ({ history }) {
+export default withRouter(function Register({ history }) {
 
 
-//const Register = () => {
+    //const Register = () => {
     const [step, setStep] = useState(0);
     const { goal } = useLocation();
-    const [ state, setState ] = useState()
+    const [state, setState] = useState()
 
     useEffect(() => {
         if (goal) {
@@ -97,18 +97,18 @@ export default withRouter(function Register ({ history }) {
                 break;
         }
 
-        
+
         console.log(registerData);
     }
 
     const handleGoToLogin = () => {
         history.push('./login')
     }
-    
+
     async function handleRegister() {
 
         const { steps } = registerData
-    
+
         const goal = steps[0].goal
         const activity = steps[1].activityLevel
         const gender = steps[2].genre
@@ -121,7 +121,7 @@ export default withRouter(function Register ({ history }) {
         const password = steps[4].password
         const username = steps[4].username
 
-        try {
+        try {
             await register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
 
             history.push('/login')
@@ -134,15 +134,24 @@ export default withRouter(function Register ({ history }) {
         <Fragment>
             <header className="header-activity">
                 <h3>Activity Level</h3>
-                {step > 0 && <button onClick={handleGoPrevStep}>Prev step <i className="fas fa-arrow-left"></i></button>}
-                {step < 4 && <button onClick={handleGoNextStep}>Next step <i className="fas fa-arrow-right"></i></button>}
+                {step > 0 && <a href="" onClick={event => {
+                    event.preventDefault()
+                    handleGoPrevStep()
+                }}>Prev <i className="fas fa-angle-left"></i></a>
+                }
+
+                {step < 4 && <a href="" onClick={event => {
+                    event.preventDefault()
+                    handleGoNextStep()
+                }}>Next <i className="fas fa-angle-right"></i></a>
+                }
             </header>
 
             {step === 0 && <Step1 onSaveData={handleSaveData} onGoToLogin={handleGoToLogin} data={registerData.steps[0]} />}
             {step === 1 && <Step2 onSaveData={handleSaveData} data={registerData.steps[1]} />}
             {step === 2 && <Step3 onSaveData={handleSaveData} data={registerData.steps[2]} />}
             {step === 3 && <Step4 onSaveData={handleSaveData} data={registerData.steps[3]} />}
-            {step === 4 && <Step5 onSaveData={handleSaveData} data={registerData.steps[4]} onRegister={handleRegister}/>}
+            {step === 4 && <Step5 onSaveData={handleSaveData} data={registerData.steps[4]} onRegister={handleRegister} />}
         </Fragment>
     )
 })

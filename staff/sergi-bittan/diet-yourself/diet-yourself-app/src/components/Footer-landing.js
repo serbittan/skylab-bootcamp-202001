@@ -6,13 +6,13 @@ const FooterLanding = ({ goToFavs, currentDiet, goToLogout }) => {
         <div className="footer">
             <button type="button" className="footer__landing" onClick={() => {
                 goToFavs()
-            }}>Add Favorites</button>
+            }}>My Diets</button>
             <button type="button" className="footer__landing" onClick={() => {
                 currentDiet()
-            }}>NEW</button>
+            }}>Today</button>
             <button type="button" className="footer__landing" onClick={() => {
                 goToLogout()
-            }}>Profile</button>
+            }}>Logout</button>
         </div>
     )
 }
