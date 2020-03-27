@@ -5,13 +5,13 @@ import context from './context'
 const API_URL = process.env.REACT_APP_API_URL
 
 
-const addMethod = (method => {
+const createDiet = function (method) {
     validate.string(method, 'method')
 
     return (async () => {
         const response = await fetch(`${API_URL}/user/diet`, {
             method: 'POST',
-            header: {
+            headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${this.token}`
             },
@@ -36,6 +36,6 @@ const addMethod = (method => {
         throw new Error('server error')
     })()
 
-}).bind(context)
+}.bind(context)
 
-export default addMethod
+export default createDiet

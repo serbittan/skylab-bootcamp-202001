@@ -7,6 +7,8 @@ import Page from './Page'
 import ItemFood from './Item-food'
 import ResultsFood from './Results-food'
 import Header from './Header'
+import FooterDiet from './Footer-diet'
+import FooterLanding from './Footer-landing'
 
 export {
     App,
@@ -17,5 +19,7 @@ export {
     Page,
     ItemFood,
     ResultsFood,
-    Header
+    Header,
+    FooterDiet,
+    FooterLanding
 }

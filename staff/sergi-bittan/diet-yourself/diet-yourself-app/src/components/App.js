@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import { Login, Register, Landing, Page, ItemFood, ResultsFood, Header } from '../components'
-import { register, login, isLoggedIn, addMethod, retrieveUser, retrieveDiet } from '../logic'
+import { Login, Register, Landing, Page, ItemFood, ResultsFood, Header, FooterDiet, FooterLanding } from '../components'
+import { register, login, isLoggedIn, retrieveUser, retrieveDiet, retrieveDiets, addFavDiet, updateUser } from '../logic'
 import { Context } from './ContextProvider'
 import './App.sass'
+import createDiet from '../logic/create-diet'
 
 
 
 export default withRouter(function ({ history }) {
     //const [state, setState] = useState()
     const [state, setState] = useContext(Context)
-    const [foods, setFoods] = useState()
-    const [user, setUser] = useState([])
+    const [diet, setDiet] = useState()
+    const [user, setUser] = useState()
+    //const [user, setUser] = useState([])
 
 
     // useEffect(() => {
@@ -33,7 +35,6 @@ export default withRouter(function ({ history }) {
               const user = await retrieveUser()
               setUser(user)
             } catch (error) {
-              // logout()
               history.push('/login')
             }
           })()
@@ -42,7 +43,8 @@ export default withRouter(function ({ history }) {
         }
       }, [])
 
-    async function handleLogin (email, password) {
+    const handleLogin = (email, password) => {
+      (async () => {
         try {
             await login(email, password)
 
@@ -50,34 +52,78 @@ export default withRouter(function ({ history }) {
             setUser(user)
             history.push('./landing')
 
-        } catch ({message}) {
-            setState({ error: message })
+        } catch ({ message }) {
+            setState({...state, error: message })
         }
+      })()
     }
 
     async function handleMethod (method) {
         try{
-            await addMethod(method)
+            await createDiet(method)
 
-            const foods = retrieveDiet()
-            setFoods(foods)
+            const user = await retrieveUser()
+            const { diet } = user
+            setDiet(diet)
             history.push('/diet')
             
-        } catch ({message}) {
+        } catch ({ message }) {
             setState({ error: message })
         }
     }
 
-    //console.log(isLoggedIn());
+    async function handleAddFavs () {
+      try{
+          await addFavDiet()
+          
+      } catch({ message }) {
+        setState({ error: message })
+      }
+    }
 
+    async function handleNewDiet() {
+      try{
+          let user = await retrieveUser()
+          const { diet: { method } } = user
+          await createDiet(method)
+          user = await retrieveUser()
+          const { diet } = user
+          setDiet(diet)
+          history.push('/diet')
+
+      }catch({ message }) {
+        setState({ error: message })
+      }
+    }
+
+    async function handleGoToProfile () {
+      try{
+          await updateUser()
+      }catch({ message }) {
+        setState({ error: message })
+      }
+    }
+
+    async function handleGoToFavs() {
+      try{
+        const diets = await retrieveDiets()
+          //TODO results fav diets compos + detail diet
+      }catch({ message }) {
+        setState({ error: message})
+      }
+    }
+     //TODO handleToday handleGoToLogout
+
+    //console.log(isLoggedIn());
+    const { error } = state
     return (
         <div className="App">
             <Switch>
                 <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Redirect to="/register"  />} />
-                <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register  /*error={error}*/ />} />
-                <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} error={'error-test'} />} />
-                <Route path="/landing" render={() => isLoggedIn() ? <Landing onMethod={handleMethod} /> : <Redirect to="/login" /*error={'error-test'}*/ />} /> 
-                <Route path="/diet" render={()=> isLoggedIn() ? <ResultsFood foods={foods} user={user}/> : <Redirect to="/login"  />} />               
+                <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register  error={error} />} />
+                <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} error={error} />} />
+                <Route path="/landing" render={() => isLoggedIn() ? <><Landing onMethod={handleMethod} error={error} /><FooterLanding goToFavs={handleGoToFavs} currentDiet={handleToday} goToLogout={handleGoToLogout} /></> : <Redirect to="/login" />} /> 
+                <Route path="/diet" render={()=> isLoggedIn() ? <><ResultsFood diet={diet} user={user} /><FooterDiet addToFavs={handleAddFavs} newDiet={handleNewDiet} goToProfile={handleGoToProfile} /></> : <Redirect to="/login"  />} />               
                 <p>Route not found</p>
             </Switch>
         </div>
