@@ -1,12 +1,14 @@
-
+import { validate } from 'diet-yourself-utils'
 import { NotAllowedError } from 'diet-yourself-errors'
 import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-const retrieveDiet = function () {
+const retrieveDiet = function (idDiet) {
+    validate.string(idDiet, 'idDiet')
+    debugger
     return (async () => {
-        const response = await fetch(`${API_URL}/diet`, {
+        const response = await fetch(`${API_URL}/user/diet/:${idDiet}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

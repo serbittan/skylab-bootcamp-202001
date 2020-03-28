@@ -24,10 +24,10 @@ module.exports =  (id)=> {
                 
         diets.forEach(diet =>{
             userDiets.push({
+                idDiet: diet._id,
                 method: diet.method,
                 foods: diet.foods,
                 points: diet.points
-
             })
         })
 
