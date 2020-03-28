@@ -8,6 +8,7 @@ import retrieveUser from './retrieve-user'
 import addFavDiet from './add-fav-diet'
 import updateUser from './update-user'
 import retrieveUserDiet from './retrieve-user-diet'
+import removeFavDiet from './remove-fav-diet'
 import logout from './logout'
 
 
@@ -23,5 +24,6 @@ export {
     retrieveUserDiet,
     addFavDiet,
     updateUser,
+    removeFavDiet,
     logout
 }
