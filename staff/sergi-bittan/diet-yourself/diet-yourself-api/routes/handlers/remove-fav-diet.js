@@ -3,7 +3,7 @@ const { NotAllowedError } = require('diet-yourself-errors')
 
 module.exports = (req, res) => {
 
-    const { params: { idDiet }, payload: { sub:{ id } } } = req
+    const { params: { idDiet }, payload: { sub: id } } = req
 
     try{
         removeFavDiet(id, idDiet)
