@@ -18,7 +18,7 @@ const Step1 = ({ onSaveData, data, onGoToLogin}) => {
             </div>
             <footer className="footer">
                 <h4 className="footer__p">Are you an account?</h4>
-                <a href="" className="footer__p" href="" onClick={event => {
+                <a href="#" className="footer__p" href="" onClick={event => {
                     event.preventDefault()
                     onGoToLogin()
                     }}>Login</a>

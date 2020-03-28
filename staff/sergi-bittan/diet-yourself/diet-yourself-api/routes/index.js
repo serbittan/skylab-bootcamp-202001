@@ -41,7 +41,7 @@ router.get("/user/diet", jwtVerifierMidWare,  retrieveUserDiet)
 
 //retrieve de las dietas de favs
 
-router.get("/user/diets", retrieveDiets)
+router.get("/user/diets", jwtVerifierMidWare, retrieveDiets)
 
 router.patch("/user/favs", jwtVerifierMidWare, addFavDiet)
 

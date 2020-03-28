@@ -110,9 +110,10 @@ export default withRouter(function ({ history }) {
 
   async function handleGoToFavs() {
     try {
+      debugger
       const diets = await retrieveDiets()
       setDiets(diets)
-      history.push('/')
+      history.push('/diets')
       //TODO results fav diets compos + detail diet
     } catch ({ message }) {
       setState({ error: message })
@@ -129,6 +130,14 @@ export default withRouter(function ({ history }) {
       setState({ error: message })
     }
   }
+
+  // async function handleGoToDetail () {
+  //   try{
+
+  //   }catch({ message }) {
+  //     setState({ error: message })
+  //   }
+  // }
 
   const handleLogout = function () {
     logout()
@@ -152,6 +161,7 @@ export default withRouter(function ({ history }) {
         <Route path="/landing" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><Landing onMethod={handleMethod} error={error} /><FooterLanding goToFavs={handleGoToFavs} currentDiet={handleToday} goToLogout={handleLogout} /></> : <Redirect to="/login" />} />
         <Route path="/diet" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} user={user} /><FooterDiet addToFavs={handleAddFavs} newDiet={handleNewDiet} goToProfile={handleGoToProfile} /></> : <Redirect to="/login" />} />
         <Route path="/diets" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFavs diets={diets} user={user} /></> : <Redirect to="/landing" />} />
+        {/* <Route path="/detail" render={() => isLoggedIn() ? <ItemDiet goDetail={handleGoToDetail} diets={diets} /> : <Redirect to="/register" /> } /> */}
         <p>Route not found</p>
       </Switch>
     </div>

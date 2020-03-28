@@ -1,10 +1,14 @@
 import React from 'react'
 
-const ItemDiet = ({ diet }) => {
-    const { method, points } = diet
+const ItemDiet = ({ diets,goDetail }) => {
+    debugger
+    const { method, points } = diets
     return(
         <div className="list-favs">
-            <p>{method}</p>
+            <a href="#" onClick={event => {
+                event.preventDefault()
+                goDetail()
+            }}><i class="fas fa-carrot"></i></a><p>{method}</p>
             <p>{points}</p>
 
         </div>

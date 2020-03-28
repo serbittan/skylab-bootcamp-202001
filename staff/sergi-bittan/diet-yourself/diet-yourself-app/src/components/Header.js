@@ -12,7 +12,7 @@ const Header = ({ user, goBack }) => {
     return (
 
         <header className="header">
-            <a href="" onClick={event => {
+            <a href="#" onClick={event => {
                 event.preventDefault()
                 goBack()
             }}><span className="header__landing"><i className="fas fa-angle-left"></i></span></a>
