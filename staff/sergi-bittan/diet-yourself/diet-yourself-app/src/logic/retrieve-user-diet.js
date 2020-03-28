@@ -1,30 +1,25 @@
-import { validate } from 'diet-yourself-utils'
-import { NotAllowedError } from 'diet-yourself-errors'
 import context from './context'
+import { NotAllowedError } from 'diet-yourself-errors'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-const retrieveDiet = function (idDiet) {
-    validate.string(idDiet, 'idDiet')
-    debugger
-    return (async () => {
-        const response = await fetch(`${API_URL}/user/diet/:${idDiet}`, {
+const retrieveUserDiet = function () {
+    return ( async () => {
+        const response = await fetch(`${API_URL}/user/diet`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${this.token}``Authorization: Bearer ${this.tolken}`
-            } 
-            
+                Authorization: `Bearer ${this.token}`
+            }
         })
 
         const { status } = response
-
         if (status === 200) {
-            const diet = await response.json()
+            const userDiet = await response.json()
 
-            return diet
+            return userDiet
         }
-
+            
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
@@ -40,4 +35,4 @@ const retrieveDiet = function (idDiet) {
     })()
 }.bind(context)
 
-export default retrieveDiet
+export default retrieveUserDiet

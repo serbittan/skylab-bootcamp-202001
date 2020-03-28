@@ -8,9 +8,10 @@ const { name, version } = require('./package')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
-const { cors } = require('./mid-wares')
+//const { cors } = require('./mid-wares')
 const { mongoose } = require('diet-yourself-data')
 const router = require('./routes')
+const cors = require('cors')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -32,7 +33,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         const app = express()
 
-        app.use(cors)
+        app.use(cors())
 
         app.use(morgan('combined', { stream: accessLogStream }))
 

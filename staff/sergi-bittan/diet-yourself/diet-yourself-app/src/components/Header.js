@@ -1,18 +1,25 @@
 import React from 'react'
 //import './Header.sass'
 
+// className={active === "g" ? "control-icon active" : "control-icon"}
+// 👍
+// 1
+// [3:22 PM]
+// const [active, setActive] = useState('g’)
 
-const Header = ({user}) => {
-    const { username, diet:{ points } } = user
-    return(
-    <div class="main">
-        <header class="header">
-            <p class="header__landing">Objetivo :</p>
-    <p class="header__landing">{points}</p>
-            <h3>{username}</h3>
+const Header = ({ user, goBack }) => {
+    const { username, diet } = user
+    return (
+
+        <header className="header">
+            <a href="#" onClick={event => {
+                event.preventDefault()
+                goBack()
+            }}><span className="header__landing"><i className="fas fa-angle-left"></i></span></a>
+            <p className="header__landing">Objetivo :</p>
+            <p className="header__landing">{diet.points}</p>
+            <p>{username}</p>
         </header>
-    </div>
-
     )
 }
 
