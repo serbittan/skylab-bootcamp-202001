@@ -17,14 +17,13 @@ const { NotFoundError } = require("diet-yourself-errors")
  */
 
 module.exports = (id, idDiet) => {
-
     validate.string(id, "id")
     validate.string(idDiet, "idDiet")
 
     return User.findById(id)
 
         //quitar dieta de los favs
-
+    
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
