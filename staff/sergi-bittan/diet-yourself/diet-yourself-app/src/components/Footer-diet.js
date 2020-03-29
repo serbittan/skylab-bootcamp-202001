@@ -1,7 +1,12 @@
 import React from 'react'
+import PopupUser from './Popup-user'
 //import './Footer-diet.sass'
 
-const FooterDiet = ({ addToFavs, newDiet, goToProfile }) => {
+const FooterDiet = ({ addToFavs, newDiet, goToPopup }) => {
+
+    function handleGoToPopup () {
+        PopupUser()
+    }
     return (
         <div className="footer">
             <button type="button" className="footer__diet" onClick={() => {
@@ -11,7 +16,7 @@ const FooterDiet = ({ addToFavs, newDiet, goToProfile }) => {
                 newDiet()
             }}>NEW</button>
             <button type="button" className="footer__diet" onClick={() => {
-                goToProfile()
+                goToPopup = {handleGoToPopup}
             }}>Profile</button>
         </div>
     )
