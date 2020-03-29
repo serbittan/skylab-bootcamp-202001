@@ -15,7 +15,7 @@ export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
   const [diet, setDiet] = useState()
   const [diets, setDiets] = useState()
-  const [user, setUser] = useState()
+  const [user, setUser] = useState([])
 
   //const [user, setUser] = useState([])
 
@@ -153,7 +153,10 @@ export default withRouter(function ({ history }) {
     try{
       debugger
           await removeFavDiet(idDiet)
+          const diets = await retrieveDiets()
+          setDiets(diets)
           history.push('/diets')
+          debugger
     }catch({ message }) {
      
       setState({ error: message })

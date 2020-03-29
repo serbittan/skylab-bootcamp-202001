@@ -29,7 +29,7 @@ module.exports = (id, idDiet) => {
 
             const { favorites } = user
 
-            const index = favorites.findIndex(item => item._id === idDiet)
+            const index = favorites.findIndex(item => item.id === idDiet)
 
             if (index !== -1) {
 

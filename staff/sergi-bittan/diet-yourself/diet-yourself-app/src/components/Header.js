@@ -1,12 +1,6 @@
 import React from 'react'
 //import './Header.sass'
 
-// className={active === "g" ? "control-icon active" : "control-icon"}
-// 👍
-// 1
-// [3:22 PM]
-// const [active, setActive] = useState('g’)
-
 const Header = ({ user, goBack }) => {
     const { username, diet } = user
     return (
