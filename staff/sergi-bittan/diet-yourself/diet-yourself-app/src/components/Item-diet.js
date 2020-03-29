@@ -2,7 +2,7 @@ import React from 'react'
 
 const ItemDiet = ({ diets, goToDetail }) => {
 const { method, points, idDiet } = diets
-debugger
+
     return(
         <div className="list-favs">
             <a href="#" onClick={event => {

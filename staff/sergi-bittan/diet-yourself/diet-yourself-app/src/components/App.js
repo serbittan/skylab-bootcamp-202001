@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import { Login, Register, Landing, ItemFood, ResultsFood, ResultsFavs, Header, FooterDiet, FooterLanding, ItemDiet } from '../components'
-import { register, login, isLoggedIn, retrieveUser, retrieveDiet, retrieveDiets, retrieveUserDiet, addFavDiet, updateUser, logout } from '../logic'
+import { Login, Register, Landing, ResultsFood, ResultsFavs, Header, FooterDiet, FooterLanding, FooterDetail } from '../components'
+import { register, login, isLoggedIn, retrieveUser, retrieveDiet, retrieveDiets, retrieveUserDiet, addFavDiet, updateUser, removeFavDiet, logout } from '../logic'
 import { Context } from './ContextProvider'
 import './App.sass'
 //import context from '../logic'
@@ -15,7 +15,7 @@ export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
   const [diet, setDiet] = useState()
   const [diets, setDiets] = useState()
-  const [user, setUser] = useState()
+  const [user, setUser] = useState([])
 
   //const [user, setUser] = useState([])
 
@@ -113,14 +113,13 @@ export default withRouter(function ({ history }) {
 
   async function handleGoToFavs() {
     try {
-    debugger
       const diets = await retrieveDiets()
       setDiets(diets)
 
       history.push('/diets')
       //TODO results fav diets compos + detail diet
     } catch ({ message }) {
-      debugger
+
       setState({ error: message })
     }
   }
@@ -138,15 +137,28 @@ export default withRouter(function ({ history }) {
   }
 
   async function handleGoToDetail(idDiet) {
-    try{
-  
+    try {
       const diet = await retrieveDiet(idDiet)
       setDiet(diet)
 
       history.push('/detail')
 
+    } catch ({ message }) {
+
+      setState({ error: message })
+    }
+  }
+
+  async function handleRemove (idDiet) {
+    try{
+      debugger
+          await removeFavDiet(idDiet)
+          const diets = await retrieveDiets()
+          setDiets(diets)
+          history.push('/diets')
+          debugger
     }catch({ message }) {
-  
+     
       setState({ error: message })
     }
   }
@@ -158,6 +170,10 @@ export default withRouter(function ({ history }) {
   }
 
   const handleGoToBack = function () {
+    history.push('/landing')
+  }
+
+  const handleGoHome = function () {
     history.push('/landing')
   }
 
@@ -174,7 +190,7 @@ export default withRouter(function ({ history }) {
         <Route path="/landing" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><Landing onMethod={handleMethod} error={error} /><FooterLanding goToFavs={handleGoToFavs} currentDiet={handleToday} goToLogout={handleLogout} /></> : <Redirect to="/login" />} />
         <Route path="/diet" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} user={user} /><FooterDiet addToFavs={handleAddFavs} newDiet={handleNewDiet} goToProfile={handleGoToProfile} /></> : <Redirect to="/login" />} />
         <Route path="/diets" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFavs goToDetail={handleGoToDetail} diets={diets} user={user} /></> : <Redirect to="/landing" />} />
-        <Route path="/detail" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood  diet={diet} user={user} /></> : <Redirect to="/register" /> } />
+        <Route path="/detail" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} diets={diets} user={user} /><FooterDetail removeDiet={handleRemove} goHome={handleGoHome} diet={diet} /></> : <Redirect to="/register" />} />
         <p>Route not found</p>
       </Switch>
     </div>

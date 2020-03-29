@@ -1,31 +1,25 @@
 import { validate } from 'diet-yourself-utils'
-import { NotAllowedError } from 'diet-yourself-errors'
+import { NotAllowedError} from 'diet-yourself-errors'
 import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-const retrieveDiet = function (idDiet) {
+const removeFavDiet = function (idDiet) {
     validate.string(idDiet, 'idDiet')
-   
-    return (async () => {
-        const response = await fetch(`${API_URL}/user/diet/${idDiet}`, {
-            method: 'GET',
+debugger
+    return ( async () => {
+        const response = await fetch(`${API_URL}/user/diet/${idDiet}/delete`, {
+            method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${this.token}`
-            } 
-            
+            }
         })
 
         const { status } = response
+         if (status === 200) return
 
-        if (status === 200) {
-            const diet = await response.json()
-        
-            return diet
-        }
-
-        if (status >= 400 && status < 500) {
+         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
             if (status === 401) {
@@ -36,8 +30,8 @@ const retrieveDiet = function (idDiet) {
         }
 
         throw new Error('server error')
-        
     })()
+
 }.bind(context)
 
-export default retrieveDiet
+export default removeFavDiet

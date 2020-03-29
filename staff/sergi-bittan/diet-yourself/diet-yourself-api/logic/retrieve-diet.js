@@ -10,7 +10,7 @@ module.exports =  (id, idDiet)=> {
 
     validate.string(idDiet, "idDiet")
 
-    return (async () => {debugger
+    return (async () => {
 
         const user = await User.findById(id)
         
@@ -29,9 +29,9 @@ module.exports =  (id, idDiet)=> {
 
         const diet = user.favorites[index]
 
-        const { method, foods, points } = diet
+        const { _id, method, foods, points } = diet
 
-        return { method, foods, points }
+        return { _id, method, foods, points }
         
     })()
 

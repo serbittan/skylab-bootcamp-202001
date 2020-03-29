@@ -1,5 +1,5 @@
 import App from './App'
-import Register from './Register'
+import Register from './Register/Index'
 import Login from './Login'
 import Feedback from './Feedback'
 import Landing from './Landing'
@@ -11,6 +11,7 @@ import ResultsFavs from './Results-favs'
 import Header from './Header'
 import FooterDiet from './Footer-diet'
 import FooterLanding from './Footer-landing'
+import FooterDetail from './Footer-detail'
 
 export {
     App,
@@ -25,5 +26,6 @@ export {
     ResultsFavs,
     Header,
     FooterDiet,
-    FooterLanding
+    FooterLanding,
+    FooterDetail
 }
