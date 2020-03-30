@@ -15,6 +15,6 @@ module.exports = id => {
 
             return user.save()
         })
-        .then(({ username, age, weight, height, goal, activity, city, finalWeight, diet, favorites }) => ({ username, age, weight, height, goal, activity, city, finalWeight, diet, favorites }))
+        .then(({ username, age, weight, height, goal, activity, city, finalWeight, diet, favorites, calories }) => ({ username, age, weight, height, goal, activity, city, finalWeight, diet, favorites, calories }))
         //.then(user => { user })
 }

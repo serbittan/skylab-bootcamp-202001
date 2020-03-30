@@ -1,6 +1,8 @@
+//@ts-check
 const { validate } = require('diet-yourself-utils')
 const { models: { User } } = require('diet-yourself-data')
 const { NotAllowedError } = require('diet-yourself-errors')
+const { calculateCalories } = require('./helpers')
 const bcrypt = require('bcryptjs')
 
 module.exports = (username, email, password, goal, activity, gender, age, height, weight, city, finalWeight) => {
@@ -17,15 +19,19 @@ module.exports = (username, email, password, goal, activity, gender, age, height
     validate.string(city, "city")
     validate.type(finalWeight, "finalWeight", Number)
     
-   
+  
     return User.findOne({ email })
     .then(user => {
+        
         if (user) throw new NotAllowedError(`user with email ${email} already exists`)
 
         return bcrypt.hash(password, 10)
     })
     .then(password => {
-        user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
+        
+        const calories = Math.round(calculateCalories(age, height, weight, gender, activity))
+
+        const user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories })
 
         return user.save()
     })

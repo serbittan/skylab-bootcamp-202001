@@ -9,11 +9,14 @@ const login = function(email, password) {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
-
+debugger
     return (async() => {
         const response = await fetch(`${API_URL}/users/auth`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer'
+        },
             body: JSON.stringify({ email, password })
         })
 

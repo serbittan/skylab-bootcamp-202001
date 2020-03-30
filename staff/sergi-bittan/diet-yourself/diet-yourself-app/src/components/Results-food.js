@@ -4,7 +4,7 @@ import './Results-food.sass'
 
 const ResultsFood = ({ diet }) => {
     const { method, foods } = diet
-  
+  debugger
     return (
         <div className="results">
             <h2>{method}</h2>
