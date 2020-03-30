@@ -19,19 +19,6 @@ export default withRouter(function ({ history }) {
 
   //const [user, setUser] = useState([])
 
-
-  // useEffect(() => {
-  //     if (isLoggedIn()) {
-  //       setState({ page: 'landing' })
-
-  //       history.push('/landing')
-  //     } else {
-  //       setState({ page: 'login' })
-
-  //       history.push('/login')
-  //     }
-  //   }, [])
-
   useEffect(() => {
     if (isLoggedIn()) {
       (async () => {
@@ -103,9 +90,11 @@ export default withRouter(function ({ history }) {
     }
   }
 
-  async function handleGoToProfile() {
+  async function handleDataUpdate() {
     try {
       await updateUser()
+      const user = await retrieveUser()
+      setUser(user)
     } catch ({ message }) {
       setState({ error: message })
     }
@@ -177,6 +166,10 @@ export default withRouter(function ({ history }) {
     history.push('/landing')
   }
 
+  const handleDietUpdate = function(data) {
+    console.log(data)
+  }
+
   //TODO handleToday handleGoToLogout
 
   //console.log(isLoggedIn());
@@ -188,7 +181,7 @@ export default withRouter(function ({ history }) {
         <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register error={error} />} />
         <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} error={error} />} />
         <Route path="/landing" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><Landing onMethod={handleMethod} error={error} /><FooterLanding goToFavs={handleGoToFavs} currentDiet={handleToday} goToLogout={handleLogout} /></> : <Redirect to="/login" />} />
-        <Route path="/diet" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} user={user} /><FooterDiet addToFavs={handleAddFavs} newDiet={handleNewDiet} goToPopup={handleGoToProfile} /></> : <Redirect to="/login" />} />
+        <Route path="/diet" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} user={user} /><FooterDiet addToFavs={handleAddFavs} newDiet={handleNewDiet} onDataUpdate={handleDataUpdate} /></> : <Redirect to="/login" />} />
         <Route path="/diets" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFavs goToDetail={handleGoToDetail} diets={diets} user={user} /></> : <Redirect to="/landing" />} />
         <Route path="/detail" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} diets={diets} user={user} /><FooterDetail removeDiet={handleRemove} goHome={handleGoHome} diet={diet} /></> : <Redirect to="/register" />} />
         <p>Route not found</p>

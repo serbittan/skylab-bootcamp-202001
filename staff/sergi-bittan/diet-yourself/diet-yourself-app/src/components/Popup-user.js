@@ -1,10 +1,12 @@
 import React from "react"
 import Popup from "reactjs-popup"
 import Feedback from "./Feedback"
+import './Popup-user.sass'
 
-const PopupUser = ({ goToProfile, error }) => (
-  <Popup trigger={<button> Trigger</button>} position="right center">
-    <form className="popup" onClick={event => {
+
+const PopupUser = ({ updateData, error }) => (
+  <Popup trigger={<button>Profile</button>} position="left bottom">
+    <form className="popup" onSubmit={event => {
         event.preventDefault()
 
         const username = event.target.username.value
@@ -18,21 +20,30 @@ const PopupUser = ({ goToProfile, error }) => (
         const password = event.target.password.value
         const oldPassword = event.target.oldPassword.value
 
-        goToProfile(username, age, weight, height, goal , activity, city, finalWeight, password, oldPassword)
+        updateData({username, age, weight, height, goal , activity, city, finalWeight, password, oldPassword})
 
-    }}>Popup content here !!
+    }}>
 
-        <input type="text" className="popup_input" name="username" placeholder="enter username" autoFocus="autofocus" />
-        <input type="text" className="popup_input" name="age" placeholder="enter age" />
-        <input type="text" className="popup_input" name="weight" placeholder="enter weight" />
-        <input type="text" className="popup_input" name="height" placeholder="enter height" />
-        <input type="text" className="popup_input" name="goal" placeholder="enter goal" />
-        <input type="text" className="popup_input" name="activity" placeholder="enter activity" />
-        <input type="text" className="popup_input" name="city" placeholder="enter city" />
-        <input type="text" className="popup_input" name="finalWeight" placeholder="enter finalWeight" />
-        <input type="password" className="popup_input" name="password" placeholder="enter password" />
-        <input type="password" className="popup_input" name="old password" placeholder="enter old password" />
-        <button type="button" className="popup_input">Update</button>
+        <input type="text" className="popup__input" name="username" placeholder="enter username" autoFocus="autofocus" />
+        <input type="text" className="popup__input" name="age" placeholder="enter age" />
+        <input type="text" className="popup__input" name="weight" placeholder="enter weight" />
+        <input type="text" className="popup__input" name="height" placeholder="enter height" />
+        <select name="goal">
+          <option value="gain muscle mass">Gain muscle Mass</option> 
+          <option value="maintain weight">Maintain Weight</option> 
+          <option value="lose weight">Lose Weight</option>
+        </select>
+        <select name="activity">
+          <option value="sedentary">Sedentary</option> 
+          <option value="mild activity">Mild Activity</option> 
+          <option value="moderate activity">Moderate Activity</option>
+          <option value="heavy activity">Heavy Activity</option>
+        </select>
+        <input type="text" className="popup__input" name="city" placeholder="enter city" />
+        <input type="text" className="popup__input" name="finalWeight" placeholder="enter finalWeight" />
+        <input type="password" className="popup__input" name="password" placeholder="enter password" />
+        <input type="password" className="popup__input" name="oldPassword" placeholder="enter old password" />
+        <button type="submit" className="popup__bottom">Update</button>
         
     </form>
     {error && <Feedback message={error} level="error" />}

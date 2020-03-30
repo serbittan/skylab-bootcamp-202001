@@ -120,11 +120,12 @@ export default withRouter(function Register({ history }) {
         const email = steps[4].email
         const password = steps[4].password
         const username = steps[4].username
-
+debugger
         try {
             await register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
 
             history.push('/login')
+            debugger
         } catch ({ message }) {
             setState({ error: message })
         }

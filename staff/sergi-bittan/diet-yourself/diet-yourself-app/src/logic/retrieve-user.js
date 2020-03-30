@@ -16,7 +16,7 @@ const retrieveUser = function () {
         })
 
         const { status } = response
-
+    
         if (status === 200) {
             const user = await response.json()
 

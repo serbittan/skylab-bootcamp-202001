@@ -1,23 +1,21 @@
 import React from 'react'
 import PopupUser from './Popup-user'
-//import './Footer-diet.sass'
+import './Footer-diet.sass'
 
-const FooterDiet = ({ addToFavs, newDiet, goToPopup }) => {
+const FooterDiet = ({ addToFavs, newDiet, onDataUpdate }) => {
 
-    function handleGoToPopup () {
-        PopupUser()
-    }
+   
     return (
-        <div className="footer">
-            <button type="button" className="footer__diet" onClick={() => {
+        <div className="footer-diet">
+            <a href="#" className="footer__diet" onClick={event => {
+                event.preventDefault()
+
                 addToFavs()
-            }}>Add Favorites</button>
-            <button type="button" className="footer__diet" onClick={() => {
+            }}><i class="far fa-star"></i></a>
+         <button type="button" className="footer__diet" onClick={() => {
                 newDiet()
             }}>NEW</button>
-            <button type="button" className="footer__diet" onClick={() => {
-                goToPopup = {handleGoToPopup}
-            }}>Profile</button>
+            <PopupUser updateData={onDataUpdate}/>
         </div>
     )
 }
