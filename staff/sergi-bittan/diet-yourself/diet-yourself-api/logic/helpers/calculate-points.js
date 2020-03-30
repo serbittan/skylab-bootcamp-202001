@@ -70,18 +70,3 @@ let points = 0
 
 
 
-
-    //  switch (method) {
-    //     case "Mediterranea":// 50C-15P-35G
-    //         totalPointsOfDay
-    //     case "Low Carb": //15h-55P-30G
-    //         totalPointsOfDay
-    //     case "Keto": // 5H-25P-70G
-    //         totalPointsOfDay
-    //     case "Vegetariana"://!!! 
-    //         totalPointsOfDay
-    //     case"Día Dificil": //grasas y proteinas
-    //         totalPointsOfDay
-    // }
-
-
