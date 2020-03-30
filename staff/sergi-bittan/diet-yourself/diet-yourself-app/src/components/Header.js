@@ -2,7 +2,7 @@ import React from 'react'
 //import './Header.sass'
 
 const Header = ({ user, goBack }) => {
-    const { username, diet } = user
+    const { username, calories } = user
     return (
 
         <header className="header">
@@ -11,7 +11,7 @@ const Header = ({ user, goBack }) => {
                 goBack()
             }}><span className="header__landing"><i className="fas fa-angle-left"></i></span></a>
             <p className="header__landing">Objetivo :</p>
-            <p className="header__landing">{diet.points}</p>
+            <p className="header__landing">{calories} Kcal</p>
             <p>{username}</p>
         </header>
     )
