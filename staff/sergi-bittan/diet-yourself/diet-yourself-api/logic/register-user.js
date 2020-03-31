@@ -32,7 +32,20 @@ module.exports = (username, email, password, goal, activity, gender, age, height
             return user.save()
 
         })
-        .then(() => { })
+        .then(() => {
+            return User.findOne({ email })
+         })
+        .then(user => {
+            // @ts-ignore
+            const { goal, weight, height, age, gender, activity } = user
+
+            const calories = Math.round(calculateCalories(goal, weight, height, age, gender, activity))
+
+            // @ts-ignore
+            user.calories = calories
+
+            return user.save()
+        })
 
 }
 
