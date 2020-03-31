@@ -4,30 +4,31 @@ import Feedback from "./Feedback"
 import './Popup-user.sass'
 
 
-const PopupUser = ({ updateData, error }) => (
+const PopupUser = ({ updateData, error, data }) => (
   <Popup trigger={<button>Profile</button>} position="left bottom">
     <form className="popup" onSubmit={event => {
         event.preventDefault()
-
+debugger
         const username = event.target.username.value
-        const age = event.target.age.value
-        const weight = event.target.weight.value
-        const height = event.target.height.value
+        const age = parseFloat(event.target.age.value)
+        const weight = parseFloat(event.target.weight.value)
+        const height = parseFloat(event.target.height.value)
         const goal = event.target.goal.value
         const activity = event.target.activity.value
         const city = event.target.city.value
-        const finalWeight = event.target.finalWeight.value
+        const finalWeight = parseFloat(event.target.finalWeight.value)
         const password = event.target.password.value
         const oldPassword = event.target.oldPassword.value
 
-        updateData({username, age, weight, height, goal , activity, city, finalWeight, password, oldPassword})
+        const newUser = { username, age, weight, height, goal, activity, city, finalWeight , password , oldPassword }
+        updateData(newUser)
 
     }}>
 
         <input type="text" className="popup__input" name="username" placeholder="enter username" autoFocus="autofocus" />
         <input type="text" className="popup__input" name="age" placeholder="enter age" />
-        <input type="text" className="popup__input" name="weight" placeholder="enter weight" />
-        <input type="text" className="popup__input" name="height" placeholder="enter height" />
+        <input type="text" className="popup__input" name="weight"  placeholder="enter weight" />
+        <input type="text" className="popup__input" name="height"  placeholder="enter height" />
         <select name="goal">
           <option value="gain muscle mass">Gain muscle Mass</option> 
           <option value="maintain weight">Maintain Weight</option> 

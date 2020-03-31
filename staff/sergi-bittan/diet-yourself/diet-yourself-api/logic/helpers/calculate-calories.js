@@ -1,7 +1,8 @@
-module.exports = (age, weight, height, genre, activity) => {
-    let calories = 0
+module.exports = (goal, age, weight, height, genre, activity) => {
+    let tmbAct = 0
     let tmb = 0
     let act = 0
+    let challenge = 0
 
     switch (genre) {
         case 'male':
@@ -27,7 +28,18 @@ module.exports = (age, weight, height, genre, activity) => {
             break;
     }
 
-    calories = tmb * act
+    switch (goal) {
+        case 'gain mucle mass':
+            challenge = 15 / 100;
+            break;
+        case 'maintain weight':
+            challenge = 0
+        case 'lose weight':
+            challenge = (-15 / 100)
+    }
+
+    tmbAct = tmb * act
+    calories = tmbAct + (tmbAct * challenge)
 
     return calories
 

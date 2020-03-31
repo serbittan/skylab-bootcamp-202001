@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL
 
 const createDiet = function (method) {
     validate.string(method, 'method')
-
+debugger
     return (async () => {
         const response = await fetch(`${API_URL}/user/diet`, {
             method: 'POST',

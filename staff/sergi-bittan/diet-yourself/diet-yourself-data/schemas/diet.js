@@ -16,5 +16,9 @@ module.exports = new Schema({
     points: {
         type: Number,
         required: true
+    },
+    calories: {
+        type: Number,
+        require: true
     }
 })

@@ -4,18 +4,14 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-const updateUser = function (username, age, weight, height, goal, activity, city , finalWeight , password, oldPassword) {
-    validate.string(username, 'username')
-    validate.type(age, 'age', Number)
-    validate.type(weight, 'weight', Number)
-    validate.type(height, 'height', Number)
-    validate.string(goal, 'goal')
-    validate.string(activity, 'activity')
-    validate.string(city, 'city')
-    validate.type(finalWeight, 'finalWeight')
-    validate.string(password, 'password')
-    validate.string(oldPassword, 'oldPassword')
-
+const updateUser = function (user) {
+    for (const key in user){
+        if (!user[key])  delete user[key]
+    
+        if ( typeof user[key] === 'string') validate.string(user[key], `${user[key]}`)
+        if (typeof user[key] === 'number') validate.type(user[key], `${user[key]}`, Number)
+    }
+    
     return (async () => {
         const response = await fetch(`${API_URL}/users`, {
             method: 'PATCH',
@@ -23,7 +19,7 @@ const updateUser = function (username, age, weight, height, goal, activity, city
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${this.token}` 
             },
-            body: JSON.stringify({ username, age, weight, height, goal, activity, city, finalWeight , password , oldPassword })
+            body: JSON.stringify(user)
         })
 
         const { status } = response

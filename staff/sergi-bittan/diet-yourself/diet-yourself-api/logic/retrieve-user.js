@@ -1,6 +1,7 @@
 const { validate } = require('diet-yourself-utils')
 const { models: { User } } = require('diet-yourself-data')
 const { NotFoundError, NotAllowedError } = require('diet-yourself-errors')
+const { calculateCalories } = require('./helpers')
 
 module.exports = id => {
     validate.string(id, 'id')
@@ -15,6 +16,13 @@ module.exports = id => {
 
             return user.save()
         })
-        .then(({ username, age, weight, height, goal, activity, city, finalWeight, diet, favorites, calories }) => ({ username, age, weight, height, goal, activity, city, finalWeight, diet, favorites, calories }))
-        //.then(user => { user })
-}
+         .then(({ username, age, weight, height, goal, activity, genre, city, finalWeight, diet, favorites, calories }) => ({ username, age, weight, height, goal, activity, genre, city, finalWeight, diet, favorites, calories }))}
+        //calories = calculateCalories(age, weight, height, genre, activity)
+
+
+
+
+
+
+
+    // //.then((user) => { user })

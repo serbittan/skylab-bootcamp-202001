@@ -3,6 +3,7 @@ import ItemFood from './Item-food'
 import './Results-food.sass'
 
 const ResultsFood = ({ diet }) => {
+    
     const { method, foods } = diet
   debugger
     return (
