@@ -28,9 +28,7 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch("/users", jwtVerifierMidWare, jsonBodyParser, updateUser)
 
-//router.patch("/user/:userId/:idDiet",jsonBodyParser, updateUserDiet)
-
-router.post("/user/diet", jsonBodyParser, jwtVerifierMidWare, createDiet)
+router.post("/user/diet", jwtVerifierMidWare, jsonBodyParser, createDiet)
 
 //retrieve de la dieta con el idDiet
 router.get("/user/diet/:idDiet", jwtVerifierMidWare,  retrieveDiet)

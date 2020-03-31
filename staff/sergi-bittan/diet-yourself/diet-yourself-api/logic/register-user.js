@@ -18,22 +18,28 @@ module.exports = (username, email, password, goal, activity, gender, age, height
     validate.type(weight, "weight", Number)
     validate.string(city, "city")
     validate.type(finalWeight, "finalWeight", Number)
-    
-  
+
+
     return User.findOne({ email })
-    .then(user => {
-        
-        if (user) throw new NotAllowedError(`user with email ${email} already exists`)
+        .then(user => {
+            if (user) throw new NotAllowedError(`user with email ${email} already exists`)
 
-        return bcrypt.hash(password, 10)
-    })
-    .then(password => {
-        
-        const calories = Math.round(calculateCalories(age, height, weight, gender, activity))
+            return bcrypt.hash(password, 10)
+        })
+        .then(password => {
+            const user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
 
-        const user = new User({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories })
+            return user.save()
 
-        return user.save()
-    })
-    .then(() => { })
+        })
+        .then(() => { })
+
 }
+
+
+
+
+//     //const {  goal, activity, gender, age, height, weight } = user
+//     const calories = Math.round(calculateCalories(goal, age, height, weight, gender, activity))
+//     user.calories = calories
+

@@ -6,7 +6,7 @@ module.exports = (id) => {
     
     validate.string(id, "id")
 
-    return (async () => {debugger
+    return (async () => {
 
         const user = await User.findById(id)
         

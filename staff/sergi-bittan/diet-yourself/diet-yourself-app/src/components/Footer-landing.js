@@ -13,7 +13,7 @@ const FooterLanding = ({ goToFavs, currentDiet, goToLogout }) => {
             <a href="#" className="footer__landing" onClick={event => {
                 event.preventDefault()
                 goToLogout()
-            }}><i class="fas fa-power-off"></i></a>
+            }}><i className="fas fa-power-off"></i></a>
         </div>
     )
 }

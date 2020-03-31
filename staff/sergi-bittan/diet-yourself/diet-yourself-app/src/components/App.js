@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import { Login, Register, Landing, ResultsFood, ResultsFavs, Header, FooterDiet, FooterLanding, FooterDetail } from '../components'
+import { Login, Register, Landing, ResultsFood, ResultsFavs, Header, FooterDiet, FooterLanding, FooterDetail } from '.'
 import { register, login, isLoggedIn, retrieveUser, retrieveDiet, retrieveDiets, retrieveUserDiet, addFavDiet, updateUser, removeFavDiet, logout } from '../logic'
 import { Context } from './ContextProvider'
 import './App.sass'
@@ -16,8 +16,7 @@ export default withRouter(function ({ history }) {
   const [diet, setDiet] = useState()
   const [diets, setDiets] = useState()
   const [user, setUser] = useState([])
-
-  //const [user, setUser] = useState([])
+  
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -53,20 +52,21 @@ export default withRouter(function ({ history }) {
   async function handleMethod(method) {
     try {
       await createDiet(method)
-
       const user = await retrieveUser()
       const { diet } = user
+
       setDiet(diet)
 
       history.push('/diet')
 
     } catch ({ message }) {
+     
       setState({ error: message })
     }
   }
 
   async function handleAddFavs() {
-    try {//coger la dieta???
+    try {
       await addFavDiet()
 
     } catch ({ message }) {
@@ -90,12 +90,13 @@ export default withRouter(function ({ history }) {
     }
   }
 
-  async function handleDataUpdate() {
+  async function handleDataUpdate(newUser) {
     try {
-      await updateUser()
-      const user = await retrieveUser()
+      await updateUser(newUser) 
+       const user = await retrieveUser()
       setUser(user)
     } catch ({ message }) {
+      debugger
       setState({ error: message })
     }
   }
@@ -140,12 +141,11 @@ export default withRouter(function ({ history }) {
 
   async function handleRemove (idDiet) {
     try{
-      debugger
           await removeFavDiet(idDiet)
           const diets = await retrieveDiets()
           setDiets(diets)
           history.push('/diets')
-          debugger
+
     }catch({ message }) {
      
       setState({ error: message })

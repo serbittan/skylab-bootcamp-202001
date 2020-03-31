@@ -1,8 +1,19 @@
 
 
-module.exports = (weight, height, age, gender, activity) => {
+module.exports = (goal, weight, height, age, gender, activity) => {
     // TODO apply the formula
 let points = 0
+let challenge = 0
+
+    switch (goal) {
+        case 'gain mucle mass':
+            challenge = 15 / 100;
+            break;
+        case 'maintain weight':
+            challenge = 0
+        case 'lose weight':
+            challenge = (-15 / 100)
+    }
 
     switch (activity) {
         case "sedentary":
@@ -60,7 +71,7 @@ let points = 0
     if (gender === "male") points += 8
     else points += 2
 
-    let totalPointsOfDay = points
+    let totalPointsOfDay = points + (points * challenge)
 
 
     return totalPointsOfDay

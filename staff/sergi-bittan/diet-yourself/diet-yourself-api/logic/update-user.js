@@ -2,6 +2,7 @@ const { validate } = require("diet-yourself-utils")
 const { ContentError, NotAllowedError } = require("diet-yourself-errors")
 const { models: { User } } = require("diet-yourself-data")
 const bcrypt = require('bcryptjs')
+const { calculateCalories } = require('./helpers')
 
 
 module.exports = (id, body) => {  
@@ -30,6 +31,16 @@ module.exports = (id, body) => {
         }
         
         await user.save()
-        return 
+       
+        const userSaved = await User.findById(id)
+
+        const { goal, age, weight, height, gender, activity } = userSaved
+
+        const calories = Math.round(calculateCalories(goal, age, weight, height, gender, activity))
+
+        user.calories = calories
+
+        await user.save()
+ 
     })()
 }

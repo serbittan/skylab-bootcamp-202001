@@ -3,6 +3,7 @@ const { NotFoundError } = require("diet-yourself-errors")
 const { models: { Diet, User } } = require("diet-yourself-data")
 const { constants: { methods, foods } } = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
+const { calculateCalories } = require('./helpers')
 
 
 
@@ -15,27 +16,28 @@ module.exports = (userId, method) => {
 
         if (!user) throw new NotFoundError(`user with id ${userId} does not exist`)
 
-        const { weight, height, age, gender, activity } = user
-
-        const points = calculatePoints(weight, height, age, gender, activity)
+        const { goal, weight, height, age, gender, activity } = user
 
         const { proportions: { protein, carbs, fat } } = methods.find(_method => _method.name === method)
 
+        const calories = Math.round(calculateCalories(goal, weight, height, age, gender, activity))
+        let points = calculatePoints(goal, weight, height, age, gender, activity)
+       
+        if (method === 'difficult day') points = 45
+        
         const proteinPoints = Math.round(points * protein / 100)
         const carbsPoints = Math.round(points * carbs / 100)
         const fatPoints = Math.round(points * fat / 100)
         const fruitPoints = 1
         const vegetablesPoints = 3
 
-
-
+       
         const proteinFoods = foods.filter(food => food.domain === 'protein')
         const carbsFoods = foods.filter(food => food.domain === 'carbs')
         const fatFoods = foods.filter(food => food.domain === 'fat')
         const fruitsFoods = foods.filter(food => food.domain === "fruit")
         const vegetables = foods.filter(food => food.domain === "vegetables")
 
-        debugger
 
         let counter = 0
         let counterProteins = 0
@@ -44,6 +46,8 @@ module.exports = (userId, method) => {
         let counterFruit = 0
         let counterVegetables = 0
         let dietFoods = []
+      
+
 
         while (counter < points) {
 
@@ -56,7 +60,7 @@ module.exports = (userId, method) => {
                 //dietFoods.push(proteinFoods[random])
 
                 counterProteins += proteinFoods[random].points
-                debugger
+              
             }
 
             if (counterCarbs < carbsPoints) {
@@ -108,16 +112,12 @@ module.exports = (userId, method) => {
         console.log(counterProteins, counterCarbs, counterFats)
 
 
-        const diet = new Diet({ method, foods: dietFoods, points })
+        const diet = new Diet({ method, foods: dietFoods, points , calories })
 
         user.diet = diet
 
 
         await user.save()
-
-        // const user2 = await User.findById(userId)
-
-        // console.log(user2.diet)
 
         return
     })()
