@@ -1,12 +1,14 @@
 const { validate } = require("diet-yourself-utils")
-const { ContentError, NotAllowedError } = require("diet-yourself-errors")
+const { ContentError, NotAllowedError, NotFoundError } = require("diet-yourself-errors")
 const { models: { User } } = require("diet-yourself-data")
 const bcrypt = require('bcryptjs')
 const { calculateCalories } = require('./helpers')
 
 
 module.exports = (id, body) => {  
+
     validate.string(id, "id")
+    validate.type(body, 'body', Object)
 
     const validInputs = ["username", "age", "weight", "height", "goal", "activity", "city", "finalWeight", "password", "oldPassword"]
     
@@ -18,29 +20,39 @@ module.exports = (id, body) => {
         
     return (async() =>{
         const user = await User.findById(id)
-    
-        if (body.password) {
-            const result = await bcrypt.compare(body.oldPassword, user.password)
-    
-            if (!result) throw new NotAllowedError('wrong credentials')
-            body.password = await bcrypt.hash(body.password, 10)
-        }
-    
-        for (key in body) {
-            user[key] = body[key]
-        }
+
+        if(!user) throw new NotFoundError(`user with id ${id} does not exist`)
+
+        // if(!body) throw new ContentError(`No data has been updated`)
         
-        await user.save()
-       
-        const userSaved = await User.findById(id)
 
-        const { goal, age, weight, height, gender, activity } = userSaved
+        else {
 
-        const calories = Math.round(calculateCalories(goal, age, weight, height, gender, activity))
 
-        user.calories = calories
-
-        await user.save()
- 
+            if (body.password) {
+                const result = await bcrypt.compare(body.oldPassword, user.password)
+        
+                if (!result) throw new NotAllowedError('wrong credentials')
+                body.password = await bcrypt.hash(body.password, 10)
+            }
+        
+            for (key in body) {
+                user[key] = body[key]
+            }
+            
+            await user.save()
+           
+            const userSaved = await User.findById(id)
+    
+            const { goal, age, weight, height, gender, activity } = userSaved
+    
+            const calories = Math.round(calculateCalories(goal, age, weight, height, gender, activity))
+    
+            user.calories = calories
+    
+            await user.save()
+     
+        }
+    
     })()
 }

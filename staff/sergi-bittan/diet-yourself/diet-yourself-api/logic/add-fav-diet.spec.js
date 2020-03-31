@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Diet } } = require('diet-yourself-data')
+
 const { expect } = require('chai')
 const { random } = Math
 const addFavDiet = require('./add-fav-diet')
@@ -11,17 +12,17 @@ const { NotFoundError } = require("diet-yourself-errors")
 const { constants: { methods, foods } } = require("diet-yourself-utils")
 const { calculatePoints } = require('./helpers')
 
-describe.only('add diet to favorites', () => {
+describe('add diet to favorites', () => {
 
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany)
+            .then(() => Promise.all([User.deleteMany(), Diet.deleteMany()]))
     )
 
     //user
     let username, email, password, age, height, weight, city, finalWeight, points, id, goal, activity, gender, goalIndex, activityIndex, genderIndex
 
-
+    let goals, activities, genders
     //diet
 
     let method, idDiet, newDiet
@@ -43,9 +44,9 @@ describe.only('add diet to favorites', () => {
 
     beforeEach(async () => {
 
-        goal = ["gain muscle mass", "maintain weight", "lose weight"]
-        activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
-        gender = ["male", "female"]
+        goals = ["gain muscle mass", "maintain weight", "lose weight"]
+        activities = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
+        genders = ["male", "female"]
 
         goalIndex = Math.floor(Math.random() * 3)
         activityIndex = Math.floor(Math.random() * 4)
@@ -55,9 +56,9 @@ describe.only('add diet to favorites', () => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        goal = goal[goalIndex]
-        activity = activity[activityIndex]
-        gender = gender[genderIndex]
+        goal = goals[goalIndex]
+        activity = activities[activityIndex]
+        gender = genders[genderIndex]
         age = (Math.floor(random() * 65) + 12)
         height = (Math.floor(random() * 200) + 120)
         weight = (Math.floor(random() * 200) + 30)
@@ -78,16 +79,15 @@ describe.only('add diet to favorites', () => {
         const user = await User.create({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, points })
 
         id = user.id
-
+        debugger
 
         //create diet and extract id
 
         newDiet = await new Diet({ method, foods: _foods, points })
 
         idDiet = newDiet.id
-        user.diet = []
-
-        user.diet.push(newDiet)
+        user.diet = newDiet
+        
         
         await user.save()
 
@@ -102,12 +102,14 @@ describe.only('add diet to favorites', () => {
         const user = await User.findById(id)
 
         const favs = user.favorites
+
         expect(favs.length).to.equal(1)
 
         let isFav = false
-        favs.forEach(fav => {
+
+        favs.forEach(fav => {debugger
             
-            if (fav.id === user.diet[0].id) {
+            if (fav.id === user.diet.id) {
                 isFav = true
             }
         })
@@ -118,21 +120,19 @@ describe.only('add diet to favorites', () => {
 
     })
 
-    // it('should fail on wrong user id', async () => {
-    //     let wrongId = '293898iujuyh'
+    it('should fail on wrong user id', async () => {
+        let wrongId = '293898iujuyh'
 
-    //     try {
-    //         await retrieveUserDiet(wrongId)
+        try {
+            await addFavDiet(wrongId)
 
-    //         throw Error('should not reach this point')
-    //     } catch (error) {
-    //         expect(error).to.exist
-    //         expect(error).to.be.an.instanceOf(NotFoundError)
-    //         expect(error.message).to.equal(`user with id ${wrongId} not found`)
-    //     }
-    // })
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with id ${wrongId} does not exist`)
+        }
+    })
 
-    after(() => User.deleteMany()
-        .then(() => mongoose.disconnect()))
-
+    after(() => Promise.all([User.deleteMany(), Diet.deleteMany()]).then(() => mongoose.disconnect()))
 })   
