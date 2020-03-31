@@ -7,12 +7,12 @@ let challenge = 0
 
     switch (goal) {
         case 'gain mucle mass':
-            challenge = 15 / 100;
+            challenge = 5 / 100;
             break;
         case 'maintain weight':
             challenge = 0
         case 'lose weight':
-            challenge = (-15 / 100)
+            challenge = (- 5 / 100)
     }
 
     switch (activity) {

@@ -1,5 +1,5 @@
 import React from 'react'
-//import './Header.sass'
+import './Header.sass'
 
 const Header = ({ user, goBack }) => {
     const { username, calories } = user
