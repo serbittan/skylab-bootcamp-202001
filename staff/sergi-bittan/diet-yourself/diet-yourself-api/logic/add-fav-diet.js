@@ -12,12 +12,18 @@ module.exports = (id) => {
         const user = await User.findById(id)
 
         if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
+        else {
 
-        const diet = user.diet
-        
-        user.favorites.push(diet)
+            const diet = user.diet
 
-        await user.save()
+            if(!diet) throw new NotFoundError(`user with id ${id} does not have a diet`)
+            
+            user.favorites.push(diet)
+    
+            await user.save()
+
+        }
+
     
     })()
 

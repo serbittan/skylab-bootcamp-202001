@@ -20,7 +20,7 @@ describe('retrieve user diet', () => {
 
     //user
     let username, email, password, age, height, weight, city, finalWeight, points, id, goal, activity, gender, goalIndex, activityIndex, genderIndex
-    
+    let goals, activities, genders
     
     //diet
     
@@ -43,9 +43,9 @@ describe('retrieve user diet', () => {
     
     beforeEach(async () => {
 
-        goal = ["gain muscle mass", "maintain weight", "lose weight"]
-    activity = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
-    gender = ["male", "female"]
+        goals = ["gain muscle mass", "maintain weight", "lose weight"]
+    activities = ["sedentary", "mild activity", "moderate activity", "heavy activity"]
+    genders = ["male", "female"]
         
         goalIndex = Math.floor(Math.random() * 3)
         activityIndex = Math.floor(Math.random() * 4)
@@ -55,9 +55,9 @@ describe('retrieve user diet', () => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        goal = goal[goalIndex]
-        activity = activity[activityIndex]
-        gender = gender[genderIndex]
+        goal = goals[goalIndex]
+        activity = activities[activityIndex]
+        gender = genders[genderIndex]
         age = (Math.floor(random() * 65) + 12)
         height = (Math.floor(random() * 200) + 120)
         weight = (Math.floor(random() * 200) + 30)
@@ -87,10 +87,7 @@ describe('retrieve user diet', () => {
         idDiet = diet.id
         debugger
 
-        user.diet = []
-
-        user.diet.push(diet)
-    
+        user.diet = diet  
 
         await user.save()
 
