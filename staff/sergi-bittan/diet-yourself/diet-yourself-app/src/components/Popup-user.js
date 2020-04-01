@@ -5,10 +5,10 @@ import './Popup-user.sass'
 
 
 const PopupUser = ({ updateData, error, data }) => (
-  <Popup trigger={<button>Profile</button>} position="left bottom">
+  <Popup trigger={<a href="#"><i className="footer-diet__p fas fa-user"></i></a>} position="left bottom">
     <form className="popup" onSubmit={event => {
         event.preventDefault()
-debugger
+
         const username = event.target.username.value
         const age = parseFloat(event.target.age.value)
         const weight = parseFloat(event.target.weight.value)

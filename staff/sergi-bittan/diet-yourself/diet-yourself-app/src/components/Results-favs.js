@@ -1,5 +1,6 @@
 import React from 'react'
 import ItemDiet from './Item-diet'
+import './Results-favs.sass'
 
 
 const ResultsFavs = ({diets, goToDetail }) => {

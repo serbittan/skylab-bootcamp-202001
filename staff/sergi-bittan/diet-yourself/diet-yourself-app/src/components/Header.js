@@ -9,9 +9,9 @@ const Header = ({ user, goBack }) => {
             <a href="#" onClick={event => {
                 event.preventDefault()
                 goBack()
-            }}><span className="header__landing"><i className="fas fa-angle-left"></i></span></a>
+            }}><span className="header__prev"><i className="fas fa-angle-left"></i></span></a>
             <p className="header__landing">Objetivo :</p>
-            <p className="header__landing">{calories} Kcal</p>
+            <p className="header__kcl">{calories} Kcal</p>
             <p>{username}</p>
         </header>
     )

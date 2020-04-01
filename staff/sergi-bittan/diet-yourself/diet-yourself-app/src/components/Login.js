@@ -5,7 +5,7 @@ import './Login.sass'
 
 export default ({ onLogin, error }) => {
     return <div className="log">
-        <header className="header-activity">
+        <header className="header-log">
             <h3>Diet Yourself</h3>
         </header>
 

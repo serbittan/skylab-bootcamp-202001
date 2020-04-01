@@ -5,15 +5,26 @@ body
     width: 100%
     
 .header
+    position: fixed
     display: flex
-    justify-content: space-evenly
+    flex-direction: row
     align-items: center
-    margin: 3rem 2rem 2rem 2rem
+    height: 18vh
+    background-color: #b6dbe1
+    width: 100%
     &__landing
         padding: 1rem 
-        padding-right: 2rem
+        color: black
+        font-family: monospace
+    &__kcl
+        padding: 1.5rem 
         color: red
         font-family: monospace
+        font-size: 1.5em
+    &__prev
+        _visibility: hidden
+      
 p
     font-size: large
-        
+    _padding-left: 2em  
+       

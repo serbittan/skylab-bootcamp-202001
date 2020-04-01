@@ -29,9 +29,9 @@ module.exports =  (id, idDiet)=> {
 
         const diet = user.favorites[index]
 
-        const { _id, method, foods, points } = diet
+        const { _id, method, foods, points, calories } = diet
 
-        return { _id, method, foods, points }
+        return { _id, method, foods, points, calories }
         
     })()
 

@@ -8,7 +8,7 @@ const Landing = ({onMethod}) => {
 
     return(
         <div className="main-landing">
-            <h4>Choose your ideal Diet</h4>
+            <h4 className="land">Choose your ideal Diet</h4>
             <div className={"main-landing__diet"} onClick={() => {
                 method = 'mediterranean'
                 onMethod(method)
