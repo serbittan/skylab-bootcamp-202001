@@ -27,7 +27,8 @@ module.exports =  (id)=> {
                 idDiet: diet._id,
                 method: diet.method,
                 foods: diet.foods,
-                points: diet.points
+                points: diet.points,
+                calories: diet.calories
 
             })
         })

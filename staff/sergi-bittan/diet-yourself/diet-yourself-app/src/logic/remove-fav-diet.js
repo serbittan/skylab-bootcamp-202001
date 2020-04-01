@@ -6,7 +6,7 @@ const API_URL = process.env.REACT_APP_API_URL
 
 const removeFavDiet = function (idDiet) {
     validate.string(idDiet, 'idDiet')
-debugger
+
     return ( async () => {
         const response = await fetch(`${API_URL}/user/diet/${idDiet}/delete`, {
             method: 'PATCH',
