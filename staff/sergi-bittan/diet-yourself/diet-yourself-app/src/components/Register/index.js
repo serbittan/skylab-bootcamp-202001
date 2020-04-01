@@ -134,17 +134,17 @@ debugger
     return (
         <Fragment>
             <header className="header-activity">
-                <h3>Activity Level</h3>
-                {step > 0 && <a href="" onClick={event => {
+                {step > 0 && <a href="" className="header-activity__a" onClick={event => {
                     event.preventDefault()
                     handleGoPrevStep()
-                }}>Prev <i className="fas fa-angle-left"></i></a>
-                }
+                }}><i className="header-activity__a fas fa-angle-left"></i></a>
+            }
+            <h3>Activity Level</h3>
 
-                {step < 4 && <a href="" onClick={event => {
+                {step < 4 && <a href="" className="header-activity__a" onClick={event => {
                     event.preventDefault()
                     handleGoNextStep()
-                }}>Next <i className="fas fa-angle-right"></i></a>
+                }}><i className="header-activity__a fas fa-angle-right"></i></a>
                 }
             </header>
 

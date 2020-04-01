@@ -18,7 +18,7 @@ const register =  function (username, email, password, goal, activity, gender, a
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
-    debugger
+   
     return (async () => {
         const response = await fetch(`${API_URL}/users`, {
             method: 'POST',

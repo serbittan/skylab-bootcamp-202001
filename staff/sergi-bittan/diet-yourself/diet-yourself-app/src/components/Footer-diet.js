@@ -4,17 +4,17 @@ import './Footer-diet.sass'
 
 const FooterDiet = ({ addToFavs, newDiet, onDataUpdate }) => {
 
-   debugger
+   
     return (
         <div className="footer-diet">
-            <a href="#" className="footer__diet" onClick={event => {
+            <a href="#"  onClick={event => {
                 event.preventDefault()
 
                 addToFavs()
-            }}><i className="far fa-star"></i></a>
-         <button type="button" className="footer__diet" onClick={() => {
+            }}><i className=" footer-diet__f far fa-star"></i></a>
+         <a href="#"  onClick={() => {
                 newDiet()
-            }}>NEW</button>
+            }}><i className="footer-diet__r fas fa-redo"></i></a>
             <PopupUser updateData={onDataUpdate}/>
         </div>
     )

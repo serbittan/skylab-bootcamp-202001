@@ -1,5 +1,5 @@
 import React from 'react'
-//import './Item-food.sass'
+import './Item-food.sass'
 
 const ItemFood = ({ foods }) => {
     const { name, quantity }  = foods
@@ -7,8 +7,8 @@ const ItemFood = ({ foods }) => {
     return(
         <div>
             <section className="foods">
-                <p>{name}</p>
-                <p>{quantity} gr</p>
+                <p className="foods__n">{name}</p>
+                <p className="foods__q">{quantity} gr</p>
             </section>
         </div>
     )
