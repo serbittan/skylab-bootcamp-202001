@@ -4,7 +4,12 @@ import './Login.sass'
 
 
 export default ({ onLogin, error }) => {
-    return <div>
+    return <div className="log">
+        <header className="header-activity">
+            <h3>Diet Yourself</h3>
+        </header>
+
+             
         <form className="login" onSubmit={event => {
             event.preventDefault()
 
@@ -14,9 +19,9 @@ export default ({ onLogin, error }) => {
             onLogin(email, password)
         }}>
 
-            <input type="text" className="login__mail" name="email" placeholder="ejemplo@email.com" autoFocus="autofocus" />
-            <input type="password" className="login__password" name="password" placeholder="password" />
-            <button className="login__acces">Login</button>
+            <input type="text" className="login__ac" name="email" placeholder="ejemplo@email.com" autoFocus="autofocus" />
+            <input type="password" className="login__ac" name="password" placeholder="password" />
+            <button className="login__in">Login</button>
 
         </form>
         {error && <Feedback message={error} level="error" />} 
