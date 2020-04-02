@@ -374,19 +374,19 @@ module.exports = [
     {
         name: 'apple',
         points: 0,
-        quantity: 1,
+        quantity: 100,
         domain: 'fruit'
     },
     {
         name: 'orange',
         points: 0,
-        quantity: 1,
+        quantity: 120,
         domain: 'fruit'
     },
     {
         name: 'kiwi',
         points: 0,
-        quantity: 1,
+        quantity: 100,
         domain: 'fruit'
     },
     {
@@ -404,13 +404,13 @@ module.exports = [
     {
         name: 'pear',
         points: 0,
-        quantity: 1,
+        quantity: 100,
         domain: 'fruit'
     },
     {
         name: 'banana',
         points: 0,
-        quantity: 1,
+        quantity: 100,
         domain: 'fruit'
     },
     {
@@ -428,13 +428,13 @@ module.exports = [
     {
         name: 'peach',
         points: 0,
-        quantity: 1,
+        quantity: 100,
         domain: 'fruit'
     },
     {
         name: 'grapefruit',
         points: 0,
-        quantity: 1,
+        quantity: 100,
         domain: 'fruit'
     },
     {

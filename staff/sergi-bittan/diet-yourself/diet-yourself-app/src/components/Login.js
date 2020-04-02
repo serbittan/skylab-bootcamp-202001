@@ -3,10 +3,14 @@ import Feedback from './Feedback'
 import './Login.sass'
 
 
-export default ({ onLogin, error }) => {
+export default ({ onLogin, goToRegister, error }) => {
     return <div className="log">
         <header className="header-log">
-            <h3>Diet Yourself</h3>
+            <a href="#" onClick={event => {
+                    event.preventDefault()
+                    goToRegister()
+                }}><i className="header-log__log fas fa-angle-left"></i></a>
+            <h3 className="header-log__tt">Diet Yourself</h3>
         </header>
 
              
@@ -19,8 +23,8 @@ export default ({ onLogin, error }) => {
             onLogin(email, password)
         }}>
 
-            <input type="text" className="login__ac" name="email" placeholder="ejemplo@email.com" autoFocus="autofocus" />
-            <input type="password" className="login__ac" name="password" placeholder="password" />
+            <input type="text" autoComplete="off" className="login__ac" name="email" placeholder="ejemplo@email.com" autoFocus="autofocus" />
+            <input type="password" autoComplete="off" className="login__ac" name="password" placeholder="password" />
             <button className="login__in">Login</button>
 
         </form>

@@ -12,7 +12,7 @@ const { method, calories, idDiet } = diets
                 goToDetail(idDiet)
 
             }}><i className="item-favs__l fas fa-carrot"></i></a><p>{method}</p>
-            <p>{calories}</p>
+            <p>{calories} Kcal</p>
 
         </div>
     )

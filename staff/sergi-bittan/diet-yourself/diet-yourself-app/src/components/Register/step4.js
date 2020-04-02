@@ -7,11 +7,11 @@ const Step4 = ({ onSaveData, data}) => {
     return (
     <div className="height">
         <h5>How Tall are you?</h5>
-        <input type="text" className="height__h" name="height" placeholder="cms" autoFocus="autofocus" onBlur={event => onSaveData(3, {height: event.target.value})}/>
+        <input type="text" autoComplete="off" className="height__h" name="height" placeholder="cms" autoFocus="autofocus" onBlur={event => onSaveData(3, {height: event.target.value})}/>
         <h5>What's your current weight?</h5>
-        <input type="text" className="height__h" name="weight" placeholder="kg"  onBlur={event => onSaveData(3, {weight: event.target.value})}/>
+        <input type="text" autoComplete="off" className="height__h" name="weight" placeholder="kg"  onBlur={event => onSaveData(3, {weight: event.target.value})}/>
         <h5>your desired weight?</h5>
-        <input type="text" className="height__h" name="final_weight" placeholder="kg"  onBlur={event => onSaveData(3, {finalWeight: event.target.value})}/>
+        <input type="text" autoComplete="off" className="height__h" name="final_weight" placeholder="kg"  onBlur={event => onSaveData(3, {finalWeight: event.target.value})}/>
     </div>
     )
 }
