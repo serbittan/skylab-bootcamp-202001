@@ -42,7 +42,7 @@ module.exports = (username, email, password, goal, activity, gender, age, height
             const { goal, weight, height, age, gender, activity } = user
 
             const calories = Math.round(calculateCalories(goal, weight, height, age, gender, activity))
-
+            debugger
             user.calories = calories
 
             return user.save()

@@ -19,7 +19,8 @@ module.exports =  (id)=> {
 
         const userDiets = []
         
-        if(!diets) throw new NotFoundError(`there are no diets`)
+        //if(!diets.length) throw new NotFoundError(`there are no diets`) 
+         if(!diets.length) return userDiets
 
                 
         diets.forEach(diet =>{

@@ -9,7 +9,7 @@ import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
 import Step5 from './Step5'
-import Img from '../../images/icons8-aceituna-48.png'
+
 
 const registerData = {
     steps: [
@@ -37,6 +37,8 @@ const registerData = {
     ]
 }
 
+const errorMessage = 'To continue, please fill the necesary information'
+
 export default withRouter(function Register({ history }) {
 
 
@@ -44,7 +46,9 @@ export default withRouter(function Register({ history }) {
     //const [state, setState] = useContext(Context)
     const [error, setError] = useState(undefined)
     const [step, setStep] = useState(0);
+    
     const { goal } = useLocation();
+
 
     useEffect(() => {
         if (goal) {
@@ -53,21 +57,27 @@ export default withRouter(function Register({ history }) {
     }, [])
 
     const handleGoNextStep = () => {
+        
         switch (step) {
             case 0:
-                registerData.steps[0].goal && setStep(1)
+                if(registerData.steps[0].goal) return setStep(1)
+                else setError(errorMessage)
                 break;
             case 1:
-                registerData.steps[1].activityLevel && setStep(2)
+                if(registerData.steps[1].activityLevel) return setStep(2)
+                else setError(errorMessage)
                 break;
             case 2:
-                registerData.steps[2].genre && registerData.steps[2].age && registerData.steps[2].city && setStep(3)
+                if(registerData.steps[2].genre && registerData.steps[2].age && registerData.steps[2].city) return setStep(3)
+                else setError(errorMessage)
                 break;
             case 3:
-                registerData.steps[3].height && registerData.steps[3].weight && registerData.steps[3].finalWeight && setStep(4)
+                if(registerData.steps[3].height && registerData.steps[3].weight && registerData.steps[3].finalWeight) return setStep(4)
+                else setError(errorMessage)
                 break;
             case 4:
-                registerData.steps[4].email && registerData.steps[4].password && registerData.steps[4].username && setStep(5)
+                if(registerData.steps[4].email && registerData.steps[4].password && registerData.steps[4].username) return setStep(5)
+                else setError(errorMessage)
                 break;
         }
     }
@@ -77,6 +87,7 @@ export default withRouter(function Register({ history }) {
     }
 
     const handleSaveData = (step, data) => {
+        if (data) setError(undefined)
         switch (step) {
             case 0:
                 registerData.steps[0].goal = data.goal;
@@ -154,10 +165,10 @@ export default withRouter(function Register({ history }) {
                 }
             </header>
 
-            {step === 0 && <Step1 onSaveData={handleSaveData} onGoToLogin={handleGoToLogin} data={registerData.steps[0]} />}
-            {step === 1 && <Step2 onSaveData={handleSaveData} data={registerData.steps[1]} />}
-            {step === 2 && <Step3 onSaveData={handleSaveData} data={registerData.steps[2]} />}
-            {step === 3 && <Step4 onSaveData={handleSaveData} data={registerData.steps[3]} />}
+            {step === 0 && <Step1 onSaveData={handleSaveData} onGoToLogin={handleGoToLogin} data={registerData.steps[0]} error={error} />}
+            {step === 1 && <Step2 onSaveData={handleSaveData} data={registerData.steps[1]} error={error} />}
+            {step === 2 && <Step3 onSaveData={handleSaveData} data={registerData.steps[2]} error={error} />}
+            {step === 3 && <Step4 onSaveData={handleSaveData} data={registerData.steps[3]} error={error} />}
             {step === 4 && <Step5 onSaveData={handleSaveData} data={registerData.steps[4]} onRegister={handleRegister} goToLogin={handleGoToLogin} error={error}/>}
         </Fragment>
     )

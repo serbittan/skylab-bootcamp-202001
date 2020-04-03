@@ -4,7 +4,6 @@ import './Login.sass'
 
 
 export default ({ onLogin, goToRegister, error }) => {
-    
     return <div className="log">
         <header className="header-log">
             <a href="#" onClick={event => {
@@ -28,7 +27,8 @@ export default ({ onLogin, goToRegister, error }) => {
             <input type="password" autoComplete="off" className="login__ac" name="password" placeholder="password" />
             <button className="login__in">Login</button>
 
-        </form>
         {error && <Feedback message={error} level="error" />} 
+        
+        </form>
     </div>
 }

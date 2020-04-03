@@ -7,7 +7,7 @@ import Feedback from '../Feedback'
 const Step5 = ({ onSaveData, data, onRegister, goToLogin, error }) => {
     console.log(data)
     
-    return(<>
+    return(
         <div className="register">
             <input type="text" autoComplete="off" className="register__m" name="mail" placeholder="exemple@mail.com" autoFocus="autofocus" onBlur={event => onSaveData(4, { email: event.target.value })}/>
             <input type="text" autoComplete="off" className="register__m" name="password" placeholder="password" onBlur={event => onSaveData(4, { password: event.target.value })}/>
@@ -15,16 +15,11 @@ const Step5 = ({ onSaveData, data, onRegister, goToLogin, error }) => {
             <button className="register__acces" onClick ={event => {
                 event.preventDefault();
                 onRegister()
-            }}>Login</button>
-            <a href="#" className="register__anchor" onClick={event => {
-                event.preventDefault()
-
-                goToLogin()
-            }}>Register</a>
+            }}>Register</button>
+                {error && <Feedback message={error} level="error" />} 
         </div>
 
-        {error && <Feedback message={error} level="error" />} 
-</>
+
     )
 
 }

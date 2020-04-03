@@ -1,8 +1,9 @@
 import React from 'react'
 import './Step1.sass'
 import  Logo from '../../images/diet-yourself.png'
+import Feedback from '../Feedback'
 
-const Step1 = ({ onSaveData, data, onGoToLogin}) => {
+const Step1 = ({ onSaveData, data, onGoToLogin, error}) => {
     console.log(data);
 
     return (
@@ -10,6 +11,7 @@ const Step1 = ({ onSaveData, data, onGoToLogin}) => {
             <figure className="logo">
                 <img className="logo__image" src={Logo} alt="" />
             </figure>
+            {error && <Feedback message={error} level="error" />} 
 
             <div className="logo-goal">
                 <button className="logo-goal__opciones" onClick={() => onSaveData( 0, { goal: 'gain muscle mass' })}>Gain Muscle Mass</button>

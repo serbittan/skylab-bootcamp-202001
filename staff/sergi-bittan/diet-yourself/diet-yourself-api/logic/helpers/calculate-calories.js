@@ -22,7 +22,7 @@ module.exports = (goal, weight, height, age, gender, activity) => {
             act = 1.37 ;
             break;
         case 'moderate activity':
-            activity = 1.55 ;
+            act = 1.55 ;
             break;
         case 'heavy activity':
             act = 1.72 ;
