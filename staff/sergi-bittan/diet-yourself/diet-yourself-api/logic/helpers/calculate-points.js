@@ -5,7 +5,7 @@ let challenge = 0
 
     switch (goal) {
         case 'gain mucle mass':
-            challenge = 5 / 100;
+            challenge = 10 / 100;
             break;
         case 'maintain weight':
             challenge = 0;
@@ -67,15 +67,15 @@ let challenge = 0
         points += 16
     } else if (weight >= 77 && weight <= 81) {
         points += 17
-    } else if (weight >= 82 && weight <= 85) {
+    } else if (weight >= 82 /*&& weight <= 85*/) {
         points += 18
     }
 
 
-    if (height > 178) points += 2
+    if (height > 178) points += 6
     else points += 1
 
-    if (gender === "male") points += 8
+    if (gender === "male") points += 15
     else points += 2
 
     let totalPointsOfDay = points + (points * challenge)

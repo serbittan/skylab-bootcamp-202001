@@ -1,4 +1,4 @@
-//@ts-check
+
 const { validate } = require('diet-yourself-utils')
 const { models: { User } } = require('diet-yourself-data')
 const { NotAllowedError } = require('diet-yourself-errors')
@@ -6,6 +6,7 @@ const { calculateCalories } = require('./helpers')
 const bcrypt = require('bcryptjs')
 
 module.exports = (username, email, password, goal, activity, gender, age, height, weight, city, finalWeight) => {
+    debugger
     validate.string(username, 'username')
     validate.string(email, 'email')
     validate.email(email)
@@ -36,12 +37,12 @@ module.exports = (username, email, password, goal, activity, gender, age, height
             return User.findOne({ email })
          })
         .then(user => {
-            // @ts-ignore
+           
+            
             const { goal, weight, height, age, gender, activity } = user
 
             const calories = Math.round(calculateCalories(goal, weight, height, age, gender, activity))
-
-            // @ts-ignore
+            debugger
             user.calories = calories
 
             return user.save()

@@ -3,7 +3,7 @@ import './Footer-detail.sass'
 
 const FooterDetail = ({ diet, removeDiet, goHome }) => {
     const { _id } = diet
-    debugger
+   
     return (
         <div className="footer-detail">
             <a href="#"  alt="remove diet" onClick={event => {

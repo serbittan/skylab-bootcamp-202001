@@ -5,6 +5,7 @@ module.exports = (req, res) => {
     const { body: { username, email, password, goal, activity, gender, age, height, weight, city, finalWeight  } } = req
 
     try {
+        debugger
         registerUser(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
             .then(() => res.status(201).end())
             .catch(error => {

@@ -20,6 +20,8 @@ module.exports = (userId, method) => {
 
         const { proportions: { protein, carbs, fat } } = methods.find(_method => _method.name === method)
 
+        //const calories = user.calories
+        debugger
         const calories = Math.round(calculateCalories(goal, weight, height, age, gender, activity))
         let points = calculatePoints(goal, weight, height, age, gender, activity)
        
@@ -107,9 +109,9 @@ module.exports = (userId, method) => {
 
         }
 
-        console.log('dietFoods => ', dietFoods)
 
-        console.log(counterProteins, counterCarbs, counterFats)
+
+        console.log(calories)
 
 
         const diet = new Diet({ method, foods: dietFoods, points , calories })
@@ -117,9 +119,11 @@ module.exports = (userId, method) => {
         user.diet = diet
 
 
+
+
         await user.save()
 
-        return
+        return 
     })()
 
 }

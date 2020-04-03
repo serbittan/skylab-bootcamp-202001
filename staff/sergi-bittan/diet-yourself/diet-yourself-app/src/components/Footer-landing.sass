@@ -7,26 +7,34 @@ body
 
 .footer
     display: flex
+    position: fixed
+    bottom: 0
+    width: 100vw
     justify-content: space-evenly
-    height: 15vh
+    height: 10vh
     align-items: center
-    background-color: #ccb6b6
+    background-color: #e78181
+    _background-color: #ccb6b6
+    border-top: 1px black solid
     &__today
         -webkit-appearance: none
         width: 5em
         height: 5em
         border-radius: 50%
-        background: #14abe2
+        background: #f58f8f
+        border: 2px black solid
     &__logout
-        color: #bb58b3
+        color: #191724
         font-size: 2.2em
     &__diets
         color: black
         _display: flex
-        background-color: aqua
+        background-color: #f58f8f
         _justify-content: space-between
         height: 5em
         border-radius: 25%
+        border: 2px black solid
+
 
 .large-icon-size
     font-size: x-large

@@ -18,7 +18,7 @@ const retrieveDiets = function () {
 
         if (status === 200) {
             const userDiets = await response.json()
-            debugger
+            
             return userDiets
         }
 

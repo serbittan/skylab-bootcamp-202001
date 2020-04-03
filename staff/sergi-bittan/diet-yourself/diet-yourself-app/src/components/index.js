@@ -12,7 +12,7 @@ import Header from './Header'
 import FooterDiet from './Footer-diet'
 import FooterLanding from './Footer-landing'
 import FooterDetail from './Footer-detail'
-import PopupUser from './Popup-user'
+import UpdateUser from './Update-user'
 
 export {
     App,
@@ -29,5 +29,5 @@ export {
     FooterDiet,
     FooterLanding,
     FooterDetail,
-    PopupUser
+    UpdateUser
 }

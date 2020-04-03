@@ -1,17 +1,18 @@
-module.exports = (goal, age, weight, height, genre, activity) => {
+module.exports = (goal, weight, height, age, gender, activity) => {
+    debugger
     let tmbAct = 0
     let tmb = 0
     let act = 0
     let challenge = 0
 
-    switch (genre) {
+    switch (gender) {
         case 'male':
             tmb = (10 * weight) + (6.25 * height) - (5 * age) + 5;
             break;
         case 'female':
             tmb = (10 * weight) + (6.25 * height) - (5 * age) - 161;
             break;
-    }
+    }//male, 21años, 180h, 84w   2075
 
     switch (activity) {
         case 'sedentary':
@@ -21,7 +22,7 @@ module.exports = (goal, age, weight, height, genre, activity) => {
             act = 1.37 ;
             break;
         case 'moderate activity':
-            activity = 1.55 ;
+            act = 1.55 ;
             break;
         case 'heavy activity':
             act = 1.72 ;
@@ -29,17 +30,17 @@ module.exports = (goal, age, weight, height, genre, activity) => {
     }
 
     switch (goal) {
-        case 'gain mucle mass':
-            challenge = 15 / 100;
+        case 'gain muscle mass':
+            challenge = 1.25;
             break;
         case 'maintain weight':
-            challenge = 0
+            challenge = 1
         case 'lose weight':
-            challenge = (-15 / 100)
+            challenge = 0.75
     }
 
     tmbAct = tmb * act
-    calories = tmbAct + (tmbAct * challenge)
+    calories = tmbAct * challenge
 
     return calories
 

@@ -1,18 +1,28 @@
 import React from 'react'
 import './Header.sass'
+import { useLocation } from 'react-router-dom'
 
 const Header = ({ user, goBack }) => {
+
     const { username, calories } = user
+
+    let location = useLocation()
+
     return (
 
         <header className="header">
-            <a href="#" onClick={event => {
-                event.preventDefault()
-                goBack()
-            }}><span className="header__prev"><i className="fas fa-angle-left"></i></span></a>
-            <p className="header__landing">Objetivo :</p>
-            <p className="header__kcl">{calories} Kcal</p>
-            <p>{username}</p>
+
+            {location.pathname !== '/landing' &&
+                <a href="#" onClick={event => {
+                    event.preventDefault()
+                    goBack()
+                }}><i className="header__prev fas fa-angle-left"></i></a> 
+            }
+            {location.pathname === '/landing' && <p><i class="fas fa-utensils"></i></p>}
+
+            <p className="header__landing">Objetivo:</p>
+            {calories && <p className="header__kcl">{calories} Kcal</p>}
+            {username && <p className="header__name">{username}</p>}
         </header>
     )
 }
