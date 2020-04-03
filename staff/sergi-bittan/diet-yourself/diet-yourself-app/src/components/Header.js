@@ -3,6 +3,7 @@ import './Header.sass'
 import { useLocation } from 'react-router-dom'
 
 const Header = ({ user, goBack }) => {
+
     const { username, calories } = user
 
     let location = useLocation()
@@ -15,8 +16,9 @@ const Header = ({ user, goBack }) => {
                 <a href="#" onClick={event => {
                     event.preventDefault()
                     goBack()
-                }}><i className="header__prev fas fa-angle-left"></i></a>
+                }}><i className="header__prev fas fa-angle-left"></i></a> 
             }
+            {location.pathname === '/landing' && <p><i class="fas fa-utensils"></i></p>}
 
             <p className="header__landing">Objetivo:</p>
             {calories && <p className="header__kcl">{calories} Kcal</p>}

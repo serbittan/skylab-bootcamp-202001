@@ -45,6 +45,7 @@ export default withRouter(function ({ history }) {
 
       } catch ({ message }) {
         setState({ ...state, error: message })
+        debugger
       }
     })()
   }
@@ -68,6 +69,9 @@ export default withRouter(function ({ history }) {
   async function handleAddFavs() {
     try {
       await addFavDiet()
+      const diets = await retrieveDiets()
+      setDiets(diets)
+      history.push('/diets')
 
     } catch ({ message }) {
       setState({ error: message })
@@ -93,7 +97,9 @@ export default withRouter(function ({ history }) {
   async function handleDataUser(newUser) {
     try {
       await updateUser(newUser) 
-       const user = await retrieveUser()
+      const user = await retrieveUser()
+      //const { user: diet }
+      //setDiet(diet)
       setUser(user)
 
       history.push('/landing')
@@ -189,13 +195,13 @@ export default withRouter(function ({ history }) {
     <div className="App">
       <Switch>
         <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Redirect to="/register" />} />
-        <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register error={error}  />} />
+        <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Register />} />
         <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/landing" /> : <Login onLogin={handleLogin} goToRegister={handleGoToRegister} error={error} />} />
         <Route path="/landing" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><Landing onMethod={handleMethod} error={error} /><FooterLanding goToFavs={handleGoToFavs} currentDiet={handleToday} goToLogout={handleLogout} /></> : <Redirect to="/login" />} />
         <Route path="/diet" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} user={user} /><FooterDiet addToFavs={handleAddFavs} newDiet={handleNewDiet} updateData={handleDataUpdate} /></> : <Redirect to="/login" />} />
         <Route path="/diets" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFavs goToDetail={handleGoToDetail} diets={diets} user={user} /></> : <Redirect to="/landing" />} />
         <Route path="/detail" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><ResultsFood diet={diet} diets={diets} user={user} /><FooterDetail removeDiet={handleRemove} goHome={handleGoHome} diet={diet} /></> : <Redirect to="/register" />} />
-  <Route path="/profile" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><UpdateUser dataUser={handleDataUser} /></> : <Redirect to='/register'/> } />
+        <Route path="/profile" render={() => isLoggedIn() ? <><Header goBack={handleGoToBack} user={user} /><UpdateUser dataUser={handleDataUser} /></> : <Redirect to='/register'/> } />
         <p>Route not found</p>
       </Switch>
     </div>

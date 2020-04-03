@@ -1,13 +1,13 @@
 import React from 'react'
 import './Step5.sass'
-// import Feedback from './Feedback'
+import Feedback from '../Feedback'
 
 
 
-const Step5 = ({ onSaveData, data, onRegister, goToLogin }) => {
+const Step5 = ({ onSaveData, data, onRegister, goToLogin, error }) => {
     console.log(data)
     
-    return(
+    return(<>
         <div className="register">
             <input type="text" autoComplete="off" className="register__m" name="mail" placeholder="exemple@mail.com" autoFocus="autofocus" onBlur={event => onSaveData(4, { email: event.target.value })}/>
             <input type="text" autoComplete="off" className="register__m" name="password" placeholder="password" onBlur={event => onSaveData(4, { password: event.target.value })}/>
@@ -15,14 +15,16 @@ const Step5 = ({ onSaveData, data, onRegister, goToLogin }) => {
             <button className="register__acces" onClick ={event => {
                 event.preventDefault();
                 onRegister()
-            }}>Sign Up</button>
+            }}>Login</button>
             <a href="#" className="register__anchor" onClick={event => {
                 event.preventDefault()
 
                 goToLogin()
-            }}>Sign In</a>
+            }}>Register</a>
         </div>
 
+        {error && <Feedback message={error} level="error" />} 
+</>
     )
 
 }

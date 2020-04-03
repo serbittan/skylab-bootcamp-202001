@@ -22,18 +22,19 @@ const UpdateUser = ({ dataUser, error }) => {
 
             dataUser(newUser)
         }}>
-            {/* <div className="update__g"> */}
-                {/* <p className="g">Click for goal:</p> */}
-                <a href="#"><select className="update__g" name="goal">
+            <div className="update__goal"> 
+               <p className="goal__p">Select goal:</p>
+                <select className="goal__s" name="goal">
                     <option value="gain muscle mass">Gain muscle Mass</option>
                     <option value="maintain weight">Maintain Weight</option>
                     <option value="lose weight">Lose Weight</option>
-                </select>Click for goal:</a>
-            {/* </div> */}
-
-            <div className="update__a">
-                <p className="a">Click for activity:</p>
-                <select className="a" name="activity">
+                </select>
+                
+            </div>
+            <div className="update__act">
+                <p className="act__a">Select activity:</p>
+            
+                <select className="act__sa" name="activity">
                     <option value="sedentary">Sedentary</option>
                     <option value="mild activity">Mild Activity</option>
                     <option value="moderate activity">Moderate Activity</option>
@@ -41,16 +42,14 @@ const UpdateUser = ({ dataUser, error }) => {
                 </select>
             </div>
 
-
-
-            <input type="text" className="update__input" name="username" placeholder="enter username" autoFocus="autofocus" />
-            <input type="text" className="update__input" name="age" placeholder="enter age" />
-            <input type="text" className="update__input" name="weight" placeholder="enter weight" />
-            <input type="text" className="update__input" name="height" placeholder="enter height" />
-            <input type="text" className="update__input" name="city" placeholder="enter city" />
-            <input type="text" className="update__input" name="finalWeight" placeholder="enter finalWeight" />
-            <input type="password" className="update__input" name="password" placeholder="enter password" />
-            <input type="password" className="update__input" name="oldPassword" placeholder="enter old password" />
+            <input type="text" className="update__input" autoComplete="off" name="username" placeholder="enter username" autoFocus="autofocus" />
+            <input type="text" className="update__input" autoComplete="off"  name="age" placeholder="enter age" />
+            <input type="text" className="update__input" autoComplete="off" name="weight" placeholder="enter weight" />
+            <input type="text" className="update__input" autoComplete="off" name="height" placeholder="enter height" />
+            <input type="text" className="update__input" autoComplete="off" name="city" placeholder="enter city" />
+            <input type="text" className="update__input" autoComplete="off" name="finalWeight" placeholder="enter finalWeight" />
+            <input type="password" className="update__input" autoComplete="off" name="password" placeholder="enter password" />
+            <input type="password" className="update__input" autoComplete="off" name="oldPassword" placeholder="enter old password" />
             <button type="submit" className="update__bottom">Update</button>
 
             {error && <Feedback message={error} level="error" />}

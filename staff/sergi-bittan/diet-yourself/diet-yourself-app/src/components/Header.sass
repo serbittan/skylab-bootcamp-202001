@@ -6,13 +6,14 @@ body
     
 .header
     position: fixed
+    top: 0
+    z-index: 1000
     display: flex
     flex-direction: row
     align-items: center
     height: 10vh
     border-bottom: 1px black solid
-    background-color: #e3c7c7
-    _background-color: #b6dbe1
+    background-color: #f3f0f0
     width: 100%
     &__landing
         padding: 0.7rem 
@@ -32,7 +33,9 @@ body
         margin: 1em
         font-size: 1.5em
         
-
+h3
+    padding: 0 1em 0 1em
+    _display: none
       
 p
     font-size: large

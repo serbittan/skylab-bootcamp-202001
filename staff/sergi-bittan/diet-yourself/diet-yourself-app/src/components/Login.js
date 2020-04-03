@@ -4,6 +4,7 @@ import './Login.sass'
 
 
 export default ({ onLogin, goToRegister, error }) => {
+    
     return <div className="log">
         <header className="header-log">
             <a href="#" onClick={event => {

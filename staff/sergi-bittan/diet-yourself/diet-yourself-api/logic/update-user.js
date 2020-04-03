@@ -46,7 +46,7 @@ module.exports = (id, body) => {
     
             const { goal, age, weight, height, gender, activity } = userSaved
     
-            const calories = Math.round(calculateCalories(goal, age, weight, height, gender, activity))
+            const calories = Math.round(calculateCalories(goal, weight, height, age, gender, activity))
     
             user.calories = calories
     

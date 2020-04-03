@@ -60,7 +60,7 @@ let challenge = 0
         points += 16
     } else if (weight >= 77 && weight <= 81) {
         points += 17
-    } else if (weight >= 82 && weight <= 85) {
+    } else if (weight >= 82 /*&& weight <= 85*/) {
         points += 18
     }
 

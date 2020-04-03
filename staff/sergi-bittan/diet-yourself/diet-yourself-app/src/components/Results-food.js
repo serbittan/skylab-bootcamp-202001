@@ -2,7 +2,9 @@ import React from 'react'
 import ItemFood from './Item-food'
 import './Results-food.sass'
 
+
 const ResultsFood = ({ diet }) => {
+
     
     const { method, foods } = diet
     return (
@@ -11,6 +13,7 @@ const ResultsFood = ({ diet }) => {
             <section className="results_results">
                 {foods && foods.map((food, index) => <ItemFood key={index} foods={food} />)}
             </section>
+            
         </div>
     )
 
