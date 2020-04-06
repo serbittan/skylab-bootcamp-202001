@@ -1,5 +1,5 @@
 module.exports = (goal, weight, height, age, gender, activity) => {
-    // TODO apply the formula
+   
 let points = 0
 let challenge = 0
 
@@ -11,12 +11,8 @@ let challenge = 0
             challenge = 0;
             break;
         case 'lose weight':
-<<<<<<< HEAD
             challenge = (-15 / 100);
             break;
-=======
-            challenge = (- 5 / 100)
->>>>>>> develop-diet-yourself
     }
 
     switch (activity) {

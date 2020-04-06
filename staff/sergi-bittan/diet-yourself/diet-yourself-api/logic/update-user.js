@@ -23,7 +23,7 @@ module.exports = (id, body) => {
 
         if(!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-        // if(!body) throw new ContentError(`No data has been updated`)
+       
         
 
         else {

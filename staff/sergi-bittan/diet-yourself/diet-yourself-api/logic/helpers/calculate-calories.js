@@ -1,5 +1,4 @@
 module.exports = (goal, weight, height, age, gender, activity) => {
-    debugger
     let tmbAct = 0
     let tmb = 0
     let act = 0
