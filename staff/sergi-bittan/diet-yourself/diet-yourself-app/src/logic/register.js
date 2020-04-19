@@ -13,7 +13,7 @@ const register =  function (username, email, password, goal, activity, gender, a
     validate.type(age, 'age', Number)
     validate.type(height, 'height', Number)
     validate.type(weight, 'weight', Number)
-    validate.type(finalWeight, 'afinalWeight', Number)
+    validate.type(finalWeight, 'finalWeight', Number)
     validate.string(city, 'city')
     validate.string(email, 'email')
     validate.email(email)
