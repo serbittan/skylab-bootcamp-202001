@@ -538,13 +538,6 @@ module.exports = [
         points: 0,
         quantity: 120,
         domain: 'vegetables'
-    },
+    }
     
-    
-    
-
-    
-
-
-
 ]
