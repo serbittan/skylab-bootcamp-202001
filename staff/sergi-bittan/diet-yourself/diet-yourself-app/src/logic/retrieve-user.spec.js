@@ -1,7 +1,7 @@
 const { mongoose, models: { User } } = require('diet-yourself-data')
 const { random } = Math
-const { retrieveUser } = require('.')
-import context from './context'
+const { retrieveUser } = require('.') // ES5
+import context from './context' // ES6
 const jwt = require('jsonwebtoken')
 
 const { constants: { goals, activities } } = require("diet-yourself-utils")
@@ -54,7 +54,7 @@ describe('retrieveUser', () => {
                     expect(user.username).toBe(username) 
                     //mail is not returned
                     expect(user.password).toBeUndefined()
-                    expect(user.goal).toBe(goal)
+                    expect(user.goal).toBe(goal)    
                     expect(user.activity).toBe(activity)
                     expect(user.gender).toBe(gender)
                     expect(user.age).toBe(age)

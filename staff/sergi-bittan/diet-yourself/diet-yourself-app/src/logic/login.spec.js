@@ -10,7 +10,7 @@ const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL, REACT_APP_TEST_JWT_
 
 describe('login', () => {
     let username, email, password, goal, activity, gender, age, height, weight, city, finalWeight
-    const genderList =['male', 'female']
+    const genderList = ['male', 'female']
     let goalIndex = Math.floor(Math.random() * 3)
     let genderIndex = Math.floor(Math.random() * 2)
     let activityIndex = Math.floor(Math.random() * 4)
@@ -29,7 +29,7 @@ describe('login', () => {
         activity = activities[activityIndex]
         gender = genderList[genderIndex]
         age = Math.floor(Math.random() * 53) + 17
-        height = Math.floor(Math.random() * 80 ) + 120
+        height = Math.floor(Math.random() * 80) + 120
         weight = Math.floor(Math.random() * 110) + 40
         city = `city-${random()}`
         finalWeight = Math.floor(Math.random() * 110) + 40
@@ -43,7 +43,7 @@ describe('login', () => {
             const _password = await bcript.hash(password, 10)
 
             await User.create({ username, email, password: _password, goal, activity, gender, age, height, weight, city, finalWeight })
-                .then(user => _id = user.id)
+                .then(({ id }) => _id = id)
         })
 
         it('should succeed on correct credentials', () =>

@@ -4,7 +4,6 @@ const { random } = Math
 const { createDiet } = require('.')
 const jwt = require('jsonwebtoken')
 import context from './context'
-import retrieveUser from './retrieve-user'
 
 const { env: {
     REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL,
@@ -19,7 +18,7 @@ describe('createDiet', () => {
         await User.deleteMany()
     })
     let username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories, method, diet
-    const genderList =['male', 'female']
+    const genderList = ['male', 'female']
     let goalIndex = Math.floor(Math.random() * 3)
     let genderIndex = Math.floor(Math.random() * 2)
     let activityIndex = Math.floor(Math.random() * 4)
@@ -41,19 +40,23 @@ describe('createDiet', () => {
         method = methods[methodIndex].name
     })
     describe('when user already exist', () => {
+        let userId
         beforeEach(async () => {
             const user = await User.create({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories })
             context.token = jwt.sign({ sub: user.id }, TEST_JWT_SECRET)
+            userId = user.id
         })
         it('should suceed on a correct and valid data', async () => {
             await createDiet(method)
 
-            const user = await retrieveUser()
+            // const user = await retrieveUser()
+
+            const user = await User.findById(userId)
 
             expect(user).toBeDefined()
             expect(user.username).toBe(username)
-            expect(user.password).toBeUndefined()
-            expect(user.email).toBeUndefined()
+            expect(user.password).toBe(password)
+            expect(user.email).toBe(email)
             expect(user.goal).toBe(goal)
             expect(user.activity).toBe(activity)
             expect(user.gender).toBe(gender)
@@ -67,11 +70,11 @@ describe('createDiet', () => {
         })
     })
     it('should fail on invalid token', async () => {
-        try{
+        try {
             await createDiet(`${token}-wrong`)
             throw new Error('should not reach this point')
-            
-        } catch(error) {
+
+        } catch (error) {
             expect(error).toBeDefined()
             expect(error.message).toBe(`token is not defined`)
         }
@@ -79,8 +82,8 @@ describe('createDiet', () => {
 
     it('should fail on non-string method', () => {
         method = 1
-        expect(()=> createDiet(method)).toThrowError(TypeError, `method ${method} is not a string`)
-        
+        expect(() => createDiet(method)).toThrowError(TypeError, `method ${method} is not a string`)
+
         method = true
         expect(() => createDiet(method)).toThrowError(TypeError, `method ${method} is not a string`)
 
@@ -91,11 +94,11 @@ describe('createDiet', () => {
         expect(() => createDiet(method)).toThrowError(TypeError, `method ${method} is not a string`)
     })
 
-    afterAll( async () => {
+    afterAll(async () => {
         await User.deleteMany()
         await mongoose.disconnect()
     })
-    
+
 })
 
 

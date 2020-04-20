@@ -5,16 +5,17 @@ const bcrypt = require('bcryptjs')
 
 const { constants: { goals, activities } } = require("diet-yourself-utils")
 
-const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL, REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET} } = process
+const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL, REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET } } = process
 
+// const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 
 describe('register', () => {
     let username, email, password, goal, activity, gender, age, height, weight, city, finalWeight
-    const genderList =['male', 'female']
+    const genderList = ['male', 'female']
     let goalIndex = Math.floor(Math.random() * 3)
     let genderIndex = Math.floor(Math.random() * 2)
     let activityIndex = Math.floor(Math.random() * 4)
-    
+
     beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -29,11 +30,12 @@ describe('register', () => {
         activity = activities[activityIndex]
         gender = genderList[genderIndex]
         age = Math.floor(Math.random() * 53) + 17
-        height = Math.floor(Math.random() * 80 ) + 120
+        height = Math.floor(Math.random() * 80) + 120
         weight = Math.floor(Math.random() * 110) + 40
         city = `city-${random()}`
         finalWeight = Math.floor(Math.random() * 110) + 40
-        
+
+
     })
 
     it('should succeed on correct user data', async () => {
@@ -46,7 +48,7 @@ describe('register', () => {
         expect(user).toBeDefined()
         expect(typeof user.id).toBe('string')
         expect(user.username).toBe(username)
-        
+
         expect(user.goal).toBe(goal)
         expect(user.activity).toBe(activity)
         expect(user.gender).toBe(gender)
@@ -56,7 +58,7 @@ describe('register', () => {
         expect(user.city).toBe(city)
         expect(user.finalWeight).toBe(finalWeight)
         //expect(user.calories).toBe(calories)
-    
+
         const validPassword = await bcrypt.compare(password, user.password)
 
         expect(validPassword).toBeTruthy()
@@ -64,227 +66,227 @@ describe('register', () => {
 
     it('should fail on non-string username', () => {
         username = 1
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `username ${username} is not a string`)
 
         username = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `username ${username} is not a string`)
 
         username = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `username ${username} is not a string`)
 
         username = null
-        expect(()=> 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `username ${username} is not a string`)
     })
 
     it('should fail in non-string email', () => {
         email = 1
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `email ${email} is not a string`)
 
         email = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `email ${email} is not a string`)
 
         email = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `email ${email} is not a string`)
 
         email = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `email ${email} is not a string`)
     })
 
     it('should fail on non-string goal', () => {
         goal = 1
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `goal ${goal} is not a string`)
 
         goal = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `goal ${goal} is not a string`)
 
         goal = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `goal ${goal} is not a string`)
 
         goal = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `goal ${goal} is not a string`)
     })
 
     it('should fail on non-string activity', () => {
         activity = 1
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `activity ${activity} is not a string`)
 
         activity = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `activity ${activity} is not a string`)
 
         activity = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `activity ${activity} is not a string`)
 
         activity = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `activity ${activity} is not a string`)
     })
 
     it('should fail on non-string gender', () => {
         gender = 1
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `gender ${gender} is not a string`)
 
         gender = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `gender ${gender} is not a string`)
 
         gender = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `gender ${gender} is not a string`)
 
         gender = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `gender ${gender} is not a string`)
     })
 
     it('should fail on non-string city', () => {
         city = 1
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `city ${city} is not a string`)
 
         city = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `city ${city} is not a string`)
 
         city = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `city ${city} is not a string`)
 
         city = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `city ${city} is not a string`)
     })
 
     it('should fail on non-number age', () => {
         age = 'string'
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `age ${age} is not a number`)
 
         age = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `age ${age} is not a number`)
 
         age = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `age ${age} is not a number`)
 
         age = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `age ${age} is not a number`)
     })
 
     it('should fail on non-number height', () => {
         height = ''
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `height ${height} is not a number`)
 
         height = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `height ${height} is not a number`)
 
         height = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `height ${height} is not a number`)
 
         height = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `height ${height} is not a number`)
     })
 
     it('should fail on non-number weight', () => {
         weight = 'hello'
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `weight ${weight} is not a number`)
 
         weight = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `weight ${weight} is not a number`)
 
         weight = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `weight ${weight} is not a number`)
 
         weight = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `weight ${weight} is not a number`)
     })
 
     it('should fail on non-number finalWeight', () => {
         finalWeight = ''
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `finalWeight ${finalWeight} is not a number`)
 
         finalWeight = true
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `finalWeight ${finalWeight} is not a number`)
 
         finalWeight = undefined
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `finalWeight ${finalWeight} is not a number`)
 
         finalWeight = null
-        expect(() => 
+        expect(() =>
             register(username, email, password, goal, activity, gender, age, height, weight, city, finalWeight)
         ).toThrowError(TypeError, `finalWeight ${finalWeight} is not a number`)
     })
 
 
 
-    
+
 
     afterAll(async () => {
         await User.deleteMany()
