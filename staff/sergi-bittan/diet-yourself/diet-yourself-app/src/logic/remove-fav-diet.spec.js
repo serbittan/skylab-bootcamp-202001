@@ -1,29 +1,29 @@
-const { mongoose, models : { User, Diet } } = require('diet-yourself-data')
-const { retrieveDiet } = require('.')
+const { mongoose, models: { User, Diet } } = require('diet-yourself-data')
 const { constants: { activities, foods, goals, methods } } = require('diet-yourself-utils')
-
-import context from './context'
+const { removeFavDiet } = require('.')
 const { random } = Math
 const jwt = require('jsonwebtoken')
-
+import context from './context'
 
 const { env: {
     REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL,
     REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET
 } } = process
 
-
-describe('retrieveDiet', () => {
-    let username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories, points, method
+describe('removeFavDiet', () => {
+    let username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories, points, method 
+    let favorites = []
+    let genderList = ['male', 'female']
     let goalIndex = Math.floor(Math.random() * 3)
     let activityIndex = Math.floor(Math.random() * 4)
-    let genderList = ['male', 'female']
-    let genderIndex = Math.floor(Math.random() * 2) 
+    let genderIndex = Math.floor(Math.random() * 2)
     let methodIndex = Math.floor(Math.random() * 4)
-    beforeAll(async ()=> {
+
+    beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
+
     beforeEach(() => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
@@ -40,48 +40,41 @@ describe('retrieveDiet', () => {
         points = Math.floor(Math.random() * 30) + 10
         method = methods[methodIndex].name
 
-
     })
 
     describe('when user and diet exist', () => {
-        
         let _id
-        beforeEach(async() => {
-            const user = await User.create({username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
+        
+        beforeEach(async () => {
+            const user = await User.create({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
             context.token = jwt.sign({ sub: user.id }, TEST_JWT_SECRET)
             _id = user.id
 
             const diet = new Diet({ method, foods, points, calories })
+
             user.favorites.push(diet)
-            
+
             await user.save()
-            
+
         })
 
-        it('should suceed on correct and valid data', async () => {
-            
+        it('should suceed on correct data', async () => {
+
             const user = await User.findById(_id)
             const idDiet = user.favorites[0]._id.toString()
+            
+            const result = await removeFavDiet(idDiet)
 
-            const diet = await retrieveDiet(idDiet)
-
-            expect(diet).toBeDefined()
-            expect(typeof diet).toBe('object')
-            expect(diet._id).toBe(idDiet)
-            expect(diet.method).toBe(method)
-            expect(diet.points).toBe(points)
-            expect(diet.calories).toBe(calories)
-            expect(diet.foods).toBeDefined()
-            expect(diet.foods.length).toBeGreaterThan(0)
+            expect(result).toBeUndefined()
         })
 
-        it('should fail on invalid tolken', async () => {
+        it('should fail on invalid token', async () => {
             let idDiet
             try{
-                await retrieveDiet(idDiet,`${token}-wrong`)
+                await removeFavDiet(idDiet,`${token}-wrong`)
                 throw new Error('should not reach this point')
 
-            } catch(error){
+            } catch(error) {
                 expect(error).toBeDefined()
                 expect(error.message).toBe('token is not defined')
             }
@@ -90,18 +83,23 @@ describe('retrieveDiet', () => {
 
     it('should fail on non-string idDiet', () => {
         let idDiet = 1
-        expect(()=>
-            retrieveDiet(idDiet)
+        expect(() =>
+            removeFavDiet(idDiet)
         ).toThrowError(TypeError, `idDiet ${idDiet} is not a string`)
 
         idDiet = true
         expect(() =>
-            retrieveDiet(idDiet)
+            removeFavDiet(idDiet)
         ).toThrowError(TypeError, `idDiet ${idDiet} is not a string`)
 
         idDiet = undefined
         expect(() =>
-            retrieveDiet(idDiet)
+            removeFavDiet(idDiet)
+        ).toThrowError(TypeError, `idDiet ${idDiet} is not a string`)
+
+        idDiet = {}
+        expect(() =>
+            removeFavDiet(idDiet)
         ).toThrowError(TypeError, `idDiet ${idDiet} is not a string`)
     })
 
@@ -109,7 +107,4 @@ describe('retrieveDiet', () => {
         await User.deleteMany()
         await mongoose.disconnect()
     })
-
-
 })
-
