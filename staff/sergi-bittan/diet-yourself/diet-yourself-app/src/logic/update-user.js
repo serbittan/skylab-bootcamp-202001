@@ -5,12 +5,30 @@ import context from './context'
 const API_URL = process.env.REACT_APP_API_URL
 
 const updateUser = function (user) {
+    const { username, age, weight, height, goal, activity, city, finalWeight, password, oldPassword } = user
     for (const key in user){
         if (!user[key])  delete user[key]
-    
-        if ( typeof user[key] === 'string') validate.string(user[key], `${user[key]}`)
-        if (typeof user[key] === 'number') validate.type(user[key], `${user[key]}`, Number)
+
+        const stringKeys = ['username', 'goal', 'activity', 'city', 'password', 'oldPassword']
+        const numberKeys = ['age', 'weight', 'height','finalWeight']
+        
+        if (stringKeys.includes(key)) validate.string(user[key], `${user[key]}`)
+        if (numberKeys.includes(key)) validate.type(user[key], `${user[key]}`, Number)
+        // if ( typeof user[key] === 'string') validate.string(user[key], `${user[key]}`)
+        // if (typeof user[key] === 'number') validate.type(user[key], `${user[key]}`, Number)
     }
+    
+    if (password && !oldPassword) throw new Error('oldPassword is not defined')
+    if (!password && oldPassword) throw new Error('password is not defined')
+
+    const keys = Object.keys(user)
+
+    const validKeys = ['username', 'age', 'weight', 'height', 'goal', 'activity', 'city', 'finalWeight', 'password', 'oldPassword']
+
+    for (const key of keys){
+        if (!validKeys.includes(key)) throw new NotAllowedError(`property ${key} is not allowed)`)
+    }
+
     
     return (async () => {
         const response = await fetch(`${API_URL}/users`, {
