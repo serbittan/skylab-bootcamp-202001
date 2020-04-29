@@ -4,6 +4,15 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Find and receives data from desired user
+ * 
+ * @return {Promise<Object>} user from database. 
+ * 
+ * @throws {NotAllowedError} if user does not exist
+ * @throws {Error} server error
+ */
+
 
 const retrieveUser = function () {
     return (async () => {
