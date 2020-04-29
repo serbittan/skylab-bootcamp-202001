@@ -5,6 +5,27 @@ const { NotAllowedError } = require('diet-yourself-errors')
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Register user
+ * 
+ * @param {string} username user's username
+ * @param {string} email user's email
+ * @param {string} password user's password
+ * @param {string} goal user's goal
+ * @param {string} activity user's activity
+ * @param {string} gender user's gender
+ * @param {number} age user's age
+ * @param {number} height user's height
+ * @param {number} weight user's weight
+ * @param {string} city user's city
+ * @param {number} finalWeight user's finalWeight
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
+
+
 const register =  function (username, email, password, goal, activity, gender, age, height, weight, city, finalWeight) {
     validate.string(username, 'username')
     validate.string(goal, 'goal')

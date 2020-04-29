@@ -3,6 +3,15 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Show all diets from favorites
+ * 
+ * @returns {Promise<Object[]>} array with all diets included in favorites
+ * 
+ * @throws {NotAllowedError} if there are not diets in favorites
+ * @throws {Error} server error
+ */
+
 
 const retrieveDiets = function () {
     return (async () => {

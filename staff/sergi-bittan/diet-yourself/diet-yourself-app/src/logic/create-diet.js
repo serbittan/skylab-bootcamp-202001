@@ -4,6 +4,15 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Create a new user's diet
+ * 
+ * @param {string} method - user's method
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 
 const createDiet = function (method) {
     validate.string(method, 'method')

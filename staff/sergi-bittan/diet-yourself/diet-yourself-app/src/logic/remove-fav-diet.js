@@ -4,6 +4,15 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Remove diet from favorites
+ * 
+ * @param {string} idDiet - diet's id
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 const removeFavDiet = function (idDiet) {
     validate.string(idDiet, 'idDiet')
 

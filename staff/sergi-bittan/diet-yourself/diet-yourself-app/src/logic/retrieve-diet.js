@@ -4,6 +4,17 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Find and receives diet from user database
+ * 
+ * @param {string} idDiet - diet's id
+ * 
+ * @returns {Promise<Object>} specific diet from favorites. diet's id, foods, method, points, calories
+ * 
+ * @throws {NotAllowedError} if diet does not exist
+ * @throws {Error} server error
+ */
+
 const retrieveDiet = function (idDiet) {
     validate.string(idDiet, 'idDiet')
    

@@ -4,8 +4,17 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Update user's data
+ * 
+ * @param {Object} user - user's data
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 const updateUser = function (user) {
-    const { username, age, weight, height, goal, activity, city, finalWeight, password, oldPassword } = user
+    const { password, oldPassword } = user
     for (const key in user){
         if (!user[key])  delete user[key]
 

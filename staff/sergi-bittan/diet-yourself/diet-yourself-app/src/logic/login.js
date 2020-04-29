@@ -5,6 +5,19 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Checks user credentials against the storage
+ * 
+ * @param {string} email user's email
+ * @param {string} password user's password
+ * 
+ * @returns {Promise<string>} token from storage
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
+
 const login = function(email, password) {
     validate.string(email, 'email')
     validate.email(email)

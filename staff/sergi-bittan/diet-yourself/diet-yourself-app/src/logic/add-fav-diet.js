@@ -3,6 +3,13 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * add diets to favorites
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 const addFavDiet = function () {
     return ( async () => {
         const response = await fetch(`${API_URL}/user/favs`, {
