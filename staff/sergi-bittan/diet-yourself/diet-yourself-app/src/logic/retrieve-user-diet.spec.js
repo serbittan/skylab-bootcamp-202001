@@ -44,18 +44,22 @@ describe('retrieveUserDiet', () => {
         method = methods[methodIndex].name
         food = foods[foodIndex]
     })
-    describe('when user already exist', () => {
+    describe('when user and diet exist', () => {
+
         beforeEach(async () => {
-            const diet = new Diet({ method, foods, points, calories })
-            const user = await User.create({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight, calories, diet })
+            const user = await User.create({ username, email, password, goal, activity, gender, age, height, weight, city, finalWeight })
             context.token = jwt.sign({ sub: user.id }, TEST_JWT_SECRET)
+
+            const diet = new Diet({ method, foods, points, calories })
+
+            user.diet = diet
+            
+            await user.save()
         })
 
         it('should suceed on correct and valid data', async () => {
-            // await createDiet(method)
-
             const userDiet = await retrieveUserDiet()
-
+            
             expect(userDiet).toBeDefined()
             expect(userDiet.method).toBe(method)
             expect(typeof method).toBe('string')
@@ -69,8 +73,9 @@ describe('retrieveUserDiet', () => {
             expect(typeof userDiet.points).toBe('number')
             expect(userDiet.foods.length).toBeGreaterThan(0)
             expect(userDiet.foods[foodIndex].name).toBe(food.name)
-            //expect(userDiet.calories).toBe(calories)
+        
         })
+
         it('should fail on invalid token', async () => {
             try {
                 await retrieveUserDiet(`${token}-wrong`)
@@ -81,6 +86,17 @@ describe('retrieveUserDiet', () => {
                 expect(error.message).toBe('token is not defined')
             }
         })
+
+        it('should fail on non user diet', async() => {
+            try{
+                await retrieveUserDiet()
+            } catch(error) {
+                expect(error).toBeDefined()
+                expect(error.message).toBe('you have no diet')
+            }
+        })
+        
+
     })
 
     afterAll(async () => {
