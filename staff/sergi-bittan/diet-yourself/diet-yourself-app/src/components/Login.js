@@ -6,7 +6,7 @@ import './Login.sass'
 export default ({ onLogin, goToRegister, error }) => {
     return <div className="log">
         <header className="header-log">
-            <a href="#" onClick={event => {
+            <a href="!#" onClick={event => {
                     event.preventDefault()
                     goToRegister()
                 }}><i className="header-log__log fas fa-angle-left"></i></a>

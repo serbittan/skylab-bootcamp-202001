@@ -1,8 +1,6 @@
-import { Fragment, useEffect, useState, useContext } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useLocation, withRouter } from 'react-router-dom'
 import { register } from '../../logic'
-import { Context } from '../ContextProvider'
-import Feedback from '../Feedback'
 import React from 'react'
 import Step1 from './Step1'
 import Step2 from './Step2'
@@ -54,6 +52,7 @@ export default withRouter(function Register({ history }) {
         if (goal) {
             registerData.steps[0].goal = goal;
         }
+        // eslint-disable-next-line
     }, [])
 
     const handleGoNextStep = () => {
@@ -75,7 +74,8 @@ export default withRouter(function Register({ history }) {
                 if(registerData.steps[3].height && registerData.steps[3].weight && registerData.steps[3].finalWeight) return setStep(4)
                 else setError(errorMessage)
                 break;
-            case 4:
+            // case 4:
+            default:
                 if(registerData.steps[4].email && registerData.steps[4].password && registerData.steps[4].username) return setStep(5)
                 else setError(errorMessage)
                 break;
@@ -105,7 +105,8 @@ export default withRouter(function Register({ history }) {
                 data.weight && (registerData.steps[3].weight = Number(data.weight))
                 data.finalWeight && (registerData.steps[3].finalWeight = Number(data.finalWeight))
                 break;
-            case 4:
+            // case 4:
+            default:
                 data.email && (registerData.steps[4].email = data.email)
                 data.password && (registerData.steps[4].password = data.password)
                 data.username && (registerData.steps[4].username = data.username)
@@ -150,7 +151,7 @@ export default withRouter(function Register({ history }) {
     return (
         <Fragment>
             <header className="header-activity">
-                {step > 0 && <a href="" className="header-activity__a" onClick={event => {
+                {step > 0 && <a href="!#" className="header-activity__a" onClick={event => {
                     event.preventDefault()
                     handleGoPrevStep()
                 }}><i className="header-activity__a fas fa-angle-left"></i></a>
@@ -158,7 +159,7 @@ export default withRouter(function Register({ history }) {
             {step !== 0 && <h3>Diet Yourself</h3> && step !== 4 && <h3>Diet Yourself</h3>}
             
 
-                {step < 4 && <a href="" className="header-activity__a" onClick={event => {
+                {step < 4 && <a href="!#" className="header-activity__a" onClick={event => {
                     event.preventDefault()
                     handleGoNextStep()
                 }}><i className="header-activity__a fas fa-angle-right"></i></a>

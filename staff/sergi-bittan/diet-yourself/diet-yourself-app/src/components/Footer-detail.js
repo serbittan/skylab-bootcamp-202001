@@ -6,14 +6,14 @@ const FooterDetail = ({ diet, removeDiet, goHome }) => {
    
     return (
         <div className="footer-detail">
-            <a href="#"  alt="remove diet" onClick={event => {
+            <a href="!#"  alt="remove diet" onClick={event => {
                 event.preventDefault()
 
                 removeDiet(_id)
 
             }}><i className="footer-detail__clean fas fa-trash-alt"></i></a>
 
-            <a href="#"  alt="go home" onClick={event => {
+            <a href="!#"  alt="go home" onClick={event => {
                 event.preventDefault()
 
                 goHome()

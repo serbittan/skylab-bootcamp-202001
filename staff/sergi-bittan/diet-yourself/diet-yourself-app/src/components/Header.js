@@ -13,12 +13,12 @@ const Header = ({ user, goBack }) => {
         <header className="header">
 
             {location.pathname !== '/landing' &&
-                <a href="#" onClick={event => {
+                <a href="!#" onClick={event => {
                     event.preventDefault()
                     goBack()
                 }}><i className="header__prev fas fa-angle-left"></i></a> 
             }
-            {location.pathname === '/landing' && <p><i class="fas fa-utensils"></i></p>}
+            {location.pathname === '/landing' && <p><i className="fas fa-utensils"></i></p>}
 
             <p className="header__landing">Objetivo:</p>
             {calories && <p className="header__kcl">{calories} Kcal</p>}

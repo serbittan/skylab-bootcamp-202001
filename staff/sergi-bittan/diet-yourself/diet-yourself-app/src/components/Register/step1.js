@@ -20,7 +20,7 @@ const Step1 = ({ onSaveData, data, onGoToLogin, error}) => {
             </div>
             <footer className="start">
                 <h4 className="start__p">Are you an account?</h4>
-                <a href="#" className="start__a" href="" onClick={event => {
+                <a href="!#" className="start__a" onClick={event => {
                     event.preventDefault()
                     onGoToLogin()
                     }}>Login</a>

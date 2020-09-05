@@ -6,7 +6,7 @@ const { method, calories, idDiet } = diets
 
     return(
         <div className="item-favs">
-            <a href="#" onClick={event => {
+            <a href="!#" onClick={event => {
                 event.preventDefault()
 
                 goToDetail(idDiet)

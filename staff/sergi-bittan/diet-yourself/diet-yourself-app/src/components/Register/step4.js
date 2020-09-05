@@ -4,7 +4,6 @@ import Feedback from '../Feedback'
 
 
 const Step4 = ({ onSaveData, data, error }) => {
-    const { height, weight, finalWeight } = data
     return (
     <div className="height">
         <h5>How Tall are you?</h5>

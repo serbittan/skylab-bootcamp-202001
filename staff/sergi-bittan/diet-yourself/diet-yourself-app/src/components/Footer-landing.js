@@ -10,7 +10,7 @@ const FooterLanding = ({ goToFavs, currentDiet, goToLogout }) => {
             <button type="button" className="footer__today" onClick={() => {
                 currentDiet()
             }}>Today</button>
-            <a href="#" className="footer__landing" onClick={event => {
+            <a href="!#" className="footer__landing" onClick={event => {
                 event.preventDefault()
                 goToLogout()
             }}><i className="footer__logout fas fa-power-off"></i></a>
